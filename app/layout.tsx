@@ -5,6 +5,7 @@ import "./redesign.css";
 import "./poppy-intro.css";
 import "lenis/dist/lenis.css";
 import "./editorial-motion.css";
+import "@/components/ui/fluid-button.css";
 
 const siteName = "Poppy Project";
 const description =

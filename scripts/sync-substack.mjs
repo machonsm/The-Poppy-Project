@@ -8,6 +8,16 @@ const output = new URL("../public/data/substack-posts.json", import.meta.url);
 // The public archive used by Substack's own website. No login, token, full
 // article bodies, subscriber information or paid content is requested/stored.
 // This is not a versioned API; fail closed if its shape changes.
+function normalizeCover(value) {
+  if (typeof value !== "string") return null;
+  try {
+    const url = new URL(value);
+    if (url.protocol !== "https:" || url.username || url.password || url.port) return null;
+    if (!["substack-post-media.s3.amazonaws.com", "substackcdn.com"].includes(url.hostname)) return null;
+    return url.href;
+  } catch { return null; }
+}
+
 export function normalizePost(post) {
   const url = new URL(post.canonical_url);
   if (url.origin !== publication.origin || !/^\/p\/[^/]+$/.test(url.pathname)) throw new Error("Unexpected post URL");
@@ -16,6 +26,7 @@ export function normalizePost(post) {
     id: String(post.id),
     title: post.title.trim(),
     description: String(post.subtitle || post.description || "").trim().slice(0, 500),
+    coverImage: normalizeCover(post.cover_image),
     url: url.href,
     publishedAt: new Date(post.post_date).toISOString()
   };

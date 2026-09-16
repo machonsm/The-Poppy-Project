@@ -39,7 +39,7 @@
 .pp-library__toolbar { position: sticky; top: var(--header-height); z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 18px 0; background: var(--bone); border-block: 1px solid var(--pp-line); }
 .pp-library__filters { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 .pp-library__filters button { display: flex; gap: 9px; align-items: center; min-height: 42px; padding: 10px 15px; border: 1px solid var(--pp-line); border-radius: 24px; color: var(--pitch); background: none; font-size: 14px; line-height: 20px; transition: background .2s, color .2s, border-color .2s; }
-.pp-library__filters button > span { font-size: 12px; opacity: .65; font-variant-numeric: tabular-nums; }
+.pp-library__filters button > span { font-size: 12px; opacity: .7; font-variant-numeric: tabular-nums; }
 .pp-library__filters button:hover { border-color: var(--poppy); color: var(--poppy); }
 .pp-library__filters button[aria-pressed="true"] { background: var(--poppy); color: var(--bone); border-color: var(--poppy); }
 .pp-library__search { display: flex; align-items: center; gap: 11px; width: min(32%, 350px); flex-shrink: 0; min-height: 44px; color: var(--olive); border-bottom: 1px solid var(--pp-line); }

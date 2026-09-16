@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { femtechCompanies, femtechGroups, femtechSectors, type FemtechCityId, type FemtechCompany, type FemtechSectorId } from "@/data/femtech-companies";
 import { polandCities, polandMapViewBox, polandOutlinePath, polandMapAttribution } from "@/data/poland-map";
 import type { PoppyLanguage } from "@/components/PoppyChrome";
+import { FluidLink } from "@/components/ui/FluidButton";
 import "./femtech-explorer.css";
 
 const copy = {
@@ -165,7 +166,7 @@ export function FemtechExplorer({ language }: { language: PoppyLanguage }) {
 
             <div className="pfe-results-column">
             <div className="pfe-results" id="pfe-results" ref={results} role="region" aria-label={c.resultsRegion}>
-              <div className="pfe-results__header"><div><span>{locationLabel}</span><p aria-live="polite" aria-atomic="true">{companyCount(visibleCompanies.length, language)}</p></div>{hasFilters && <button type="button" className="pfe-clear" onClick={reset} aria-label={c.clear} title={c.clear}><X size={18} /></button>}</div>
+              <div className="pfe-results__header"><div><span>{locationLabel}</span><p aria-live="polite" aria-atomic="true">{companyCount(visibleCompanies.length, language)}</p></div>{hasFilters && <button type="button" className="pfe-clear" onClick={reset} aria-label={c.clear} title={c.clear}><X size={18} aria-hidden="true" /></button>}</div>
               {selected ? (
                 <div className="pfe-profile" key={selected.id}>
                   <button type="button" className="pfe-back" onClick={backToList}><ArrowLeft size={16} aria-hidden="true" />{c.back}</button>
@@ -173,19 +174,19 @@ export function FemtechExplorer({ language }: { language: PoppyLanguage }) {
                   <p className="pfe-profile__location"><MapPin size={15} aria-hidden="true" />{selected.location?.[language] ?? c.noLocation}</p>
                   <p className="pfe-profile__description">{selected.description?.[language] ?? c.noDescription}</p>
                   <dl className="pfe-profile__facts">{selected.typeLabel && <div><dt>{c.type}</dt><dd>{selected.typeLabel[language]}</dd></div>}{selected.businessModel && <div><dt>{c.model}</dt><dd>{selected.businessModel}</dd></div>}<div><dt>{c.connection}</dt><dd>{femtechGroups.find(group => group.id === selected.group)!.label[language]}</dd></div></dl>
-                  {selected.website ? <a className="pp-button pfe-profile__website" href={selected.website} target="_blank" rel="noopener noreferrer">{c.website}<ArrowUpRight size={18} aria-hidden="true" /><span className="sr-only"> ({c.newTab})</span></a> : <p className="pfe-profile__missing">{c.noWebsite}</p>}
+                  {selected.website ? <FluidLink className="pfe-profile__website" href={selected.website} target="_blank" rel="noopener noreferrer">{c.website}<ArrowUpRight size={18} aria-hidden="true" /><span className="sr-only"> ({c.newTab})</span></FluidLink> : <p className="pfe-profile__missing">{c.noWebsite}</p>}
                 </div>
               ) : visibleCompanies.length ? (
                 <ul className="pfe-company-list" ref={companyList} aria-label={c.results} data-lenis-prevent>{visibleCompanies.map(companyRow)}</ul>
               ) : (
-                <div className="pfe-empty"><Search size={28} aria-hidden="true" /><h3>{c.noResults}</h3><p>{c.noResultsBody}</p><button type="button" className="pp-text-link" onClick={reset}>{c.clear}<ArrowRight size={16} /></button></div>
+                <div className="pfe-empty"><Search size={28} aria-hidden="true" /><h3>{c.noResults}</h3><p>{c.noResultsBody}</p><button type="button" className="pp-text-link" onClick={reset}>{c.clear}<ArrowRight size={16} aria-hidden="true" /></button></div>
               )}
             </div>
             </div>
           </div>
           <div className="pfe-notes"><p>{c.mapNote}</p><p>{c.source}<span className="pfe-credit">{c.mapCredit}: <a href={polandMapAttribution.outline.url} target="_blank" rel="noopener noreferrer">{polandMapAttribution.outline.label}</a> · <a href={polandMapAttribution.cities.url} target="_blank" rel="noopener noreferrer">{polandMapAttribution.cities.label}</a> (<a href={polandMapAttribution.cities.licenseUrl} target="_blank" rel="noopener noreferrer">{polandMapAttribution.cities.license}</a>)</span></p></div>
         </div></div>
-        <div className="pfe-submit"><span>{c.missing}</span><a href="#zglos-firme">{c.add}<ArrowUpRight size={18} aria-hidden="true" /></a></div>
+        <div className="pfe-submit"><span>{c.missing}</span><FluidLink href="#zglos-firme">{c.add}<ArrowUpRight size={18} aria-hidden="true" /></FluidLink></div>
       </div>
     </section>
   );

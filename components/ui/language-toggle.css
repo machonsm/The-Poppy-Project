@@ -1,0 +1,20 @@
+/* Globe disclosure + sliding selection inspired by the supplied Framer toggle.
+   The capsule floats below the icon so opening it never shifts the navigation. */
+.pp-language-toggle { position: relative; flex-shrink: 0; z-index: 2; }
+.pp-language-toggle__trigger { display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 1px solid var(--pp-line); border-radius: 50%; color: var(--pitch); background: transparent; transition: color .2s, background .2s, border-color .2s; }
+.pp-language-toggle__trigger:hover { border-color: var(--poppy); color: var(--poppy); }
+.pp-language-toggle__trigger[aria-expanded="true"] { color: var(--bone); background: var(--poppy); border-color: var(--poppy); }
+.pp-language-toggle__panel { position: absolute; top: calc(100% + 12px); right: -4px; width: 132px; visibility: hidden; opacity: 0; transform: translateY(-6px) scale(.94); transform-origin: top right; transition: opacity .25s, transform .35s var(--pp-ease), visibility .25s; }
+.pp-language-toggle[data-open="true"] .pp-language-toggle__panel { visibility: visible; opacity: 1; transform: none; }
+.pp-language-toggle__choices { position: relative; display: grid; grid-template-columns: 1fr 1fr; padding: 4px; border: 1px solid var(--poppy); border-radius: 999px; background: var(--bone); box-shadow: 0 5px 18px rgba(26, 10, 10, .1); }
+.pp-language-toggle__indicator { position: absolute; left: 4px; top: 4px; bottom: 4px; width: calc((100% - 8px) / 2); border-radius: 999px; background: var(--poppy); transition: transform .35s var(--pp-ease); }
+.pp-language-toggle__choices[data-language="en"] .pp-language-toggle__indicator { transform: translateX(100%); }
+.pp-language-toggle__choices button { position: relative; min-width: 0; padding: 10px 12px; border: 0; border-radius: 999px; background: transparent; color: var(--pitch); font: 500 13px/18px var(--font-sans); transition: color .2s; }
+.pp-language-toggle__choices button[aria-checked="true"] { color: var(--bone); }
+.pp-language-toggle button:focus-visible { outline: 2px solid var(--poppy); outline-offset: 3px; }
+@media (max-width: 650px) {
+  .pp-language-toggle__trigger { width: 30px; height: 30px; }
+  .pp-language-toggle__panel { right: -30px; }
+}
+html[data-motion="off"] .pp-language-toggle * { transition: none !important; }
+@media (prefers-reduced-motion: reduce) { .pp-language-toggle * { transition: none !important; } }

@@ -1,0 +1,103 @@
+/* Native, reusable adaptation of fluidbutton.framer.website:
+   pill outline, rising rounded fill, and a clipped rolling label.
+   Specificity keeps legacy per-section rules from changing shared button chrome. */
+.pp-fluid.pp-fluid.pp-fluid {
+  --fluid-ink: var(--poppy);
+  --fluid-fill: var(--poppy);
+  --fluid-contrast: var(--bone);
+  --fluid-gap: 16px;
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  vertical-align: middle;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 52px;
+  height: auto;
+  padding: 12px 25px;
+  overflow: hidden;
+  border: 1.5px solid var(--fluid-ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--fluid-ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  box-shadow: none;
+  transform: none;
+  transition: transform .45s var(--pp-ease), opacity .2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.pp-fluid.pp-fluid[data-tone="light"] { --fluid-ink: var(--bone); --fluid-fill: var(--bone); --fluid-contrast: var(--olive); }
+.pp-fluid.pp-fluid[data-tone="olive"] { --fluid-ink: var(--olive); --fluid-fill: var(--olive); --fluid-contrast: var(--bone); }
+.pp-fluid.pp-fluid[data-size="small"] { --fluid-gap: 10px; min-height: 40px; padding: 7px 16px; font-size: 13px; line-height: 20px; }
+.pp-fluid.pp-fluid[data-size="icon"] { --fluid-gap: 0px; width: 36px; height: 36px; min-height: 36px; padding: 7px; }
+.pp-fluid.pp-fluid[data-size="micro"] { --fluid-gap: 0px; min-height: 28px; padding: 2px 6px; font-size: 12px; line-height: 20px; }
+.pp-fluid::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -1px -12%;
+  border-radius: 50% 50% 0 0 / 70% 70% 0 0;
+  background: var(--fluid-fill);
+  transform: translateY(104%);
+  transition: transform .55s var(--pp-ease), border-radius .55s var(--pp-ease);
+  pointer-events: none;
+}
+.pp-fluid .pp-fluid__window { position: relative; display: block; width: 100%; min-width: 0; overflow: hidden; opacity: 1; font: inherit; color: inherit; }
+.pp-fluid .pp-fluid__label { display: flex; align-items: center; justify-content: center; gap: var(--fluid-gap); min-height: 20px; padding-block: 1px; color: inherit; transform: translateY(0); transition: transform .5s var(--pp-ease); }
+.pp-fluid .pp-fluid__label--copy { position: absolute; inset: 0; color: var(--fluid-contrast); transform: translateY(110%); pointer-events: none; }
+.pp-fluid .pp-fluid__label > svg { flex-shrink: 0; transform: none; transition: none; }
+.pp-fluid__count { opacity: .7; font-size: .85em; font-variant-numeric: tabular-nums; }
+.pp-fluid.pp-fluid:is([aria-pressed="true"], [data-selected="true"]) { color: var(--fluid-contrast); }
+.pp-fluid:is([aria-pressed="true"], [data-selected="true"])::before { transform: translateY(0); border-radius: 0; }
+.pp-fluid:focus-visible { outline: 2px solid var(--fluid-ink); outline-offset: 5px; }
+.pp-fluid:is(:focus-visible, :active):not(:disabled, [aria-disabled="true"])::before,
+[data-fluid-trigger]:is(:focus-visible, :active):not(:disabled) .pp-fluid::before { transform: translateY(0); border-radius: 0; }
+.pp-fluid:is(:focus-visible, :active):not(:disabled, [aria-disabled="true"]) .pp-fluid__label,
+[data-fluid-trigger]:is(:focus-visible, :active):not(:disabled) .pp-fluid__label { transform: translateY(-110%); }
+.pp-fluid:is(:focus-visible, :active):not(:disabled, [aria-disabled="true"]) .pp-fluid__label--copy,
+[data-fluid-trigger]:is(:focus-visible, :active):not(:disabled) .pp-fluid__label--copy { transform: translateY(0); }
+.pp-fluid.pp-fluid:disabled, .pp-fluid.pp-fluid[aria-disabled="true"] { opacity: .45; cursor: not-allowed; transform: none; }
+.pp-fluid.pp-fluid:active:not(:disabled) { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .pp-fluid:not(:disabled, [aria-disabled="true"]):hover::before,
+  [data-fluid-trigger]:hover:not(:disabled) .pp-fluid::before { transform: translateY(0); border-radius: 0; }
+  .pp-fluid:not(:disabled, [aria-disabled="true"]):hover .pp-fluid__label,
+  [data-fluid-trigger]:hover:not(:disabled) .pp-fluid__label { transform: translateY(-110%); }
+  .pp-fluid:not(:disabled, [aria-disabled="true"]):hover .pp-fluid__label--copy,
+  [data-fluid-trigger]:hover:not(:disabled) .pp-fluid__label--copy { transform: translateY(0); }
+  a.pp-fluid.pp-fluid:hover:not(:active), button.pp-fluid.pp-fluid:hover:not(:disabled, :active) { transform: scale(1.025); }
+}
+/* Primary card actions; secondary controls keep their original section CSS. */
+.pp-resource__bottom { flex-wrap: wrap; }
+.pp-substack-post__action.pp-fluid { width: 100%; margin-top: 18px; }
+@media (max-width: 650px) {
+  .pp-fluid.pp-fluid { padding-inline: 19px; }
+  .pp-fluid.pp-fluid[data-size="small"] { padding-inline: 13px; }
+  .pp-fluid.pp-fluid[data-size="icon"] { padding: 7px; }
+  .pp-fluid.pp-fluid[data-size="micro"] { padding-inline: 4px; }
+}
+html[data-motion="off"] .pp-fluid, html[data-motion="off"] .pp-fluid::before, html[data-motion="off"] .pp-fluid__label { transition: none !important; }
+html[data-motion="off"] .pp-fluid.pp-fluid { transform: none; }
+html[data-motion="off"] .pp-fluid__label { transform: none !important; }
+html[data-motion="off"] .pp-fluid__label--copy { display: none; }
+html[data-motion="off"] .pp-fluid:is(:hover, :focus-visible, :active):not(:disabled, [aria-disabled="true"]),
+html[data-motion="off"] [data-fluid-trigger]:is(:hover, :focus-visible, :active):not(:disabled) .pp-fluid { color: var(--fluid-contrast); }
+@media (prefers-reduced-motion: reduce) {
+  .pp-fluid.pp-fluid { transform: none !important; }
+  .pp-fluid, .pp-fluid::before, .pp-fluid__label { transition: none !important; }
+  .pp-fluid .pp-fluid__label { transform: none !important; }
+  .pp-fluid .pp-fluid__label--copy { display: none; }
+  .pp-fluid.pp-fluid.pp-fluid:is(:hover, :focus-visible, :active):not(:disabled, [aria-disabled="true"]),
+  [data-fluid-trigger]:is(:hover, :focus-visible, :active):not(:disabled) .pp-fluid.pp-fluid { color: var(--fluid-contrast); }
+}

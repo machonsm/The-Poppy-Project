@@ -2,6 +2,7 @@ import { ArrowDown, ArrowUpRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { PoppyFooter, PoppyHeader } from "@/components/PoppyChrome";
 import { links } from "@/data/links";
+import { FluidLink } from "@/components/ui/FluidButton";
 import "./content-pages.css";
 
 type PageCard = {
@@ -121,9 +122,9 @@ export function PoppyContentPage({ kicker, title, lede, cards, afterCollection }
             <p className="pp-eyebrow">Dobre rzeczy zaczynają się od połączeń</p>
             <h2 id="conversation-title">Porozmawiajmy<br />o <em>możliwościach.</em></h2>
           </div>
-          <a className="pp-button pp-content-contact" href={`mailto:${links.email}`}>
+          <FluidLink className="pp-content-contact" href={`mailto:${links.email}`}>
             Napisz do nas <ArrowUpRight size={20} aria-hidden="true" />
-          </a>
+          </FluidLink>
         </section>
       </main>
 

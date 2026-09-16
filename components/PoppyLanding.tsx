@@ -1,10 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowDownRight, ArrowUpRight, Download, Send } from "lucide-react";
+import { ArrowUpRight, Download, Send } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { PoppyHeader, PoppyFooter, type PoppyLanguage } from "@/components/PoppyChrome";
 import { PoppyEventList } from "@/components/PoppyEventList";
+import { PoppyNewsletterSignup } from "@/components/PoppyNewsletterSignup";
+import { InstagramStoryCarousel } from "@/components/InstagramStoryCarousel";
+import { FluidButton, FluidLink } from "@/components/ui/FluidButton";
 import { FemtechExplorer } from "@/components/FemtechExplorer";
 import { PoppyMark } from "@/components/brand/PoppyMark";
 import { PoppyBloomBorder } from "@/components/brand/PoppyBloomBorder";
@@ -16,7 +19,6 @@ import { usePoppyScroll } from "@/components/motion/usePoppyScroll";
 import { events, type EventRegion } from "@/data/events";
 import { links } from "@/data/links";
 import { mapAssets } from "@/data/map-assets";
-import { socialPosts } from "@/data/social";
 
 type EventFilter = "all" | EventRegion;
 const eventFilters: EventFilter[] = ["all", "poland", "europe", "world", "online"];
@@ -26,7 +28,7 @@ const content = {
   pl: {
     hero: ["Zdrowie kobiet.", "Czas na", "nową", "perspektywę."],
     intro: "Łączymy wiedzę, ludzi i innowacje. Otwieramy nowe możliwości dla zdrowia kobiet — w Polsce i poza jej granicami.",
-    mapCta: "Odkryj mapę FemTechu", scrollDown: "Przewiń w dół", subscribeLabel: "Poppy Notes", subscribeTitle: "Zapisz się do naszego Substacka", subscribeEmail: "Twój adres e-mail", subscribeButton: "Zapisz się", subscribeFallback: "Otwórz Substack",
+    mapCta: "Odkryj mapę FemTechu", scrollDown: "Przewiń w dół",
     strip: ["Obserwuj nas na Instagramie"],
     aboutTitle: <><span className="pp-heading-line"><span>Czym się</span></span><span className="pp-heading-line"><span><em>zajmujemy?</em></span></span></>,
     aboutIntro: "Budujemy przestrzeń, w której wiedza, innowacje i relacje otwierają nowe możliwości dla zdrowia kobiet.",
@@ -51,7 +53,7 @@ const content = {
   en: {
     hero: ["Women’s health.", "Time for a", "new", "perspective."],
     intro: "Connecting knowledge, people and innovation. Opening new possibilities for women’s health — in Poland and beyond.",
-    mapCta: "Explore the FemTech map", scrollDown: "Scroll down", subscribeLabel: "Poppy Notes", subscribeTitle: "Subscribe to our Substack", subscribeEmail: "Your email address", subscribeButton: "Subscribe", subscribeFallback: "Open Substack",
+    mapCta: "Explore the FemTech map", scrollDown: "Scroll down",
     strip: ["Follow us on Instagram"],
     aboutTitle: <><span className="pp-heading-line"><span>What</span></span><span className="pp-heading-line"><span><em>we do.</em></span></span></>,
     aboutIntro: "We create a space where knowledge, innovation and relationships open new possibilities for women’s health.",
@@ -151,15 +153,8 @@ export function PoppyLanding() {
             <div className="pp-hero__copy">
               <h1 id="pp-hero-title"><span className="pp-title-line"><span>{c.hero[0]}</span></span><span className="pp-title-line"><span>{c.hero[1]} <em>{c.hero[2]}</em></span></span><span className="pp-title-line"><span><em>{c.hero[3]}</em></span></span></h1>
               <p className="pp-hero__intro">{c.intro}</p>
-              <div className="pp-substack-signup">
-                <div><span>{c.subscribeLabel}</span><strong>{c.subscribeTitle}</strong></div>
-                <form action={`${links.substack}api/v1/free?nojs=true`} method="post" target="_blank">
-                  <label><span>{c.subscribeEmail}</span><input name="email" type="email" autoComplete="email" placeholder={c.subscribeEmail} required /></label>
-                  <button type="submit">{c.subscribeButton}<ArrowUpRight size={17} /></button>
-                </form>
-                <a href={`${links.substack}subscribe`} target="_blank" rel="noreferrer">{c.subscribeFallback}<ArrowUpRight size={16} /></a>
-              </div>
-              <a className="pp-text-link pp-hero__map-link" href="#firmy">{c.mapCta}<ArrowDownRight size={18} /></a>
+              <PoppyNewsletterSignup language={language} />
+              <FluidLink className="pp-hero__map-link" href="#firmy">{c.mapCta}</FluidLink>
             </div>
             <div className="pp-flower-stage" ref={flower}>
               <div className="pp-flower-stage__orbit" aria-hidden="true" />
@@ -170,7 +165,7 @@ export function PoppyLanding() {
                 <div className="pp-flower-stage__mark" ref={mark} tabIndex={0} role="img" aria-label={language === "pl" ? "Mak — płatki delikatnie kołyszą się po najechaniu lub zaznaczeniu klawiaturą" : "Poppy — petals gently flutter on hover or keyboard focus"}><PoppyMark animated /></div>
               </div>
             </div>
-            <a className="pp-hero-scroll" href="#perspektywa"><span>{c.scrollDown}</span><span aria-hidden="true"><ArrowDownRight size={18} /></span></a>
+            <a className="pp-hero-scroll" href="#perspektywa"><span>{c.scrollDown}</span></a>
           </div>
         </section>
 
@@ -185,7 +180,7 @@ export function PoppyLanding() {
               <p className="pp-about__lead">{c.aboutIntro}</p>
               <div className="pp-about__invitation">
                 <p>{c.aboutMore}</p>
-                <a className="pp-text-link" href="/o-nas/">{c.aboutMoreAction}<ArrowUpRight size={18} /></a>
+                <FluidLink href="/o-nas/">{c.aboutMoreAction}<ArrowUpRight size={18} aria-hidden="true" /></FluidLink>
               </div>
             </div>
             <div className="pp-work-grid">
@@ -205,7 +200,7 @@ export function PoppyLanding() {
 
         <section className="pp-map pp-section" id="mapa" aria-labelledby="map-heading">
           <div className="pp-container pp-map__grid">
-            <div className="pp-map__copy" data-reveal><h2 id="map-heading">{c.mapTitle}</h2><p className="pp-map__description">{c.mapBody}</p><span className="pp-map__edition">{c.mapFree}</span><a className="pp-button pp-button--light" href={mapAsset.pdf} download={mapAsset.filename}>{c.mapDownload}<Download size={18} /></a><span className="pp-map__file">{c.mapFile}</span><p className="pp-map__join">{c.mapJoin} <a href="#zglos-firme">{c.mapJoinCta} ↗</a></p></div>
+            <div className="pp-map__copy" data-reveal><h2 id="map-heading">{c.mapTitle}</h2><p className="pp-map__description">{c.mapBody}</p><span className="pp-map__edition">{c.mapFree}</span><a className="pp-button pp-button--light" href={mapAsset.pdf} download={mapAsset.filename}>{c.mapDownload}</a><span className="pp-map__file">{c.mapFile}</span><p className="pp-map__join">{c.mapJoin} <a href="#zglos-firme">{c.mapJoinCta} ↗</a></p></div>
             <a href={mapAsset.pdf} download={mapAsset.filename} className="pp-map-art" aria-label={c.mapDownload} data-reveal><Image className="pp-map-art__poster" src={mapAsset.poster} alt={c.mapName + " 2025"} width={595} height={842} sizes="(max-width: 600px) calc(100vw - 40px), (max-width: 1000px) 40vw, 420px" /><span className="pp-map-art__caption"><span>{c.mapName} · 2025</span><Download size={18} aria-hidden="true" /></span></a>
           </div>
         </section>
@@ -215,8 +210,8 @@ export function PoppyLanding() {
         <section className="pp-events pp-section" id="wydarzenia" aria-labelledby="events-heading">
           <div className="pp-container">
             <div className="pp-section-heading pp-section-heading--split" data-reveal><div><h2 id="events-heading">{c.eventsTitle}</h2></div><p>{c.eventsBody}</p></div>
-            <div className="pp-events__toolbar"><div className="pp-event-filters" role="group" aria-label={language === "pl" ? "Filtruj wydarzenia" : "Filter events"}>{eventFilters.map((id, index) => <button key={id} type="button" aria-pressed={filter === id} aria-controls="pp-events-results" onClick={() => setFilter(id)}>{c.filters[index]}<span>{id === "all" ? events.length : events.filter(event => event.region === id).length}</span></button>)}</div><span className="pp-events__hint">{c.eventHint}<ArrowDownRight size={17} /></span></div>
-            <div id="pp-events-results">{visibleEvents.length ? <PoppyEventList key={filter} events={visibleEvents} language={language} openLabel={c.eventOpen} /> : <div className="pp-events__empty" role="status"><p>{c.noEvents}</p><button type="button" onClick={() => setFilter("all")}>{c.showAllEvents}<ArrowUpRight size={17} /></button></div>}</div>
+            <div className="pp-events__toolbar"><div className="pp-event-filters" role="group" aria-label={language === "pl" ? "Filtruj wydarzenia" : "Filter events"}>{eventFilters.map((id, index) => <button type="button" key={id} aria-pressed={filter === id} aria-controls="pp-events-results" onClick={() => setFilter(id)}>{c.filters[index]}<span>{id === "all" ? events.length : events.filter(event => event.region === id).length}</span></button>)}</div><span className="pp-events__hint">{c.eventHint}</span></div>
+            <div id="pp-events-results">{visibleEvents.length ? <PoppyEventList key={filter} events={visibleEvents} language={language} openLabel={c.eventOpen} /> : <div className="pp-events__empty" role="status"><p>{c.noEvents}</p><button type="button" onClick={() => setFilter("all")}>{c.showAllEvents}<ArrowUpRight size={17} aria-hidden="true" /></button></div>}</div>
             <p className="pp-events__note">{c.eventNote}</p>
           </div>
         </section>
@@ -224,33 +219,9 @@ export function PoppyLanding() {
         <section className="pp-instagram pp-section" id="instagram" aria-labelledby="instagram-heading">
           <div className="pp-marquee" aria-label={c.strip.join(" · ")}><div className="pp-marquee__track" aria-hidden="true">{[0, 1, 2, 3].map(group => <div className="pp-marquee__group" key={group}>{c.strip.map((word, index) => <span key={word}><span className={index % 2 ? "pp-marquee__italic" : ""}>{word}</span><span className="pp-marquee__asterisk">✳</span></span>)}</div>)}</div></div>
           <div className="pp-container pp-instagram__inner">
-            <div className="pp-section-heading pp-section-heading--split" data-reveal><div><h2 id="instagram-heading">{c.instagramTitle}</h2></div><div className="pp-instagram__intro"><p>{c.instagramBody}</p><a className="pp-text-link" href={links.instagram} target="_blank" rel="noreferrer">{c.socialAction}<ArrowUpRight size={18} /></a></div></div>
-            <div className="pp-instagram__rail" data-reveal>
-              <div className="pp-instagram__sticky">
-                <div className="pp-instagram__track" role="region" aria-label={language === "pl" ? "Posty z Instagrama — przewiń w bok" : "Instagram posts — scroll sideways"} tabIndex={0} data-lenis-prevent-horizontal>
-                  {socialPosts.map((post, index) => (
-                    <article className="pp-instagram__card" key={post.href}>
-                      <iframe
-                        src={`${post.href.split("?")[0].replace(/\/$/, "")}/embed/captioned/`}
-                        title={`${language === "pl" ? "Podgląd posta na Instagramie" : "Instagram post preview"} ${index + 1}`}
-                        loading="lazy"
-                        tabIndex={-1}
-                        aria-hidden="true"
-                        scrolling="no"
-                      />
-                      <a
-                        className="pp-instagram__card-link"
-                        href={post.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${language === "pl" ? "Otwórz post na Instagramie" : "Open Instagram post"} ${index + 1} ${language === "pl" ? "w nowej karcie" : "in a new tab"}`}
-                      />
-                    </article>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <div className="pp-section-heading pp-section-heading--split" data-reveal><div><h2 id="instagram-heading">{c.instagramTitle}</h2></div><div className="pp-instagram__intro"><p>{c.instagramBody}</p><FluidLink href={links.instagram} target="_blank" rel="noreferrer">{c.socialAction}<ArrowUpRight size={18} aria-hidden="true" /></FluidLink></div></div>
           </div>
+          <InstagramStoryCarousel language={language} />
         </section>
 
         <section className="pp-contact pp-section" id="kontakt" aria-labelledby="contact-heading">
@@ -259,7 +230,7 @@ export function PoppyLanding() {
               <div data-reveal>
                 <h2 id="contact-heading">{c.contactTitle}</h2>
                 <p className="pp-contact__intro">{c.contactBody}</p>
-                <a className="pp-button" href={`mailto:${links.email}`}>{c.contactAction}<ArrowUpRight size={19} /></a>
+                <FluidLink href={`mailto:${links.email}`}>{c.contactAction}<ArrowUpRight size={19} aria-hidden="true" /></FluidLink>
               </div>
               <div className="pp-contact__flower" aria-hidden="true" data-reveal>
                 <svg className="pp-contact__flower-filters" width="0" height="0" focusable="false">
@@ -288,7 +259,7 @@ export function PoppyLanding() {
                   <label><span>{c.formFields[3]}</span><select name="category" defaultValue=""><option value="" disabled>{c.choose}</option>{c.categories.map(category => <option key={category}>{category}</option>)}</select></label>
                   <label className="pp-company__wide"><span>{c.formFields[4]} *</span><textarea name="description" rows={3} required maxLength={1500} /></label>
                   <label className="pp-company__consent"><input type="checkbox" name="consent" value="yes" required /><span>{c.consent}</span></label>
-                  <div className="pp-company__wide"><button className="pp-button" type="submit" disabled={formStatus === "sending"}>{formStatus === "sending" ? c.formSending : c.formButton}<Send size={17} /></button></div>
+                  <div className="pp-company__wide"><FluidButton type="submit" disabled={formStatus === "sending"}>{formStatus === "sending" ? c.formSending : c.formButton}<Send size={17} aria-hidden="true" /></FluidButton></div>
                   {formStatus === "success" && <p className="pp-company__wide" role="status">{c.formSuccess}</p>}
                   {formStatus === "error" && <p className="pp-company__wide" role="alert">{c.formError}</p>}
                 </form>

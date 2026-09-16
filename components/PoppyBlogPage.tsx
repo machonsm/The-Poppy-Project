@@ -2,12 +2,14 @@
 
 /* eslint-disable @next/next/no-html-link-for-pages -- Native navigation supports the static export. */
 
-import { ArrowDownRight, ArrowUpRight, Search, X } from "lucide-react";
+import { ArrowUpRight, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { PoppyFooter, PoppyHeader, type PoppyLanguage } from "@/components/PoppyChrome";
-import { SubstackPostEmbed } from "@/components/SubstackPostEmbed";
+import { SubstackPostCard } from "@/components/SubstackPostCard";
+import { PoppyNewsletterSignup } from "@/components/PoppyNewsletterSignup";
 import { substackArchive } from "@/data/substack";
 import { links } from "@/data/links";
+import { FluidLink } from "@/components/ui/FluidButton";
 import "./blog-page.css";
 
 const copy = {
@@ -15,10 +17,6 @@ const copy = {
     title: <>Nowe pytania.<br /><em>Szersza perspektywa.</em></>,
     intro: "Analizy, obserwacje i najważniejsze wiadomości ze świata zdrowia kobiet. Czytaj nasz Substack — FemTech po Polsku.",
     explore: "Przeglądaj artykuły",
-    signupTitle: "Dobre treści. Prosto na maila.",
-    signupLabel: "Zapisz się na nasz newsletter",
-    signupHelp: "Formularz nie działa? Zapisz się na Substacku",
-    signupPrivacy: "Zapis obsługuje Substack. Twój adres e-mail trafia bezpośrednio do naszego newslettera na tej platformie.",
     archiveTitle: "Wszystkie artykuły",
     archiveIntro: "Prosto z naszego Substacka. Od najnowszych do tych, do których warto wrócić.",
     search: "Szukaj artykułu",
@@ -31,16 +29,12 @@ const copy = {
     empty: "Nie znaleźliśmy takiego artykułu.",
     reset: "Pokaż wszystkie artykuły",
     original: "Otwórz archiwum na Substacku",
-    embedNote: "Podglądy i formularz pochodzą z Substacka i wymagają połączenia z internetem. Jeśli podgląd się nie załaduje, artykuł możesz otworzyć przez link."
+    archiveNote: "Artykuły pochodzą z naszego Substacka. Tutaj znajdziesz krótkie zajawki — pełne teksty otwierają się w nowej karcie."
   },
   en: {
     title: <>New questions.<br /><em>Wider perspectives.</em></>,
     intro: "Analysis, observations and the latest in women’s health. Read our Substack publication — FemTech po Polsku.",
     explore: "Explore the articles",
-    signupTitle: "Good reads. In your inbox.",
-    signupLabel: "Subscribe to our newsletter",
-    signupHelp: "Form not loading? Subscribe on Substack",
-    signupPrivacy: "Substack handles subscriptions. Your email goes directly to our newsletter on that platform.",
     archiveTitle: "All articles",
     archiveIntro: "From our Substack. The latest perspectives and stories worth revisiting.",
     search: "Search articles",
@@ -53,7 +47,7 @@ const copy = {
     empty: "No matching article just yet.",
     reset: "Show all articles",
     original: "Open the archive on Substack",
-    embedNote: "Previews and the signup form are provided by Substack and require an internet connection. If a preview cannot load, use its article link. Articles stay in their original language."
+    archiveNote: "Articles come from our Substack. These are short previews — full articles open in a new tab and stay in their original language."
   }
 };
 
@@ -81,16 +75,9 @@ export function PoppyBlogPage() {
               <p className="pp-eyebrow">Poppy Notes · FemTech po Polsku</p>
               <h1 id="blog-title">{c.title}</h1>
               <p className="pp-blog-hero__intro">{c.intro}</p>
-              <a className="pp-text-link" href="#artykuly">{c.explore}<ArrowDownRight size={20} aria-hidden="true" /></a>
+              <FluidLink href="#artykuly">{c.explore}</FluidLink>
             </div>
-            <div className="pp-blog-signup" aria-labelledby="signup-title">
-              <h2 id="signup-title">{c.signupTitle}</h2>
-              <iframe src={`${links.substack}embed`} title={c.signupLabel} className="pp-blog-signup__frame" referrerPolicy="strict-origin-when-cross-origin" />
-              <div className="pp-blog-signup__help">
-                <a href={`${links.substack}subscribe`} target="_blank" rel="noopener noreferrer">{c.signupHelp}<ArrowUpRight size={15} aria-hidden="true" /></a>
-                <p>{c.signupPrivacy}</p>
-              </div>
-            </div>
+            <PoppyNewsletterSignup language={language} variant="card" />
           </div>
         </div>
       </section>
@@ -108,8 +95,8 @@ export function PoppyBlogPage() {
             <label className="pp-blog-year"><span>{c.year}</span><select value={year} onChange={event => setYear(event.target.value)}><option value="all">{c.allYears}</option>{years.map(value => <option key={value} value={value}>{value}</option>)}</select></label>
           </div>
           <div className="pp-blog-status"><p role="status" aria-live="polite" aria-atomic="true">{c.count}: <strong>{visible.length}</strong>{visible.length !== substackArchive.posts.length && ` / ${substackArchive.posts.length}`}</p><span>{c.updated}: <time dateTime={substackArchive.syncedAt}>{new Intl.DateTimeFormat(language === "pl" ? "pl-PL" : "en-GB", { dateStyle: "medium", timeZone: "Europe/Warsaw" }).format(new Date(substackArchive.syncedAt))}</time></span></div>
-          {visible.length ? <div className="pp-blog-grid">{visible.map(post => <SubstackPostEmbed key={post.id} post={post} language={language} />)}</div> : <div className="pp-blog-empty"><h3>{c.empty}</h3><button type="button" className="pp-text-link" onClick={() => { setQuery(""); setYear("all"); }}>{c.reset}<ArrowUpRight size={18} aria-hidden="true" /></button></div>}
-          <div className="pp-blog-archive__bottom"><p>{c.embedNote}</p><a className="pp-text-link" href={`${links.substack}archive`} target="_blank" rel="noopener noreferrer">{c.original}<ArrowUpRight size={18} aria-hidden="true" /></a></div>
+          {visible.length ? <div className="pp-blog-grid">{visible.map(post => <SubstackPostCard key={post.id} post={post} language={language} />)}</div> : <div className="pp-blog-empty"><h3>{c.empty}</h3><button type="button" className="pp-text-link" onClick={() => { setQuery(""); setYear("all"); }}>{c.reset}<ArrowUpRight size={18} aria-hidden="true" /></button></div>}
+          <div className="pp-blog-archive__bottom"><p>{c.archiveNote}</p><FluidLink href={`${links.substack}archive`} target="_blank" rel="noopener noreferrer">{c.original}<ArrowUpRight size={18} aria-hidden="true" /></FluidLink></div>
         </div>
       </section>
     </main>

@@ -4,6 +4,7 @@ export type SubstackPost = {
   id: string;
   title: string;
   description: string;
+  coverImage: string | null;
   url: string;
   publishedAt: string;
 };

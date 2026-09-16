@@ -3,12 +3,13 @@
 /* eslint-disable @next/next/no-html-link-for-pages -- Native navigation supports the static export. */
 
 import Image from "next/image";
-import { ArrowDown, ArrowDownRight, ArrowUpRight, BookOpen, Minus, Plus, Search, X } from "lucide-react";
+import { ArrowUpRight, BookOpen, Minus, Plus, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { PoppyFooter, PoppyHeader, type PoppyLanguage } from "@/components/PoppyChrome";
 import { resources, type PoppyResource, type ResourceCategory } from "@/data/resources";
 import { mapAssets } from "@/data/map-assets";
 import { links } from "@/data/links";
+import { FluidLink } from "@/components/ui/FluidButton";
 import "./resources-page.css";
 
 const copy = {
@@ -17,7 +18,6 @@ const copy = {
     title: <>Wiedza, która otwiera <em>perspektywy.</em></>,
     intro: "Nasza biblioteka raportów, grantów, list inwestorów oraz narzędzi wspierających rozwój FemTechu, zdrowia kobiet i innowacji w Polsce i Europie Środkowo-Wschodniej.",
     explore: "Odkryj bibliotekę",
-    mapLabel: "Od Poppy Project",
     mapTitle: "Mapa Polskiego FemTechu 2025",
     mapAction: "Pobierz mapę",
     mapAlt: "Podgląd Mapy Polskiego FemTechu 2025",
@@ -51,7 +51,6 @@ const copy = {
     title: <>Knowledge that opens <em>perspectives.</em></>,
     intro: "Explore our growing library of reports, grants, investor lists, and tools driving FemTech, women’s health, and innovation across Poland and Central & Eastern Europe.",
     explore: "Explore the library",
-    mapLabel: "By Poppy Project",
     mapTitle: "Polish FemTech Map 2025",
     mapAction: "Download the map",
     mapAlt: "Preview of the Polish FemTech Map 2025",
@@ -109,9 +108,9 @@ function ResourceCard({ resource, language }: { resource: PoppyResource; languag
       </button>
       <div className="pp-resource__bottom">
         <span className="pp-resource__category">{c[resource.category]}</span>
-        <a href={resource.href[language]} target="_blank" rel="noopener noreferrer" aria-label={`${c.read}: ${resource.title[language]} — ${c.newTab}`}>
+        <FluidLink size="small" href={resource.href[language]} target="_blank" rel="noopener noreferrer" aria-label={`${c.read}: ${resource.title[language]} — ${c.newTab}`}>
           <span>{c.read}</span><ArrowUpRight size={21} strokeWidth={1.5} aria-hidden="true" />
-        </a>
+        </FluidLink>
       </div>
     </article>
   );
@@ -144,10 +143,9 @@ export function PoppyResourcesPage() {
             </nav>
             <div className="pp-library-hero__grid">
               <div className="pp-library-hero__copy">
-                <p className="pp-eyebrow">{c.page}</p>
                 <h1 id="resources-title">{c.title}</h1>
                 <p className="pp-library-hero__intro">{c.intro}</p>
-                <a className="pp-text-link" href="#biblioteka">{c.explore}<ArrowDownRight size={20} aria-hidden="true" /></a>
+                <FluidLink href="#biblioteka">{c.explore}</FluidLink>
               </div>
               <a className="pp-library-map" href={map.pdf} download={map.filename}>
                 <div className="pp-library-map__art">
@@ -158,8 +156,7 @@ export function PoppyResourcesPage() {
                   <span className="pp-library-map__format" aria-hidden="true">PDF<br /><span>PL / EN</span></span>
                 </div>
                 <div className="pp-library-map__caption">
-                  <div><span className="pp-eyebrow">{c.mapLabel}</span><h2>{c.mapTitle}</h2><span className="pp-library-map__download">{c.mapAction}</span></div>
-                  <span className="pp-library-map__arrow"><ArrowDown size={20} aria-hidden="true" /></span>
+                  <div><h2>{c.mapTitle}</h2><span className="pp-library-map__download">{c.mapAction}</span></div>
                 </div>
               </a>
             </div>
@@ -171,7 +168,7 @@ export function PoppyResourcesPage() {
             <div className="pp-library__heading"><h2 id="library-title">{c.libraryTitle}</h2><p>{c.libraryIntro}</p></div>
             <div className="pp-library__toolbar">
               <div className="pp-library__filters" role="group" aria-label={c.filterLabel}>
-                {filters.map(filter => <button key={filter} type="button" aria-pressed={category === filter} onClick={() => setCategory(filter)}>{c[filter]}<span>{filter === "all" ? matching.length : matching.filter(resource => resource.category === filter).length}</span></button>)}
+                {filters.map(filter => <button type="button" key={filter} aria-pressed={category === filter} onClick={() => setCategory(filter)}>{c[filter]}<span>{filter === "all" ? matching.length : matching.filter(resource => resource.category === filter).length}</span></button>)}
               </div>
               <div className="pp-library__search" role="search">
                 <Search size={19} strokeWidth={1.6} aria-hidden="true" />
@@ -188,7 +185,7 @@ export function PoppyResourcesPage() {
               {visible.map(resource => <ResourceCard resource={resource} language={language} key={`${resource.id}-${language}`} />)}
             </div> : <div className="pp-library__empty">
               <BookOpen size={34} strokeWidth={1} aria-hidden="true" /><h3>{c.emptyTitle}</h3><p>{c.emptyBody}</p>
-              <button className="pp-text-link" type="button" onClick={() => { setQuery(""); setCategory("all"); }}>{c.reset}<ArrowUpRight size={18} aria-hidden="true" /></button>
+              <button type="button" className="pp-text-link" onClick={() => { setQuery(""); setCategory("all"); }}>{c.reset}<ArrowUpRight size={18} aria-hidden="true" /></button>
             </div>}
           </div>
         </section>
@@ -196,7 +193,7 @@ export function PoppyResourcesPage() {
         <section className="pp-library-invitation" aria-labelledby="resource-invitation-title">
           <div className="pp-container pp-library-invitation__inner">
             <div><p className="pp-eyebrow">{c.contactLabel}</p><h2 id="resource-invitation-title">{c.contactTitle}</h2></div>
-            <div><p>{c.contactBody}</p><a className="pp-text-link" href={`mailto:${links.email}?subject=${encodeURIComponent(language === "pl" ? "Materiał do biblioteki Poppy" : "A resource for the Poppy library")}`}>{c.contactAction}<ArrowUpRight size={18} aria-hidden="true" /></a></div>
+            <div><p>{c.contactBody}</p><FluidLink href={`mailto:${links.email}?subject=${encodeURIComponent(language === "pl" ? "Materiał do biblioteki Poppy" : "A resource for the Poppy library")}`}>{c.contactAction}<ArrowUpRight size={18} aria-hidden="true" /></FluidLink></div>
           </div>
         </section>
       </main>

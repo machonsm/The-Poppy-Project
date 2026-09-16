@@ -32,6 +32,17 @@ test("rejects unsafe URLs and invalid required fields", () => {
 });
 test("only exports public preview fields, never full bodies or credentials", () => {
   const result = normalizePost({ ...post(1), body_html: "private content", token: "secret", subscriber_email: "private" });
-  assert.deepEqual(Object.keys(result), ["id", "title", "description", "url", "publishedAt"]);
+  assert.deepEqual(Object.keys(result), ["id", "title", "description", "coverImage", "url", "publishedAt"]);
   assert(!JSON.stringify(result).includes("private"));
+});
+test("preserves public Substack cover URLs and gracefully omits missing or unsafe covers", () => {
+  for (const cover_image of [
+    "https://substack-post-media.s3.amazonaws.com/public/images/cover.jpeg",
+    "https://substackcdn.com/image/fetch/w_500/cover.jpeg"
+  ]) assert.equal(normalizePost({ ...post(1), cover_image }).coverImage, cover_image);
+  for (const cover_image of [undefined, null, "", "invalid", "javascript:alert(1)", "http://substackcdn.com/image.jpg", "https://example.com/image.jpg", "https://user:password@substackcdn.com/image.jpg", "https://substackcdn.com:8080/image.jpg"]) {
+    const result = normalizePost({ ...post(1), cover_image });
+    assert.equal(result.coverImage, null);
+    assert.equal(result.id, "1");
+  }
 });

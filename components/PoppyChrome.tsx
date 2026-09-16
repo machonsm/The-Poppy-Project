@@ -6,6 +6,7 @@ import { ArrowUp, Instagram, Linkedin, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { PoppyMark } from "@/components/brand/PoppyMark";
 import { links } from "@/data/links";
+import { LanguageToggle } from "@/components/ui/LanguageToggle";
 
 export type PoppyLanguage = "pl" | "en";
 
@@ -65,17 +66,13 @@ export function PoppyHeader({ language = "pl", onLanguageChange }: {
             <span>Poppy Project</span>
           </a>
           <div className="pp-header__controls">
-            {onLanguageChange && <div className="pp-language" aria-label={language === "pl" ? "Język" : "Language"}>
-              <button type="button" aria-pressed={language === "pl"} onClick={() => onLanguageChange("pl")}>PL</button>
-              <span>/</span>
-              <button type="button" aria-pressed={language === "en"} onClick={() => onLanguageChange("en")}>EN</button>
-            </div>}
+            {onLanguageChange && <LanguageToggle language={language} onChange={onLanguageChange} />}
             <div className="pp-header__socials">
-              <a href={links.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={16} strokeWidth={1.7} /></a>
-              <a href={links.instagram} target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram size={16} strokeWidth={1.7} /></a>
+              <a href={links.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={16} strokeWidth={1.7} aria-hidden="true" /></a>
+              <a href={links.instagram} target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram size={16} strokeWidth={1.7} aria-hidden="true" /></a>
               <a href={links.substack} target="_blank" rel="noopener noreferrer" aria-label="Substack"><SubstackIcon size={16} /></a>
             </div>
-            <button className="pp-menu-toggle" type="button" ref={menuButton} aria-controls="poppy-navigation" aria-expanded={open} aria-label={open ? (language === "pl" ? "Zamknij menu" : "Close menu") : (language === "pl" ? "Otwórz menu" : "Open menu")} onClick={() => setOpen(!open)}>{open ? <X size={22} /> : <Menu size={22} />}</button>
+            <button type="button" className="pp-menu-toggle" ref={menuButton} aria-controls="poppy-navigation" aria-expanded={open} aria-label={open ? (language === "pl" ? "Zamknij menu" : "Close menu") : (language === "pl" ? "Otwórz menu" : "Open menu")} onClick={() => setOpen(!open)}>{open ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}</button>
           </div>
         </div>
         <nav className={`pp-nav ${open ? "is-open" : ""}`} id="poppy-navigation" aria-label={language === "pl" ? "Nawigacja główna" : "Main navigation"}>
@@ -117,7 +114,7 @@ export function PoppyFooter({ language = "pl" }: { language?: PoppyLanguage }) {
         <div className="pp-footer__bottom">
           <span>© {new Date().getFullYear()} Poppy Project</span>
           <span className="pp-footer__note">{language === "pl" ? "Z Polski. Dla przyszłości zdrowia kobiet." : "From Poland. For the future of women’s health."}</span>
-          <a href="#main-content" aria-label={language === "pl" ? "Wróć na górę" : "Back to top"}><ArrowUp size={18} /></a>
+          <a href="#main-content" aria-label={language === "pl" ? "Wróć na górę" : "Back to top"}><ArrowUp size={18} aria-hidden="true" /></a>
         </div>
       </div>
     </footer>

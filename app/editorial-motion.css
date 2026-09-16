@@ -35,12 +35,18 @@ html[data-poppy-intro="playing"] .pp-bloom-border { visibility: hidden; }
 
 @media (min-width: 901px) and (min-height: 700px) and (pointer: fine) {
   .pp-cinematic .pp-opening .pp-hero { position: sticky; top: var(--header-height); z-index: 0; }
+  /* A full signup form must scroll into view before the next scene starts. */
+  .pp-cinematic .pp-opening:has([data-newsletter-inline]) .pp-hero { position: relative; top: auto; }
+  .pp-cinematic .pp-opening:has([data-newsletter-inline]) .pp-hero__grid { padding-bottom: 220px; }
   /* A short scroll runway holds the flowers and section, then releases naturally. */
   .pp-cinematic .pp-about-scene { position: relative; z-index: 2; }
   .pp-cinematic .pp-about-scene::after { content: ""; display: block; height: clamp(240px, 35svh, 420px); }
   .pp-cinematic .pp-opening .pp-about { position: sticky; top: calc(var(--header-height) + clamp(170px, 23svh, 240px)); border-radius: 48px 48px 0 0; box-shadow: 0 -24px 55px rgba(26, 10, 10, .035); }
   .pp-cinematic .pp-hero__copy { translate: 0 var(--hero-copy-y, 0px); }
   .pp-cinematic .pp-hero__grid { opacity: var(--hero-scene-opacity, 1); }
+  .pp-cinematic .pp-opening:has([data-newsletter-inline]) .pp-hero__copy { translate: none; }
+  .pp-cinematic .pp-opening:has([data-newsletter-inline]) .pp-hero__grid { opacity: 1; }
+  .pp-cinematic .pp-opening:has([data-newsletter-inline]) .pp-flower-stage { height: 570px; align-self: start; }
   .pp-cinematic .pp-flower-stage__orbit { rotate: var(--orbit-turn, 0deg); }
   .pp-cinematic .pp-flower-stage__orbit--inner { rotate: calc(var(--orbit-turn, 0deg) * -1.5); }
   .pp-cinematic .pp-flower-cluster { transition: none; }
