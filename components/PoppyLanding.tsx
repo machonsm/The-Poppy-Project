@@ -227,7 +227,7 @@ export function PoppyLanding() {
             <div className="pp-section-heading pp-section-heading--split" data-reveal><div><h2 id="instagram-heading">{c.instagramTitle}</h2></div><div className="pp-instagram__intro"><p>{c.instagramBody}</p><a className="pp-text-link" href={links.instagram} target="_blank" rel="noreferrer">{c.socialAction}<ArrowUpRight size={18} /></a></div></div>
             <div className="pp-instagram__rail" data-reveal>
               <div className="pp-instagram__sticky">
-                <div className="pp-instagram__track" role="region" aria-label={language === "pl" ? "Posty z Instagrama — przewiń w bok" : "Instagram posts — scroll sideways"} tabIndex={0} data-lenis-prevent>
+                <div className="pp-instagram__track" role="region" aria-label={language === "pl" ? "Posty z Instagrama — przewiń w bok" : "Instagram posts — scroll sideways"} tabIndex={0} data-lenis-prevent-horizontal>
                   {socialPosts.map((post, index) => (
                     <article className="pp-instagram__card" key={post.href}>
                       <iframe
@@ -261,7 +261,18 @@ export function PoppyLanding() {
                 <p className="pp-contact__intro">{c.contactBody}</p>
                 <a className="pp-button" href={`mailto:${links.email}`}>{c.contactAction}<ArrowUpRight size={19} /></a>
               </div>
-              <div className="pp-contact__flower" aria-hidden="true" data-reveal><PoppyMark /><span>Let’s grow<br /><em>together.</em></span></div>
+              <div className="pp-contact__flower" aria-hidden="true" data-reveal>
+                <svg className="pp-contact__flower-filters" width="0" height="0" focusable="false">
+                  <defs>
+                    <filter id="pp-contact-red-petal" colorInterpolationFilters="sRGB">
+                      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  5 -5 0 0 -.15" result="red-petal" />
+                      <feComposite in="red-petal" in2="SourceAlpha" operator="in" />
+                    </filter>
+                  </defs>
+                </svg>
+                <Image className="pp-contact__flower-base" src="/contact-poppy-cutout.png" alt="" width={1024} height={1536} />
+                <Image className="pp-contact__flower-petal pp-contact__flower-petal--left" src="/contact-poppy-cutout.png" alt="" width={1024} height={1536} />
+              </div>
             </div>
             <div className="pp-company" id="zglos-firme">
               <h3 className="pp-company__title">{c.companyAction}</h3>

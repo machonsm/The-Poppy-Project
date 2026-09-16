@@ -226,13 +226,21 @@ button, summary { cursor: pointer; }
 .pp-art-sound i { height: var(--bar-height); width: 5px; background: var(--linen); border-radius: 10px; }
 .pp-editorial-card:hover .pp-art-sound i { animation: pp-sound 1.2s var(--bar-delay) ease-in-out infinite alternate; }
 
-.pp-contact__grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: 50px; }
+/* Keep the space above the form inside this frame, so the flower rests on its divider. */
+.pp-contact__grid { position: relative; display: grid; grid-template-columns: 1.7fr 1fr; gap: 50px; min-height: 455px; padding-bottom: 65px; overflow: clip; }
 .pp-contact h2 em { color: var(--poppy); }
 .pp-contact__intro { max-width: 500px; font-size: var(--pp-body-size); color: var(--pp-muted); line-height: var(--pp-body-leading); margin: 28px 0; }
-.pp-contact__flower { position: relative; display: flex; align-items: center; justify-content: center; align-self: center; gap: 25px; color: var(--poppy); }
-.pp-contact__flower .poppy-mark { width: 140px; height: auto; }
-.pp-contact__flower > span { position: absolute; right: 0; bottom: 10px; font-family: var(--font-serif); font-size: 30px; line-height: 1.05; transform: rotate(-7deg); }
+.pp-contact__flower { position: absolute; right: 0; bottom: 0; width: min(27vw, 220px); aspect-ratio: 2 / 3; overflow: clip; isolation: isolate; pointer-events: auto; }
+.pp-contact__flower img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; user-select: none; -webkit-user-drag: none; }
+.pp-contact__flower-filters { position: absolute; pointer-events: none; }
+/* Only red pixels from the small side petal move; white details and the large petal stay in the base image. */
+.pp-contact__flower-petal { pointer-events: none; filter: url("#pp-contact-red-petal"); }
+.pp-contact__flower-petal--left { clip-path: polygon(0 46%, 22% 46%, 35% 51%, 44% 60%, 50% 72%, 58% 80%, 51% 84%, 39% 77%, 28% 65%, 14% 60%, 0 63%); transform-origin: 75% 85%; animation: pp-contact-petal-left 3.8s ease-in-out infinite; }
+@keyframes pp-contact-petal-left { 0%, 100% { transform: rotate(-.7deg); } 50% { transform: rotate(.7deg); } }
+html[data-motion="off"] .pp-contact__flower-petal { display: none; }
+@media (prefers-reduced-motion: reduce) { .pp-contact__flower .pp-contact__flower-petal { display: none; animation: none !important; } }
 .pp-company { border-block: 1px solid var(--pp-line); margin-top: 65px; scroll-margin-top: 120px; }
+.pp-contact__grid + .pp-company { margin-top: 0; }
 .pp-company__title { margin: 0; padding: 27px 0 18px; color: var(--pitch); font-family: var(--font-sans); font-size: 21px; line-height: 32px; font-weight: 500; letter-spacing: 0; }
 .pp-company__body { max-width: 850px; padding-bottom: 35px; }
 .pp-company__body > p { color: var(--pp-muted); font-size: var(--pp-body-size); line-height: var(--pp-body-leading); max-width: 640px; margin: 0 0 25px; }
@@ -250,7 +258,7 @@ button, summary { cursor: pointer; }
 .pp-company [role="status"] { font-size: var(--pp-body-size); line-height: var(--pp-body-leading); }
 .pp-company [role="alert"] { color: var(--poppy); font-size: var(--pp-body-size); line-height: var(--pp-body-leading); }
 .pp-company button:disabled { cursor: wait; opacity: .65; }
-.pp-instagram { padding-top: 0; padding-bottom: clamp(48px, 5vw, 80px); background: var(--linen); }
+.pp-instagram { padding-top: 0; padding-bottom: clamp(40px, 4.5vw, 64px); background: var(--linen); }
 .pp-instagram__inner { padding-top: clamp(70px, 8vw, 120px); }
 .pp-instagram .pp-section-heading { margin-bottom: clamp(24px, 3vw, 40px); }
 .pp-instagram .pp-section-heading h2 em { color: var(--poppy); }
@@ -258,11 +266,16 @@ button, summary { cursor: pointer; }
 .pp-instagram__intro p { margin: 0 0 22px; color: var(--pp-muted); }
 .pp-instagram__rail { position: relative; min-width: 0; }
 .pp-instagram__sticky { min-width: 0; overflow: hidden; }
-.pp-instagram__track { display: flex; gap: clamp(16px, 2vw, 30px); width: max-content; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 18px; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: var(--olive) transparent; }
+.pp-instagram__track { display: flex; gap: clamp(16px, 2vw, 30px); width: 100%; overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 18px; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: var(--olive) transparent; }
+.pp-instagram__track[data-lenis-prevent-horizontal] { overscroll-behavior-y: auto; }
+@media (hover: hover) and (pointer: fine) {
+  .pp-instagram__track { scroll-snap-type: none; }
+}
 .pp-instagram__card { position: relative; flex: 0 0 clamp(310px, 31vw, 410px); min-width: 0; border: 1px solid var(--pp-line); background: var(--bone); scroll-snap-align: start; }
 .pp-instagram__card iframe { display: block; width: 100%; height: 535px; border: 0; background: var(--bone); pointer-events: none; }
 .pp-instagram__card-link { position: absolute; z-index: 1; inset: 0; display: block; cursor: pointer; }
 .pp-instagram__card-link:focus-visible { outline: 3px solid var(--poppy); outline-offset: -3px; }
+.pp-instagram + .pp-contact { padding-top: clamp(36px, 4vw, 64px); }
 
 .pp-about-page__hero { background: var(--linen); padding-block: clamp(70px, 9vw, 140px); }
 .pp-about-page__hero-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr); gap: clamp(50px, 9vw, 140px); align-items: center; min-height: calc(80svh - var(--header-height)); }
@@ -288,9 +301,6 @@ button, summary { cursor: pointer; }
 .pp-about-page__contact .pp-eyebrow { color: var(--olive); }
 
 .pp-footer { background: var(--poppy); color: var(--bone); padding-top: 70px; --poppy-cutout: #8b1a1a; }
-.pp-footer__top { display: flex; justify-content: space-between; align-items: center; gap: 30px; padding-bottom: 60px; }
-.pp-footer__top > h2 { margin: 0; font-family: var(--font-serif); font-weight: 400; font-size: var(--pp-h2-size); line-height: var(--pp-h2-leading); letter-spacing: 0; text-transform: none; }
-.pp-footer__email { display: flex; align-items: center; font-size: 16px; font-weight: 500; line-height: 16px; border-bottom: 1px solid rgba(253,251,247,.4); padding-bottom: 10px; }
 .pp-footer__links { display: grid; grid-template-columns: 1.2fr 1fr .8fr; gap: clamp(30px, 6vw, 100px); border-top: 1px solid rgba(253,251,247,.3); padding: 32px 0 64px; }
 .pp-footer__links > div { display: flex; flex-direction: column; align-items: flex-start; gap: 13px; }
 .pp-footer__links h3 { margin: 0 0 6px; font-size: 13px; font-weight: 500; line-height: 18px; letter-spacing: .08em; text-transform: uppercase; opacity: .72; }
@@ -362,7 +372,6 @@ button, summary { cursor: pointer; }
   .pp-explore__grid { gap: 18px; }
   .pp-editorial-card__art { height: 210px; }
   .pp-contact__grid { grid-template-columns: 1.7fr .7fr; gap: 20px; }
-  .pp-contact__flower > span { font-size: 22px; bottom: -30px; }
 }
 @media (max-width: 1100px) {
   .pp-nav { top: 100%; left: 0; right: 0; width: 100%; height: calc(100vh - var(--header-height)); height: calc(100dvh - var(--header-height)); padding: clamp(28px, 6vh, 70px) clamp(24px, 8vw, 100px) 32px; overflow-y: auto; overscroll-behavior: contain; border-bottom: 0; box-shadow: 0 20px 40px rgba(26, 10, 10, .08); }
@@ -433,7 +442,7 @@ button, summary { cursor: pointer; }
   .pp-art-pages > span { font-size: 34px; }
   .pp-art-notes { font-size: 145px; }
   .pp-art-sound { width: 72%; gap: 6px; }
-  .pp-contact__grid { grid-template-columns: 1fr; }
+  .pp-contact__grid { grid-template-columns: 1fr; min-height: 0; padding-bottom: 40px; }
   .pp-contact__flower { display: none; }
   .pp-company { margin-top: 40px; }
   .pp-company form { grid-template-columns: 1fr; }
@@ -447,7 +456,6 @@ button, summary { cursor: pointer; }
   .pp-instagram__card { flex-basis: min(84vw, 360px); }
   .pp-instagram__card iframe { height: 540px; }
   .pp-footer { padding-top: 45px; }
-  .pp-footer__top { align-items: start; flex-direction: column; padding-bottom: 45px; gap: 25px; }
   .pp-footer__links { grid-template-columns: 1fr 1fr; gap: 32px 22px; padding-bottom: 44px; }
   .pp-footer__links > div:first-child { grid-column: 1 / -1; }
   .pp-footer__wordmark { gap: 10px; padding-bottom: 30px; justify-content: flex-start; }

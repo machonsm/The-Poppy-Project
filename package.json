@@ -7,7 +7,9 @@
     "build": "next build --webpack",
     "start": "python3 -m http.server 3000 --bind 127.0.0.1 --directory out",
     "lint": "eslint . --max-warnings=0",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "sync:substack": "node scripts/sync-substack.mjs",
+    "test:substack": "node --test scripts/sync-substack.test.mjs"
   },
   "dependencies": {
     "framer-motion": "^11.3.24",

@@ -13,6 +13,7 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
     const html = document.documentElement;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     const desktop = matchMedia("(min-width: 901px) and (min-height: 700px) and (pointer: fine)");
+    const carouselPointer = matchMedia("(hover: hover) and (pointer: fine)");
     let lenis: Lenis | undefined;
     let disposed = false;
     let frame = 0;
@@ -44,6 +45,10 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
     const workspace = root.querySelector<HTMLElement>(".pfe-workspace");
     const pins = Array.from(root.querySelectorAll<HTMLElement>(".pfe-pin"));
     const instagramTrack = root.querySelector<HTMLElement>(".pp-instagram__track");
+    let instagramMotion: {
+      position: number; target: number; max: number; pinY: number; pinned: boolean;
+      lastY: number; lastX: number; approach?: { x: number; direction: number };
+    } | undefined;
     const marquee = root.querySelector<HTMLElement>(".pp-marquee__track");
     const allowed = () => !reduced.matches && html.dataset.motion !== "off";
     const progress = (element: HTMLElement, end = .4) => {
@@ -116,10 +121,52 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
       });
     };
 
+    const cancelInstagramMotion = () => {
+      if (!instagramMotion) return;
+      instagramMotion = undefined;
+      lenis?.scrollTo(scrollY, { immediate: true, force: true });
+    };
+
+    const advanceInstagram = (delta: number) => {
+      const motion = instagramMotion;
+      if (!motion || !instagramTrack) return;
+      // Native gestures, keyboard navigation and scrollbar dragging always win.
+      if (Math.abs(scrollY - motion.lastY) > 2 || Math.abs(instagramTrack.scrollLeft - motion.lastX) > 2) {
+        cancelInstagramMotion();
+        return;
+      }
+      // One eased distance follows the entire path: approach, sideways, release.
+      // Never jump the page to the pin or apply a full wheel delta in one frame.
+      motion.position += (motion.target - motion.position) * (1 - Math.exp(-delta / 160));
+      const settled = Math.abs(motion.target - motion.position) < .25;
+      if (settled) motion.position = motion.target;
+      if (motion.approach && (motion.position - motion.approach.x) * motion.approach.direction >= 0) {
+        motion.approach = undefined;
+      }
+      const x = motion.approach?.x ?? Math.max(0, Math.min(motion.max, motion.position));
+      const y = motion.pinned ? motion.pinY + motion.position - x : motion.pinY;
+      instagramTrack.scrollLeft = x;
+      if (Math.abs(scrollY - y) > .5) window.scrollTo({ top: y, behavior: "instant" });
+      motion.lastX = instagramTrack.scrollLeft;
+      motion.lastY = scrollY;
+
+      const leaving = !motion.approach && (motion.position < 0 || motion.position > motion.max);
+      if (leaving && lenis) {
+        const destination = y + motion.target - motion.position;
+        cancelInstagramMotion();
+        // Carry the remaining momentum into the page instead of losing the
+        // last wheel gesture or asking for a second gesture at the last card.
+        lenis.scrollTo(destination, { programmatic: false, lerp: .1, force: true });
+      } else if (settled) cancelInstagramMotion();
+    };
+
     const tick = (time: number) => {
       if (document.hidden) { frame = 0; return; }
+      // Keep Lenis's clock current even while its animation is paused, so the
+      // first frame after handing back control cannot receive a huge delta.
       lenis?.raf(time);
       const delta = Math.min(50, time - (previousTime || time - 16.7));
+      advanceInstagram(delta);
       const velocity = Math.abs(scrollY - previousScroll) / Math.max(delta, 1);
       const targetSpeed = 1 + Math.min(velocity * .65, 2.2);
       speed += (targetSpeed - speed) * (1 - Math.exp(-delta / 180));
@@ -133,6 +180,7 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
 
     const configure = () => {
       cancelAnimationFrame(frame);
+      cancelInstagramMotion();
       lenis?.destroy();
       lenis = undefined;
       root.classList.toggle("pp-motion-ready", allowed());
@@ -141,6 +189,7 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
         lenis = new Lenis({ lerp: .1, smoothWheel: true, syncTouch: false,
           anchors: { offset: -(root.querySelector(".pp-header")?.getBoundingClientRect().height ?? 100) - 16 },
           prevent: node => node.hasAttribute("data-lenis-prevent"),
+          virtualScroll: ({ event }) => !event.defaultPrevented,
         });
       }
       dirty = true;
@@ -153,22 +202,69 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
         marquee?.getAnimations().forEach(animation => animation.updatePlaybackRate(1));
       }
     };
-    const onScroll = () => { dirty = true; if (!allowed()) paint(); };
-    const onResize = () => { dirty = true; };
+    const onScroll = () => {
+      if (instagramMotion && Math.abs(scrollY - instagramMotion.lastY) > 2) cancelInstagramMotion();
+      dirty = true;
+      if (!allowed()) paint();
+    };
+    const onResize = () => { cancelInstagramMotion(); dirty = true; };
     const onInstagramWheel = (event: WheelEvent) => {
-      if (!instagramTrack || !desktop.matches || !allowed() || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+      if (!instagramTrack || !carouselPointer.matches || !allowed() || event.defaultPrevented || !event.cancelable || event.ctrlKey || event.shiftKey || !event.deltaY || Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
+        cancelInstagramMotion();
+        return;
+      }
+      const target = event.target instanceof Element ? event.target : null;
+      if (target?.closest(".pp-header, [data-lenis-prevent]") || root.querySelector(".pp-nav.is-open")) {
+        cancelInstagramMotion();
+        return;
+      }
       const max = instagramTrack.scrollWidth - instagramTrack.clientWidth;
       if (max <= 0) return;
       const delta = event.deltaY * (event.deltaMode === 1 ? 24 : event.deltaMode === 2 ? innerHeight : 1);
+      const overTrack = !!target && instagramTrack.contains(target);
+      if (instagramMotion && (instagramMotion.pinned || overTrack)) {
+        event.preventDefault();
+        instagramMotion.target += delta;
+        if (!instagramMotion.pinned) instagramMotion.target = Math.max(0, Math.min(max, instagramMotion.target));
+        return;
+      }
+      cancelInstagramMotion();
       const next = Math.max(0, Math.min(max, instagramTrack.scrollLeft + delta));
       if (Math.abs(next - instagramTrack.scrollLeft) < .5) return;
+
+      const rect = instagramTrack.getBoundingClientRect();
+      const pinTop = (root.querySelector<HTMLElement>(".pp-header")?.offsetHeight ?? 100) + 24;
+      const distance = rect.top - pinTop;
+      const fits = rect.height <= innerHeight - pinTop - 24;
+      const pendingTravel = lenis ? lenis.targetScroll - scrollY + delta : delta;
+      const travel = delta > 0 ? Math.max(delta, pendingTravel) : Math.min(delta, pendingTravel);
+      const crossesStart = delta > 0 ? distance >= 0 && distance <= travel : distance <= 0 && distance >= travel;
+      const atStart = Math.abs(distance) <= 2;
+      // Consume horizontal travel without adding a tall, empty scroll spacer.
+      // Short windows still support wheel scrolling directly over the cards.
+      if (fits ? !atStart && !crossesStart : !overTrack) return;
+      if (rect.bottom <= pinTop || rect.top >= innerHeight) return;
       event.preventDefault();
-      instagramTrack.scrollLeft = next;
+      const position = instagramTrack.scrollLeft - (fits ? distance : 0);
+      instagramMotion = {
+        position,
+        target: fits ? position + pendingTravel : next,
+        max, pinY: fits ? scrollY + distance : scrollY, pinned: fits,
+        lastY: scrollY, lastX: instagramTrack.scrollLeft,
+        approach: fits && Math.abs(distance) > .5 ? { x: instagramTrack.scrollLeft, direction: Math.sign(distance) } : undefined,
+      };
+      // Stop Lenis at its current position, not at the future pin. Its pending
+      // travel is already included in the shared animation target above.
+      lenis?.scrollTo(scrollY, { immediate: true, force: true });
+    };
+    const onNavigationKey = (event: KeyboardEvent) => {
+      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "PageUp", "PageDown", "Home", "End", " ", "Tab", "Escape"].includes(event.key)) cancelInstagramMotion();
     };
     const onVisibility = () => { if (!document.hidden) { previousTime = 0; if (allowed() && !frame) frame = requestAnimationFrame(tick); } };
     const scrollTo = (event: Event) => {
       const target = (event as CustomEvent<HTMLElement>).detail;
       if (!target) return;
+      cancelInstagramMotion();
       if (lenis) lenis.scrollTo(target, { offset: -(root.querySelector(".pp-header")?.clientHeight ?? 100) - 16 });
       else target.scrollIntoView({ behavior: allowed() ? "smooth" : "instant", block: "start" });
     };
@@ -194,7 +290,10 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
     });
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
-    instagramTrack?.addEventListener("wheel", onInstagramWheel, { passive: false });
+    window.addEventListener("wheel", onInstagramWheel, { passive: false, capture: true });
+    window.addEventListener("pointerdown", cancelInstagramMotion, { passive: true });
+    window.addEventListener("keydown", onNavigationKey);
+    window.addEventListener("hashchange", cancelInstagramMotion);
     window.addEventListener("poppy-scroll-to", scrollTo);
     document.addEventListener("visibilitychange", onVisibility);
     reduced.addEventListener("change", configure);
@@ -205,7 +304,10 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
       blooms.forEach(({ sway }) => sway.removeAttribute("transform"));
       root.classList.remove("pp-motion-ready", "pp-cinematic");
       window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onResize);
-      instagramTrack?.removeEventListener("wheel", onInstagramWheel);
+      window.removeEventListener("wheel", onInstagramWheel, true);
+      window.removeEventListener("pointerdown", cancelInstagramMotion);
+      window.removeEventListener("keydown", onNavigationKey);
+      window.removeEventListener("hashchange", cancelInstagramMotion);
       window.removeEventListener("poppy-scroll-to", scrollTo);
       document.removeEventListener("visibilitychange", onVisibility);
       reduced.removeEventListener("change", configure); desktop.removeEventListener("change", configure);

@@ -104,10 +104,6 @@ export function PoppyFooter({ language = "pl" }: { language?: PoppyLanguage }) {
   return (
     <footer className="pp-footer">
       <div className="pp-container">
-        <div className="pp-footer__top">
-          <h2>{language === "pl" ? <>Dobre rzeczy zaczynają się<br />od <em>rozmowy.</em></> : <>Good things start<br />with a <em>conversation.</em></>}</h2>
-          <a className="pp-footer__email" href={`mailto:${links.email}`}>{links.email}</a>
-        </div>
         <div className="pp-footer__links">
           <div><h3>{language === "pl" ? "Porozmawiajmy" : "Get in touch"}</h3><a href={`mailto:${links.email}`}>{language === "pl" ? "Napisz do nas" : "Email us"}</a></div>
           <div><h3>{language === "pl" ? "Obserwuj Poppy Project" : "Follow Poppy Project"}</h3>

@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import type { CSSProperties } from "react";
 import { links } from "@/data/links";
+import type { PoppyLanguage } from "@/components/PoppyChrome";
 
 const cards = [
   { label: "Materiały", title: "Szerszy obraz.", body: "Mapy, raporty i narzędzia. Więcej kontekstu dla lepszych decyzji.", action: "Otwórz bibliotekę", href: "/materialy/" },
@@ -8,16 +9,22 @@ const cards = [
   { label: "Poppy Talks", title: "Rozmowy, które zostają.", body: "Perspektywy osób, które tworzą przyszłość zdrowia kobiet.", action: "Odkryj podcast", href: "/podcast/" }
 ];
 
-export function EditorialExploreSection() {
+const englishCards = [
+  { label: "Resources", title: "The bigger picture.", body: "Maps, reports and tools. More context for better decisions.", action: "Explore the library", href: "/materialy/" },
+  { label: "Poppy Notes", title: "New points of view.", body: "Observations, analysis and stories from the women’s health ecosystem.", action: "Read on Substack", href: links.substack },
+  { label: "Poppy Talks", title: "Conversations that stay.", body: "Perspectives from people shaping the future of women’s health.", action: "Discover the podcast", href: "/podcast/" }
+];
+
+export function EditorialExploreSection({ language = "pl" }: { language?: PoppyLanguage }) {
   return (
     <section className="pp-explore pp-section" aria-labelledby="explore-heading">
       <div className="pp-container">
         <div className="pp-section-heading">
-          <p className="pp-eyebrow">Zostań z ciekawością</p>
-          <h2 id="explore-heading">Wiedza, która<br /><em>porusza.</em></h2>
+          <p className="pp-eyebrow">{language === "pl" ? "Zostań z ciekawością" : "Stay curious"}</p>
+          <h2 id="explore-heading">{language === "pl" ? <>Wiedza, która<br /><em>porusza.</em></> : <>Knowledge that<br /><em>moves us.</em></>}</h2>
         </div>
         <div className="pp-explore__grid">
-          {cards.map((card, index) => {
+          {(language === "pl" ? cards : englishCards).map((card, index) => {
             const external = card.href.startsWith("http");
             return <a key={card.href} className={`pp-editorial-card pp-editorial-card--${index}`} href={card.href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined}>
               <div className="pp-editorial-card__top"><span>{card.label}</span></div>

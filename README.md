@@ -41,4 +41,29 @@ Brand review (15 September 2026): reviewed all 21 pages of `Poppy Project - Bran
 
 Page 11 explicitly specifies Fraunces for headings and Outfit for body/UI, with the same landing-page type scale already implemented. These website rules take precedence over inconsistent example-page fonts: Poppins appears in logo taglines, and Cormorant Garamond/Century Gothic appear in later visual-language examples. No tagline font has been substituted into body copy. Text inside the supplied 2025 PDF maps, external URLs, and email addresses is unchanged.
 
-Company submissions use [FormSubmit's AJAX endpoint](https://formsubmit.co/ajax-documentation) to send directly from the page to `femtechpopl@gmail.com`. FormSubmit is a third-party processor of the submitted fields. The first real or test submission triggers an activation email; the recipient must confirm it before relying on delivery. Test once from the published site and check the inbox/spam folder before launch. No test submission is sent during the build. Blog and podcast items marked “W przygotowaniu” remain upcoming content.
+Company submissions use [FormSubmit's AJAX endpoint](https://formsubmit.co/ajax-documentation) to send directly from the page to `femtechpopl@gmail.com`. FormSubmit is a third-party processor of the submitted fields. The first real or test submission triggers an activation email; the recipient must confirm it before relying on delivery. Test once from the published site and check the inbox/spam folder before launch. No test submission is sent during the build. Podcast items marked “W przygotowaniu” remain upcoming content.
+
+## Blog and Substack
+
+`/blog/` embeds the official signup form for **FemTech po Polsku** at the top and official Substack article previews below. The surrounding page retains Poppy's brand and PL/EN navigation; article text and the inside of the embeds belong to Substack and keep their original language/style. Emails are submitted directly to Substack, never stored in this project. No email was submitted during development.
+
+`data/substack-config.json` is the shared publication address. `public/data/substack-posts.json` is a generated snapshot containing only public titles, short descriptions, dates and article URLs. The page statically renders all entries (including older articles), with search and year filters. Lazy-loaded official post iframes use the resize protocol from [Substack's embed script](https://substack.com/embedjs/embed.js); message origin, source and height are validated. If Substack is blocked or unavailable, the cached title/description and new-tab article link remain usable. The signup box always has a direct subscription link as a fallback. Internet is required for the external embeds; no API keys or third-party feed-widget account is needed.
+
+To refresh a local Python-served preview:
+
+```bash
+npm run sync:substack
+npm run build
+```
+
+Normal `npm run build` deliberately uses the committed snapshot and works without a live Substack connection. The sync script reads the public paginated archive used by Substack's website (`/api/v1/archive`), not just the latest RSS items. It keeps requesting pages until an empty result, validates/deduplicates every entry, and writes the snapshot atomically only after a complete successful fetch. This public endpoint is not a versioned, documented API: if it changes or is unavailable, syncing fails without wiping the previous snapshot. No subscriber data, private posts or full article bodies are stored. `npm run test:substack` tests pagination, ordering, malformed data and failure safety.
+
+### Enable automatic refresh on GitHub Pages
+
+The prepared `.github/workflows/pages.yml` refreshes the complete archive and rebuilds/deploys the static site on pushes to `main`, manual runs, and every six hours (at minute 23 UTC). It has **not** been pushed or activated by this local change. To activate after reviewing the site:
+
+1. Commit/push the source, generated JSON snapshot and workflow to GitHub.
+2. In the repository's **Settings → Pages → Build and deployment**, choose **GitHub Actions**. Keep/configure your custom domain there. This existing site uses root-relative URLs, so the workflow checks for a root-domain site and refuses a `/repository-name/` subpath deployment rather than publishing broken navigation.
+3. Open **Actions → Publish Poppy Project and refresh Substack → Run workflow** for the first deployment. Check that both jobs succeed. No Substack secret is required.
+
+Successful later runs publish new/updated articles and remove deleted archive entries automatically. If syncing fails, deployment does not run and the last published site stays online. GitHub schedules are approximate and can be delayed; scheduled workflows in inactive public repositories may be disabled after 60 days. Monitor the Actions status and re-enable if necessary. See [GitHub's custom Pages workflow guide](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
