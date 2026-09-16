@@ -11,31 +11,15 @@ type Dot = {
   by: number;
   x: number;
   y: number;
-  vx: number;
-  vy: number;
-  r: number;
-  col: number;
-  row: number;
+  accent: boolean;
 };
 
-type Drop = {
-  col: number;
-  time: number;
-  amp: number;
-};
-
-const COLS = 9;
-const ROWS = 9;
-const BASE_R = 7.5;
-const SPRING_K = 0.09;
-const DAMP = 0.78;
-const GRAVITY_R = 180;
-const GRAVITY_MAX = 18;
-const ROW_DELAY = 0.055;
-const BOUNCE_AMP = 11;
-const DECAY = 4.2;
-const FREQ = 13;
-const COL_SPREAD = 0.65;
+const COLS = 6;
+const ROWS = 11;
+const BASE_R = 2.35;
+const HOVER_RADIUS = 98;
+const HOVER_PUSH = 21;
+const FOLLOW_SPEED = 13;
 
 export function GravityDotGrid({ className = "" }: GravityDotGridProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -59,11 +43,11 @@ export function GravityDotGrid({ className = "" }: GravityDotGridProps) {
     let height = 0;
     let spacing = 0;
     let dots: Dot[] = [];
-    let drops: Drop[] = [];
-    let nextDropAt = 0.6;
     let animationId = 0;
     let previousTime = performance.now();
-    let t = 0;
+    let inView = false;
+    let disposed = false;
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const mouse = { x: -9999, y: -9999, on: false };
 
     const buildGrid = () => {
@@ -77,161 +61,197 @@ export function GravityDotGrid({ className = "" }: GravityDotGridProps) {
         for (let col = 0; col < COLS; col += 1) {
           const bx = ox + col * spacing;
           const by = oy + row * spacing;
-          dots.push({ bx, by, x: bx, y: by, vx: 0, vy: 0, r: BASE_R, col, row });
+          const accent = row === 2 && col === 2;
+          dots.push({ bx, by, x: bx, y: by, accent });
         }
       }
     };
 
+    const tick = (delta: number) => {
+      const follow = 1 - Math.exp(-FOLLOW_SPEED * delta);
+      let settling = false;
+
+      for (const dot of dots) {
+        let tx = dot.bx;
+        let ty = dot.by;
+
+        if (mouse.on) {
+          const dx = dot.bx - mouse.x;
+          const dy = dot.by - mouse.y;
+          const dist = Math.hypot(dx, dy);
+
+          if (dist < HOVER_RADIUS) {
+            const push = (1 - dist / HOVER_RADIUS) ** 2 * HOVER_PUSH;
+            const directionX = dist > 0.01 ? dx / dist : dot.bx < width / 2 ? -1 : 1;
+            const directionY = dist > 0.01 ? dy / dist : 0;
+            tx += directionX * push;
+            ty += directionY * push;
+          }
+        }
+
+        const remainingX = tx - dot.x;
+        const remainingY = ty - dot.y;
+        dot.x = Math.abs(remainingX) < 0.05 ? tx : dot.x + remainingX * follow;
+        dot.y = Math.abs(remainingY) < 0.05 ? ty : dot.y + remainingY * follow;
+        settling ||= Math.abs(tx - dot.x) > 0.05 || Math.abs(ty - dot.y) > 0.05;
+      }
+
+      return settling;
+    };
+
+    const draw = () => {
+      context.clearRect(0, 0, width, height);
+
+      for (const dot of dots) {
+        context.fillStyle = dot.accent ? "#8B1A1A" : "#6E7248";
+        context.beginPath();
+        context.arc(dot.x, dot.y, dot.accent ? BASE_R * 1.08 : BASE_R, 0, Math.PI * 2);
+        context.fill();
+      }
+    };
+
+    const canAnimate = () =>
+      !disposed &&
+      inView &&
+      !document.hidden &&
+      width > 0 &&
+      height > 0 &&
+      !reducedMotionQuery.matches &&
+      document.documentElement.dataset.motion !== "off";
+
+    const loop = (now: number) => {
+      animationId = 0;
+
+      if (!canAnimate()) {
+        return;
+      }
+
+      const delta = Math.min((now - previousTime) / 1000, 0.04);
+      previousTime = now;
+      const settling = tick(delta);
+      draw();
+      if (settling) animationId = requestAnimationFrame(loop);
+    };
+
+    const startAnimation = () => {
+      if (canAnimate() && !animationId) {
+        previousTime = performance.now();
+        animationId = requestAnimationFrame(loop);
+      }
+    };
+
+    const syncAnimation = () => {
+      if (disposed) {
+        return;
+      }
+
+      if (canAnimate()) {
+        startAnimation();
+        return;
+      }
+
+      cancelAnimationFrame(animationId);
+      animationId = 0;
+      mouse.on = false;
+
+      for (const dot of dots) {
+        dot.x = dot.bx;
+        dot.y = dot.by;
+      }
+
+      draw();
+    };
+
     const resize = () => {
-      const rect = wrap.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-      width = rect.width;
-      height = rect.height;
+      // The intro scales and translates the whole artwork. Its layout size is
+      // stable; using the transformed rect here would scale the canvas twice.
+      width = wrap.clientWidth;
+      height = wrap.clientHeight;
       canvas.width = Math.max(1, Math.round(width * dpr));
       canvas.height = Math.max(1, Math.round(height * dpr));
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       buildGrid();
-    };
-
-    const spawnDrop = () => {
-      drops.push({
-        col: Math.floor(Math.random() * COLS),
-        time: t,
-        amp: BOUNCE_AMP * (0.7 + Math.random() * 0.55)
-      });
-      nextDropAt = t + 1.8 + Math.random() * 2.4;
-    };
-
-    const tick = (delta: number) => {
-      t += delta;
-
-      if (t >= nextDropAt) {
-        spawnDrop();
-      }
-
-      drops = drops.filter((drop) => t - drop.time < 2.5);
-
-      for (const dot of dots) {
-        let tx = dot.bx;
-        let ty = dot.by;
-        let tr = BASE_R;
-
-        for (const drop of drops) {
-          const localT = t - drop.time - dot.row * ROW_DELAY;
-
-          if (localT <= 0) {
-            continue;
-          }
-
-          const colDist = Math.abs(dot.col - drop.col);
-          const lateral = Math.exp(-(colDist ** 2) * COL_SPREAD);
-
-          if (lateral < 0.01) {
-            continue;
-          }
-
-          ty += drop.amp * Math.exp(-DECAY * localT) * Math.sin(FREQ * localT) * lateral;
-        }
-
-        if (mouse.on) {
-          const dx = mouse.x - dot.bx;
-          const dy = mouse.y - dot.by;
-          const dist = Math.hypot(dx, dy);
-
-          if (dist < GRAVITY_R && dist > 1) {
-            const pull = (1 - dist / GRAVITY_R) ** 2;
-            const off = pull * GRAVITY_MAX;
-            tx += (dx / dist) * off;
-            ty += (dy / dist) * off;
-            tr = BASE_R * (1 + pull * 0.22);
-          }
-        }
-
-        dot.vx += (tx - dot.x) * SPRING_K;
-        dot.vy += (ty - dot.y) * SPRING_K;
-        dot.vx *= DAMP;
-        dot.vy *= DAMP;
-        dot.x += dot.vx;
-        dot.y += dot.vy;
-        dot.r += (tr - dot.r) * 0.1;
-      }
-    };
-
-    const draw = () => {
-      context.clearRect(0, 0, width, height);
-      context.fillStyle = "#0a3b34";
-
-      for (const dot of dots) {
-        context.beginPath();
-        context.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
-        context.fill();
-      }
-    };
-
-    const loop = (now: number) => {
-      const delta = Math.min((now - previousTime) / 1000, 0.04);
-      previousTime = now;
-      tick(delta);
       draw();
-      animationId = requestAnimationFrame(loop);
+      syncAnimation();
     };
 
     const updateMouse = (clientX: number, clientY: number) => {
+      if (!canAnimate()) {
+        return;
+      }
+
+      const wasOn = mouse.on;
       const rect = wrap.getBoundingClientRect();
-      mouse.x = clientX - rect.left;
-      mouse.y = clientY - rect.top;
+      // Map the pointer back into canvas coordinates while its parent scales.
+      mouse.x = rect.width ? ((clientX - rect.left) / rect.width) * width : -9999;
+      mouse.y = rect.height ? ((clientY - rect.top) / rect.height) * height : -9999;
       mouse.on =
         mouse.x >= 0 &&
-        mouse.x <= rect.width &&
+        mouse.x <= width &&
         mouse.y >= 0 &&
-        mouse.y <= rect.height;
+        mouse.y <= height;
+      if (mouse.on || wasOn) startAnimation();
     };
 
     const handlePointerMove = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") return;
       updateMouse(event.clientX, event.clientY);
     };
 
     const handlePointerLeave = () => {
       mouse.on = false;
+      startAnimation();
     };
 
-    const handleTouchMove = (event: TouchEvent) => {
-      const touch = event.touches[0];
-
-      if (touch) {
-        updateMouse(touch.clientX, touch.clientY);
+    const handlePointerEnd = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") {
+        handlePointerLeave();
       }
     };
-
-    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     resize();
 
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(wrap);
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      syncAnimation();
+    });
+    intersectionObserver.observe(wrap);
 
-    if (!reducedMotionQuery.matches) {
-      animationId = requestAnimationFrame(loop);
-      window.addEventListener("pointermove", handlePointerMove);
-      window.addEventListener("pointerleave", handlePointerLeave);
-      window.addEventListener("blur", handlePointerLeave);
-      window.addEventListener("touchmove", handleTouchMove, { passive: true });
-      window.addEventListener("touchend", handlePointerLeave);
-    } else {
-      draw();
-    }
+    const motionObserver = new MutationObserver(syncAnimation);
+    motionObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-motion"]
+    });
+
+    reducedMotionQuery.addEventListener("change", syncAnimation);
+    window.addEventListener("poppy-motion-change", syncAnimation);
+    document.addEventListener("visibilitychange", syncAnimation);
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("pointerleave", handlePointerLeave);
+    window.addEventListener("pointerup", handlePointerEnd, { passive: true });
+    window.addEventListener("pointercancel", handlePointerLeave);
+    window.addEventListener("blur", handlePointerLeave);
 
     return () => {
+      disposed = true;
       cancelAnimationFrame(animationId);
       resizeObserver.disconnect();
+      intersectionObserver.disconnect();
+      motionObserver.disconnect();
+      reducedMotionQuery.removeEventListener("change", syncAnimation);
+      window.removeEventListener("poppy-motion-change", syncAnimation);
+      document.removeEventListener("visibilitychange", syncAnimation);
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("pointerleave", handlePointerLeave);
+      window.removeEventListener("pointerup", handlePointerEnd);
+      window.removeEventListener("pointercancel", handlePointerLeave);
       window.removeEventListener("blur", handlePointerLeave);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchend", handlePointerLeave);
     };
   }, []);
 

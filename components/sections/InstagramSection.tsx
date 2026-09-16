@@ -1,7 +1,7 @@
 import { ArrowRight, Instagram } from "lucide-react";
 import Image from "next/image";
 import { SeedField } from "@/components/brand/SeedField";
-import { socialPosts, socialProfileUrl } from "@/data/social";
+import { legacySocialPosts, socialProfileUrl } from "@/data/social";
 import { Reveal } from "@/components/motion/Reveal";
 
 export function InstagramSection() {
@@ -21,7 +21,7 @@ export function InstagramSection() {
 
         <div className="social-grid">
           <SeedField density="compact" accentIndex={18} className="social-grid__seeds" />
-          {socialPosts.map((post, index) => (
+          {legacySocialPosts.map((post, index) => (
             <Reveal key={post.href} delay={index * 0.04} className={`social-post social-post--${index + 1}`}>
               <a href={post.href} target="_blank" rel="noreferrer">
                 <Image

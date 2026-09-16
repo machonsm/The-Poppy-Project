@@ -1,0 +1,65 @@
+/* Progressive enhancement: without JS every section and control stays readable. */
+html.lenis { scroll-behavior: auto !important; }
+.pp-opening { position: relative; }
+.pp-opening .pp-about { position: relative; z-index: 2; background: var(--bone); }
+.pp-bloom-border { position: absolute; bottom: 100%; left: 0; width: 100%; height: 230px; pointer-events: none; user-select: none; opacity: 0; }
+.pp-bloom-border__source { position: absolute; overflow: hidden; }
+.pp-bloom-border__plant { position: absolute; bottom: -1px; left: var(--plant-left); width: clamp(54px, 9vw, var(--plant-width)); height: auto; aspect-ratio: 160 / 270; overflow: visible; transform: translateX(-50%); }
+.pp-bloom-border__stem { fill: none; stroke: var(--poppy); stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+html[data-poppy-intro="pending"] .pp-bloom-border,
+html[data-poppy-intro="playing"] .pp-bloom-border { visibility: hidden; }
+@media (max-width: 650px) {
+  .pp-bloom-border__plant--desktop { display: none; }
+  .pp-bloom-border__plant { width: calc(var(--plant-width) * .5); }
+}
+.pp-heading-line { display: block; overflow: clip; padding-bottom: .12em; margin-bottom: -.12em; }
+.pp-heading-line > span { display: block; }
+.pp-motion-ready .pp-about__heading.pp-reveal-ready { opacity: 1; transform: none; }
+.pp-motion-ready .pp-about__heading.pp-reveal-ready .pp-heading-line > span { transform: translateY(112%); }
+.pp-motion-ready .pp-about__heading .pp-heading-line > span { transition: transform .95s var(--pp-ease); }
+.pp-motion-ready .pp-about__heading .pp-heading-line:nth-child(2) > span { transition-delay: .12s; }
+.pp-motion-ready .pp-about__heading.is-visible .pp-heading-line > span { transform: none; }
+.pp-motion-ready .pp-team__person:nth-child(2) { transition-delay: .14s; }
+.pp-team__portrait { translate: 0 var(--portrait-y, 0px); rotate: var(--portrait-turn, 0deg); }
+.pp-team__toggle { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 24px 0; text-align: left; background: none; border: 0; color: var(--poppy); font: inherit; }
+.pp-team__toggle > svg { flex-shrink: 0; transition: transform .35s var(--pp-ease); }
+.pp-team__bio.is-open .pp-team__toggle > svg { transform: rotate(45deg); }
+.pp-team__toggle .pp-team__role { font-family: var(--font-sans); font-weight: 400; }
+.pp-team__bio .pp-team__description { animation: none; }
+.pfe-results-column { min-width: 0; }
+.pfe-map__tracing { fill: none; stroke: var(--poppy); stroke-width: 1.8; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: var(--map-draw, 0); }
+.pfe-pin { opacity: calc(.3 + var(--pin-reveal, 1) * .7); scale: calc(.75 + var(--pin-reveal, 1) * .25); }
+.pfe-pin:focus-visible, .pfe-pin:hover, .pfe-workspace.is-exploring .pfe-pin { opacity: 1; scale: 1; }
+.pfe-workspace .pfe-pin:disabled { opacity: .3; }
+.pfe-workspace.is-exploring .pfe-map__tracing { stroke-dashoffset: 0; }
+
+@media (min-width: 901px) and (min-height: 700px) and (pointer: fine) {
+  .pp-cinematic .pp-opening .pp-hero { position: sticky; top: var(--header-height); z-index: 0; }
+  /* A short scroll runway holds the flowers and section, then releases naturally. */
+  .pp-cinematic .pp-about-scene { position: relative; z-index: 2; }
+  .pp-cinematic .pp-about-scene::after { content: ""; display: block; height: clamp(240px, 35svh, 420px); }
+  .pp-cinematic .pp-opening .pp-about { position: sticky; top: calc(var(--header-height) + clamp(170px, 23svh, 240px)); border-radius: 48px 48px 0 0; box-shadow: 0 -24px 55px rgba(26, 10, 10, .035); }
+  .pp-cinematic .pp-hero__copy { translate: 0 var(--hero-copy-y, 0px); }
+  .pp-cinematic .pp-hero__grid { opacity: var(--hero-scene-opacity, 1); }
+  .pp-cinematic .pp-flower-stage__orbit { rotate: var(--orbit-turn, 0deg); }
+  .pp-cinematic .pp-flower-stage__orbit--inner { rotate: calc(var(--orbit-turn, 0deg) * -1.5); }
+  .pp-cinematic .pp-flower-cluster { transition: none; }
+  /* A natural scroll runway pauses the full directory view, then releases it. */
+  .pp-cinematic .pfe-hold.is-pinnable::after { content: ""; display: block; height: clamp(360px, 62svh, 850px); }
+  .pp-cinematic .pfe-hold.is-pinnable .pfe-explorer { position: sticky; top: calc(var(--header-height) + 20px); z-index: 1; background: var(--bone); }
+  .pp-cinematic .pfe-hold.is-pinnable .pfe-map-panel { position: relative; top: auto; }
+  .pp-cinematic .pfe-map-panel { position: sticky; top: calc(var(--header-height) + 20px); align-self: start; }
+  .pp-cinematic .pfe-map { max-width: min(540px, calc(100svh - var(--header-height) - 175px)); }
+  .pp-cinematic .pp-editorial-card { rotate: var(--card-turn, 0deg); translate: 0 var(--card-y, 0px); transform-origin: 50% 85%; transition: opacity .85s var(--pp-ease), transform .65s var(--pp-ease), box-shadow .3s; }
+  .pp-cinematic .pp-editorial-card:hover, .pp-cinematic .pp-editorial-card:focus-visible { transform: translateY(-10px) rotate(calc(var(--card-turn, 0deg) * -1)); }
+  .pp-cinematic .pp-explore__grid { padding-block: 20px; }
+}
+@media (min-width: 651px) and (max-width: 1150px) { :root { --header-height: 88px; } }
+@media (min-width: 901px) and (max-width: 1100px) { :root { --header-height: 82px; } }
+@media (min-width: 651px) and (max-width: 900px) { :root { --header-height: 82px; } }
+@media (prefers-reduced-motion: reduce) {
+  .pp-heading-line > span, .pp-team__portrait, .pp-editorial-card { transform: none !important; translate: none !important; rotate: none !important; }
+  .pfe-pin { scale: 1; opacity: 1; }
+  .pfe-pin:disabled { opacity: .3; }
+  .pfe-map__tracing { stroke-dashoffset: 0; }
+}

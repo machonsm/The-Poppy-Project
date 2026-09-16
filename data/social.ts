@@ -8,7 +8,19 @@ export type SocialPost = {
 
 export const socialProfileUrl = links.instagram;
 
-export const socialPosts: SocialPost[] = [
+// Selected embeds shown in the current landing page carousel, in display order.
+export const socialPosts = [
+  { href: "https://www.instagram.com/p/DJY3QjgOAQ2/?img_index=1" },
+  { href: "https://www.instagram.com/p/DKg9XMxAZaA/" },
+  { href: "https://www.instagram.com/p/DKO7ztrIEoE/" },
+  { href: "https://www.instagram.com/p/DPOOgO3idSg/" },
+  { href: "https://www.instagram.com/p/DJrAKEIBXrc/" },
+  { href: "https://www.instagram.com/p/DIQ35yQtEPh/" }
+];
+
+// Older homepage artwork is kept separately so its images and alt text
+// remain paired with the posts they actually describe.
+export const legacySocialPosts: SocialPost[] = [
   {
     href: "https://www.instagram.com/p/DPOuEE3CHb-/",
     image:

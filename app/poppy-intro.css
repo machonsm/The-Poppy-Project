@@ -1,0 +1,95 @@
+/* The supplied mark stays intact: a quiet reveal, a pause, then a single glide. */
+.pp-hero__grid { position: relative; }
+.pp-flower-stage { isolation: isolate; }
+.pp-flower-cluster {
+  position: absolute;
+  left: 50%;
+  top: 15px;
+  width: min(85%, 335px);
+  aspect-ratio: 440 / 700;
+  z-index: 3;
+  color: var(--poppy);
+  transform: translate(-50%, var(--flower-scroll, 0px));
+  transition: transform 1s var(--pp-ease);
+}
+.pp-flower-cluster > .pp-flower-stage__mark {
+  position: relative;
+  z-index: 2;
+  inset: auto;
+  width: 100%;
+  transform: none;
+  pointer-events: none;
+  outline-offset: 8px;
+}
+/* Only painted paths catch hover; the SVG viewport stays open to the dots. */
+.pp-flower-stage__mark .poppy-mark { pointer-events: none; }
+.pp-flower-stage__mark .poppy-mark path { pointer-events: visiblePainted; }
+.poppy-mark__plant { transform-origin: 222px 668px; transform-box: view-box; }
+.pp-hero-dots {
+  position: absolute;
+  z-index: 1;
+  top: auto;
+  bottom: -3%;
+  left: 56%;
+  right: auto;
+  width: 160px;
+  height: 330px;
+  touch-action: pan-y;
+  opacity: .85;
+  filter: none;
+}
+html[data-poppy-intro="pending"] .pp-flower-cluster { opacity: 0; }
+html[data-poppy-intro="pending"] .pp-header__inner,
+html[data-poppy-intro="playing"] .pp-header__inner,
+html[data-poppy-intro="pending"] .pp-hero__copy,
+html[data-poppy-intro="playing"] .pp-hero__copy,
+html[data-poppy-intro="pending"] .pp-hero-scroll,
+html[data-poppy-intro="playing"] .pp-hero-scroll,
+html[data-poppy-intro="pending"] .pp-hero-dots,
+html[data-poppy-intro="playing"] .pp-hero-dots,
+html[data-poppy-intro="pending"] .pp-flower-stage__orbit,
+html[data-poppy-intro="playing"] .pp-flower-stage__orbit,
+html[data-poppy-intro="pending"] .pp-flower-stage__cross,
+html[data-poppy-intro="playing"] .pp-flower-stage__cross { opacity: 0; visibility: hidden; pointer-events: none; }
+
+html[data-poppy-intro="playing"] .pp-flower-cluster { opacity: 1; transition: none; will-change: transform; }
+html[data-poppy-intro="playing"] .poppy-mark--animated .poppy-mark__reveal { animation: pp-mark-reveal .65s .05s cubic-bezier(.22, .65, .3, 1) both; }
+html[data-poppy-intro="done"] .pp-header__inner { animation: pp-intro-header .55s var(--pp-ease) both; }
+html[data-poppy-intro="done"] .pp-hero-dots { animation: pp-dot-entry .6s ease both; }
+html[data-poppy-intro="done"] .pp-hero__copy { animation: pp-intro-copy .65s var(--pp-ease) both; }
+html[data-poppy-intro="done"] .pp-hero-scroll { animation: pp-intro-copy .65s .08s var(--pp-ease) both; }
+html[data-poppy-intro="playing"] .pp-title-line > span,
+html[data-poppy-intro="playing"] .pp-hero__intro,
+html[data-poppy-intro="playing"] .pp-hero__actions,
+html[data-poppy-intro="done"] .pp-title-line > span,
+html[data-poppy-intro="done"] .pp-hero__intro,
+html[data-poppy-intro="done"] .pp-hero__actions { animation: none; }
+html[data-poppy-intro="done"] .pp-flower-stage__orbit,
+html[data-poppy-intro="done"] .pp-flower-stage__cross { animation: pp-intro-surroundings .6s ease both; }
+
+@keyframes pp-mark-reveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pp-intro-header { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+@keyframes pp-dot-entry { from { opacity: 0; } to { opacity: .85; } }
+@keyframes pp-intro-copy { from { opacity: 0; visibility: hidden; transform: translateX(-10px); } to { opacity: 1; visibility: visible; transform: none; } }
+@keyframes pp-intro-surroundings { from { opacity: 0; visibility: hidden; } to { opacity: 1; visibility: visible; } }
+
+@media (min-width: 1650px) { .pp-flower-cluster { width: 370px; } .pp-hero-dots { width: 180px; height: 370px; } }
+@media (max-width: 1150px) { .pp-flower-cluster { top: 32px; } .pp-hero-dots { width: 140px; height: 300px; } }
+@media (max-width: 900px) { .pp-flower-cluster { top: 40px; width: 95%; } .pp-hero-dots { width: 125px; height: 280px; } }
+@media (max-width: 650px) {
+  .pp-flower-cluster { width: 190px; top: 5px; }
+  .pp-hero-dots { width: 105px; height: 190px; }
+  html[data-poppy-intro="playing"] .pp-flower-cluster { z-index: 5; }
+}
+
+/* Preferences show the finished layout immediately. */
+html[data-motion="off"] .pp-flower-cluster { transform: translate(-50%, 0); opacity: 1; }
+html[data-motion="off"] .pp-flower-cluster > .pp-flower-stage__mark { transform: none; }
+html[data-motion="off"] .poppy-mark__reveal { animation: none !important; opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .pp-flower-cluster { transform: translate(-50%, 0); opacity: 1; }
+  .poppy-mark__reveal { animation: none !important; opacity: 1; transform: none; }
+}
