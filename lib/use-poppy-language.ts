@@ -1,39 +1,33 @@
 "use client";
 
 import { useCallback, useEffect, useSyncExternalStore } from "react";
-import type { PoppyLanguage } from "@/components/PoppyChrome";
+import { useRouter } from "next/navigation";
+import { languageFromPath, localizedPath, type PoppyLanguage } from "@/lib/language-routes";
 
 const languageStorageKey = "poppy-language";
-const languageChangeEvent = "poppy-language-change";
-
-function isPoppyLanguage(value: string | null): value is PoppyLanguage {
-  return value === "pl" || value === "en";
-}
-
-export function usePoppyLanguage() {
+export function usePoppyLanguage(initialLanguage: PoppyLanguage = "pl") {
+  const router = useRouter();
   const language = useSyncExternalStore<PoppyLanguage>(
     callback => {
-      window.addEventListener("storage", callback);
-      window.addEventListener(languageChangeEvent, callback);
-      return () => {
-        window.removeEventListener("storage", callback);
-        window.removeEventListener(languageChangeEvent, callback);
-      };
+      window.addEventListener("popstate", callback);
+      return () => window.removeEventListener("popstate", callback);
     },
-    (): PoppyLanguage => {
-      try {
-        const savedLanguage = window.localStorage.getItem(languageStorageKey);
-        return isPoppyLanguage(savedLanguage) ? savedLanguage : "pl";
-      } catch {
-        return "pl";
-      }
-    },
-    (): PoppyLanguage => "pl"
+    (): PoppyLanguage => languageFromPath(window.location.pathname),
+    (): PoppyLanguage => initialLanguage
   );
 
   useEffect(() => {
     document.documentElement.lang = language;
-  }, [language]);
+    try {
+      const savedLanguage = window.localStorage.getItem(languageStorageKey);
+      if ((savedLanguage === "pl" || savedLanguage === "en") && savedLanguage !== language) {
+        const targetPath = localizedPath(window.location.pathname, savedLanguage);
+        router.replace(`${targetPath}${window.location.search}${window.location.hash}`);
+      }
+    } catch {
+      // The language encoded in the URL remains authoritative when storage is unavailable.
+    }
+  }, [language, router]);
 
   const setLanguage = useCallback((nextLanguage: PoppyLanguage) => {
     document.documentElement.lang = nextLanguage;
@@ -42,8 +36,10 @@ export function usePoppyLanguage() {
     } catch {
       // The selection still applies to the current document without persistence.
     }
-    window.dispatchEvent(new Event(languageChangeEvent));
-  }, []);
+    const targetPath = localizedPath(window.location.pathname, nextLanguage);
+    const target = `${targetPath}${window.location.search}${window.location.hash}`;
+    router.push(target);
+  }, [router]);
 
   return [language, setLanguage] as const;
 }

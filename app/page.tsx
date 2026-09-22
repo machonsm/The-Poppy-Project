@@ -1,5 +1,6 @@
 import { PoppyLanding } from "@/components/PoppyLanding";
+import { currentEventDay } from "@/lib/event-dates";
 
 export default function Page() {
-  return <PoppyLanding />;
+  return <PoppyLanding initialLanguage="pl" initialEventDay={currentEventDay()} />;
 }

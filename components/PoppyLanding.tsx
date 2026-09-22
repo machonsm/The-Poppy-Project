@@ -16,8 +16,9 @@ import { usePoppyScroll } from "@/components/motion/usePoppyScroll";
 import { siteFeatures } from "@/lib/features";
 import { sitePath } from "@/lib/site-path";
 import { events, type EventRegion } from "@/data/events";
-import { currentEventDay, isUpcomingEvent, serverEventDay, subscribeEventDay } from "@/lib/event-dates";
+import { currentEventDay, isUpcomingEvent, subscribeEventDay } from "@/lib/event-dates";
 import { usePoppyLanguage } from "@/lib/use-poppy-language";
+import type { PoppyLanguage } from "@/lib/language-routes";
 import { links } from "@/data/links";
 import { mapAssets } from "@/data/map-assets";
 
@@ -73,9 +74,9 @@ const content = {
     discoverKicker: "Discover more",
     discoverIntro: "Find more knowledge, inspiration and conversations about the world of FemTech right here.",
     destinations: [
-      { label: "Resources", href: "/materialy/" },
-      { label: "Articles", href: "/artykuly/" },
-      { label: "Podcast", href: "/podcast/" }
+      { label: "Resources", href: "/en/resources/" },
+      { label: "Articles", href: "/en/articles/" },
+      { label: "Podcast", href: "/en/podcast/" }
     ],
     mapTitle: <>Polish FemTech<br /><em>Map 2025.</em></>,
     mapBody: <><strong>Download our original map of Poland’s FemTech ecosystem.</strong><br /><br />It is the first overview of the Polish ecosystem created from publicly available information and our current knowledge of the sector.</>,
@@ -89,8 +90,11 @@ const content = {
   }
 };
 
-export function PoppyLanding() {
-  const [language, setLanguage] = usePoppyLanguage();
+export function PoppyLanding({ initialLanguage = "pl", initialEventDay = "" }: {
+  initialLanguage?: PoppyLanguage;
+  initialEventDay?: string;
+}) {
+  const [language, setLanguage] = usePoppyLanguage(initialLanguage);
   const [filter, setFilter] = useState<EventFilter>("all");
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const root = useRef<HTMLDivElement>(null);
@@ -101,7 +105,7 @@ export function PoppyLanding() {
   usePoppyScroll(root);
   const c = content[language];
   const mapAsset = mapAssets[language];
-  const today = useSyncExternalStore(subscribeEventDay, currentEventDay, serverEventDay);
+  const today = useSyncExternalStore(subscribeEventDay, currentEventDay, () => initialEventDay);
   const upcomingEvents = today ? events.filter(event => isUpcomingEvent(event, today)) : [];
   const visibleEvents = filter === "all" ? upcomingEvents : upcomingEvents.filter(event => event.region === filter);
 
@@ -202,7 +206,7 @@ export function PoppyLanding() {
               </div>
               <p className="pp-about__lead">{c.aboutIntro}</p>
               <div className="pp-about__invitation">
-                <FluidLink href={sitePath("/o-nas/")}>{c.aboutMoreAction}<ArrowUpRight size={18} aria-hidden="true" /></FluidLink>
+                <FluidLink href={sitePath(language === "pl" ? "/o-nas/" : "/en/about/")}>{c.aboutMoreAction}<ArrowUpRight size={18} aria-hidden="true" /></FluidLink>
               </div>
             </div>
             <div className="pp-work-grid">

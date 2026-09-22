@@ -3,14 +3,15 @@ import { PoppyPodcastPage } from "@/components/PoppyPodcastPage";
 import { podcastEpisodes, spotifyEpisodeUrl } from "@/data/podcasts";
 import { jsonLd, localizedPageMetadata, SITE_URL } from "@/lib/seo";
 
-const description = "FemTech 101: Podcast FemTech po Polsku. Rozmowy o zdrowiu kobiet, technologiach i innowacjach — przystępnie i bez tabu.";
+const description = "FemTech 101 is a Polish-language podcast about women’s health, technology and innovation — accessible and without taboos.";
 
 export const metadata: Metadata = localizedPageMetadata({
-  title: "FemTech 101: Podcast FemTech po Polsku",
+  title: "FemTech 101: the FemTech po Polsku podcast",
   description,
-  canonical: "/podcast/",
+  canonical: "/en/podcast/",
   pl: "/podcast/",
-  en: "/en/podcast/"
+  en: "/en/podcast/",
+  locale: "en_GB"
 });
 
 const podcastSchema = {
@@ -25,15 +26,15 @@ const podcastSchema = {
     "@type": "PodcastEpisode",
     position: episode.number,
     name: episode.title,
-    description: episode.description.pl,
+    description: episode.description.en,
     url: spotifyEpisodeUrl(episode.id),
     partOfSeries: { "@type": "PodcastSeries", name: "FemTech 101: Podcast FemTech po Polsku" }
   }))
 };
 
-export default function PodcastPage() {
+export default function EnglishPodcastPage() {
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(podcastSchema) }} />
-    <PoppyPodcastPage initialLanguage="pl" />
+    <PoppyPodcastPage initialLanguage="en" />
   </>;
 }

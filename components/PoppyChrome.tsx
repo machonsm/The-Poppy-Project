@@ -9,8 +9,9 @@ import { PoppyBloomBorder } from "@/components/brand/PoppyBloomBorder";
 import { PoppyNewsletterSignup } from "@/components/PoppyNewsletterSignup";
 import { usePoppyBlooms } from "@/components/motion/usePoppyBlooms";
 import { isSiteHome, sitePath } from "@/lib/site-path";
+import { languageHome, type PoppyLanguage } from "@/lib/language-routes";
 
-export type PoppyLanguage = "pl" | "en";
+export type { PoppyLanguage } from "@/lib/language-routes";
 
 const navigation = {
   pl: [
@@ -22,12 +23,12 @@ const navigation = {
     { label: "Kontakt", href: "/#kontakt" }
   ],
   en: [
-    { label: "Resources", href: "/materialy/" },
-    { label: "Events", href: "/#wydarzenia" },
-    { label: "Articles", href: "/artykuly/" },
-    { label: "Podcast", href: "/podcast/" },
-    { label: "About", href: "/o-nas/" },
-    { label: "Contact", href: "/#kontakt" }
+    { label: "Resources", href: "/en/resources/" },
+    { label: "Events", href: "/en/#wydarzenia" },
+    { label: "Articles", href: "/en/articles/" },
+    { label: "Podcast", href: "/en/podcast/" },
+    { label: "About", href: "/en/about/" },
+    { label: "Contact", href: "/en/#kontakt" }
   ]
 };
 
@@ -61,7 +62,7 @@ export function PoppyHeader({ language = "pl", onLanguageChange }: {
       <a className="pp-skip" href="#main-content">{language === "pl" ? "Przejdź do treści" : "Skip to content"}</a>
       <header className="pp-header" ref={header}>
         <div className="pp-container pp-header__inner">
-          <a className="pp-brand" href={sitePath("/")} aria-label={language === "pl" ? "Poppy Project — strona główna" : "Poppy Project — home"}>
+          <a className="pp-brand" href={languageHome(language)} aria-label={language === "pl" ? "Poppy Project — strona główna" : "Poppy Project — home"}>
             <PoppyMark />
             <span>Poppy Project</span>
           </a>
@@ -79,8 +80,9 @@ export function PoppyHeader({ language = "pl", onLanguageChange }: {
           {navigation[language].map(({ label, href }) => (
             <a href={sitePath(href)} key={href} onClick={event => {
               setOpen(false);
-              if (href.startsWith("/#") && isSiteHome(window.location.pathname)) {
-                const target = document.getElementById(href.slice(2));
+              const hashIndex = href.indexOf("#");
+              if (hashIndex >= 0 && isSiteHome(window.location.pathname)) {
+                const target = document.getElementById(href.slice(hashIndex + 1));
                 if (target) {
                   event.preventDefault();
                   event.stopPropagation();
@@ -115,7 +117,7 @@ export function PoppyFooter({ language = "pl", showNewsletter = false, decorativ
           <div>
             <h3>{language === "pl" ? "Porozmawiajmy" : "Get in touch"}</h3>
             <a href={`mailto:${links.email}`}>{language === "pl" ? "Napisz do nas" : "Email us"}</a>
-            <a href={sitePath("/#zglos-firme")}>{language === "pl" ? "Zgłoś firmę do mapy" : "Submit your company"}</a>
+            <a href={sitePath(language === "pl" ? "/#zglos-firme" : "/en/#zglos-firme")}>{language === "pl" ? "Zgłoś firmę do mapy" : "Submit your company"}</a>
           </div>
           <div><h3>{language === "pl" ? "Obserwuj Poppy Project" : "Follow Poppy Project"}</h3>
             <a href={links.instagram} target="_blank" rel="noopener noreferrer"><Instagram size={18} strokeWidth={1.8} aria-hidden="true" /><span>Instagram</span></a>

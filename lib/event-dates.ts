@@ -16,8 +16,6 @@ export function isUpcomingEvent(event: { date: string; endDate?: string }, today
 }
 
 export const currentEventDay = () => eventDay(new Date());
-// A static export cannot know the visitor's date. Wait for the browser clock.
-export const serverEventDay = () => "";
 
 export function subscribeEventDay(onChange: () => void): () => void {
   const timer = window.setInterval(onChange, 30_000);

@@ -8,6 +8,7 @@ import { PoppyFooter, PoppyHeader } from "@/components/PoppyChrome";
 import { links } from "@/data/links";
 import { FluidLink } from "@/components/ui/FluidButton";
 import { sitePath } from "@/lib/site-path";
+import type { PoppyLanguage } from "@/lib/language-routes";
 
 // Content from the original PL/EN About pages at femtechpo.pl,
 // with the project name updated to the current Poppy Project brand.
@@ -48,8 +49,8 @@ const aboutCopy = {
   }
 };
 
-export function PoppyAboutPage() {
-  const [language, setLanguage] = usePoppyLanguage();
+export function PoppyAboutPage({ initialLanguage = "pl" }: { initialLanguage?: PoppyLanguage }) {
+  const [language, setLanguage] = usePoppyLanguage(initialLanguage);
   const c = aboutCopy[language];
 
   return (

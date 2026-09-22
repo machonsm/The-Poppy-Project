@@ -100,8 +100,8 @@ function ResourceCard({ resource, language }: { resource: PoppyResource; languag
   );
 }
 
-export function PoppyResourcesPage() {
-  const [language, setLanguage] = usePoppyLanguage();
+export function PoppyResourcesPage({ initialLanguage = "pl" }: { initialLanguage?: PoppyLanguage }) {
+  const [language, setLanguage] = usePoppyLanguage(initialLanguage);
   const [category, setCategory] = useState<"all" | ResourceCategory>("all");
   const [query, setQuery] = useState("");
   const c = copy[language];

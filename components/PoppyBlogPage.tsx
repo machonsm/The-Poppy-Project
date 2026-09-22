@@ -9,6 +9,7 @@ import { substackArchive } from "@/data/substack";
 import { links } from "@/data/links";
 import { FluidLink } from "@/components/ui/FluidButton";
 import { usePoppyLanguage } from "@/lib/use-poppy-language";
+import type { PoppyLanguage } from "@/lib/language-routes";
 import "./blog-page.css";
 
 const copy = {
@@ -53,8 +54,8 @@ const copy = {
 const normalise = (text: string) => text.toLocaleLowerCase("pl").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ł/g, "l");
 const years = Array.from(new Set(substackArchive.posts.map(post => post.publishedAt.slice(0, 4)))).sort().reverse();
 
-export function PoppyBlogPage() {
-  const [language, setLanguage] = usePoppyLanguage();
+export function PoppyBlogPage({ initialLanguage = "pl" }: { initialLanguage?: PoppyLanguage }) {
+  const [language, setLanguage] = usePoppyLanguage(initialLanguage);
   const [query, setQuery] = useState("");
   const [year, setYear] = useState("all");
   const c = copy[language];

@@ -8,6 +8,7 @@ import { links } from "@/data/links";
 import { FluidLink } from "@/components/ui/FluidButton";
 import { sitePath } from "@/lib/site-path";
 import { usePoppyLanguage } from "@/lib/use-poppy-language";
+import type { PoppyLanguage } from "@/lib/language-routes";
 import "./podcast-page.css";
 
 const copy = {
@@ -29,8 +30,8 @@ const copy = {
   }
 };
 
-export function PoppyPodcastPage() {
-  const [language, setLanguage] = usePoppyLanguage();
+export function PoppyPodcastPage({ initialLanguage = "pl" }: { initialLanguage?: PoppyLanguage }) {
+  const [language, setLanguage] = usePoppyLanguage(initialLanguage);
   const c = copy[language];
 
   return <div className="pp-site pp-podcast-page">

@@ -12,5 +12,8 @@ export function sitePath(path: string) {
 }
 
 export function isSiteHome(pathname: string) {
-  return pathname === `${siteBasePath}/` || pathname === siteBasePath;
+  return pathname === `${siteBasePath}/`
+    || pathname === siteBasePath
+    || pathname === `${siteBasePath}/en`
+    || pathname === `${siteBasePath}/en/`;
 }
