@@ -16,14 +16,14 @@ const aboutCopy = {
     title: "Co robimy?",
     intro: "Poppy Project to polska platforma innowacji w zdrowiu kobiet.",
     story: [
-      "Łączymy polski ekosystem zdrowia kobiet z szerszą europejską i globalną społecznością zdrowia kobiet i FemTech, działając na styku biznesu, wiedzy i sieci kontaktów.",
+      "Łączymy polski ekosystem zdrowia kobiet z szerszą europejską i globalną społecznością zdrowia kobiet i FemTech, działając na styku biznesu i wiedzy.",
       "Naszym celem jest pomóc polskim organizacjom, ekspertom i przedsiębiorcom zyskać widoczność oraz dostęp do międzynarodowych możliwości rozwoju, finansowania i współpracy."
     ],
     teamTitle: "Kim jesteśmy?",
     teamIntro: "Połączyła nas pasja do rozwijającego się rynku FemTech i jego roli w zdrowiu kobiet. Obydwie jesteśmy aktywnie zaangażowane w tym środowisku i chcemy użyć naszej wiedzy, aby przyspieszyć rozwój rynku i społeczności FemTech w Polsce.",
     team: [
-      { name: "Karolina Frątczak", image: "karolina-fratczak-orbit", role: "Analizy i inwestycje", bio: "Konsultantka z zapleczem analitycznym i komercyjnym. Autorka pierwszego europejskiego raportu o FemTech, stworzonego we współpracy z Sie Ventures, gdzie wspiera proces inwestycyjny w firmy prowadzone przez kobiety." },
-      { name: "Sandra Machoń", image: "sandra-machon-orbit", role: "Dane i technologie", bio: "Data Scientist i pasjonatka FemTechu. Posiada doświadczenie z pracy w femtechowym start-upie Elvie, gdzie zajmowała się danymi, tworzeniem algorytmów i technologiami zdrowotnymi." }
+      { name: "Karolina Frątczak", image: "karolina-fratczak-orbit-green-20260922", role: "Analizy i inwestycje", bio: "Konsultantka z zapleczem analitycznym i komercyjnym. Autorka pierwszego europejskiego raportu o FemTech, stworzonego we współpracy z Sie Ventures, gdzie wspiera proces inwestycyjny w firmy prowadzone przez kobiety." },
+      { name: "Sandra Machoń", image: "sandra-machon-orbit-green-20260922", role: "Dane i technologie", bio: "Data Scientist i pasjonatka FemTechu. Posiada doświadczenie z pracy w femtechowym start-upie Elvie, gdzie zajmowała się danymi, tworzeniem algorytmów i technologiami zdrowotnymi." }
     ],
     contactLabel: "Zróbmy coś razem",
     contactTitle: <>Masz pomysł?<br /><em>Porozmawiajmy.</em></>,
@@ -33,14 +33,14 @@ const aboutCopy = {
     title: "What do we do?",
     intro: "Poppy Project is a Polish platform for innovation in women’s health.",
     story: [
-      "We connect Poland’s women’s health ecosystem with the broader European and global women’s health and FemTech community, working at the intersection of business, knowledge and networks.",
+      "We connect Poland’s women’s health ecosystem with the broader European and global women’s health and FemTech community, working at the intersection of business and knowledge.",
       "Our goal is to help Polish organisations, experts and entrepreneurs gain visibility and access to international opportunities for growth, funding and collaboration."
     ],
     teamTitle: "Who are we?",
     teamIntro: "We’re united by a shared passion for the growing FemTech market and its role in women’s health. Both of us are actively involved in this space, and we want to use our knowledge to accelerate the development of the FemTech market and community in Poland.",
     team: [
-      { name: "Karolina Frątczak", image: "karolina-fratczak-orbit", role: "Research & investment", bio: "A consultant with an analytical and commercial background. Author of the first European report on FemTech, created in collaboration with Sie Ventures, where she supports the investment process for women-led companies." },
-      { name: "Sandra Machoń", image: "sandra-machon-orbit", role: "Data & technology", bio: "A data scientist and FemTech enthusiast. She has experience working at the FemTech startup Elvie, where she focused on data, algorithm development, and health technologies." }
+      { name: "Karolina Frątczak", image: "karolina-fratczak-orbit-green-20260922", role: "Research & investment", bio: "A consultant with an analytical and commercial background. Author of the first European report on FemTech, created in collaboration with Sie Ventures, where she supports the investment process for women-led companies." },
+      { name: "Sandra Machoń", image: "sandra-machon-orbit-green-20260922", role: "Data & technology", bio: "A data scientist and FemTech enthusiast. She has experience working at the FemTech startup Elvie, where she focused on data, algorithm development, and health technologies." }
     ],
     contactLabel: "Let’s build something together",
     contactTitle: <>Have an idea?<br /><em>Let’s talk.</em></>,

@@ -24,6 +24,7 @@ import { mapAssets } from "@/data/map-assets";
 type EventFilter = "all" | EventRegion;
 const eventFilters: EventFilter[] = ["all", "poland", "europe", "world", "online"];
 const formSubmitUrl = `https://formsubmit.co/ajax/${links.email}`;
+const companyFormPageUrl = "https://joinpoppy.pl/#zglos-firme";
 
 const content = {
   pl: {
@@ -52,8 +53,8 @@ const content = {
     eventsTitle: <>Dobre spotkania.<br /><em>Nowe możliwości.</em></>,
     eventsBody: null, filters: ["Wszystkie", "Polska", "Europa", "Świat", "Online"], noEvents: "Na razie nie ma wydarzeń w tej kategorii.", showAllEvents: "Zobacz wszystkie", eventDate: "Data", eventName: "Wydarzenie", eventLocation: "Miejsce", eventOpen: "Zobacz wydarzenie", eventNote: "Kalendarz branżowy · Informacje i rejestracja na stronach organizatorów.",
     contactTitle: <>Zmiana potrzebuje ludzi.<br /><em>Takich jak Ty.</em></>,
-    contactBody: "Tworzysz rozwiązanie dla zdrowia kobiet? Szukasz partnerów? A może masz pomysł, od którego wszystko się zacznie? Poznajmy się.", contactAction: "Napisz do nas", companyAction: "Zgłoś firmę do mapy", formNote: "Wyślij zgłoszenie bezpośrednio ze strony. Dane formularza trafią do nas przez usługę FormSubmit.",
-    formFields: ["Nazwa firmy", "Twój adres e-mail", "Strona internetowa", "Obszar działalności", "Opowiedz nam o firmie"], formEmailHint: "Podaj adres, na który możemy odpowiedzieć — nie musi być firmowy.", categories: ["Płodność i reprodukcja", "Zdrowie menstruacyjne", "Endometrioza", "Ciąża i poród", "Menopauza", "Onkologia", "Zdrowie psychiczne", "Inne"], choose: "Wybierz obszar", consent: "Zgadzam się na przekazanie danych zgłoszenia zespołowi Poppy Project przez usługę FormSubmit.", formButton: "Wyślij zgłoszenie", formSending: "Wysyłanie…", formSuccess: "Dziękujemy! Zgłoszenie zostało przyjęte. Odpowiemy na podany adres e-mail.", formError: "Nie udało się wysłać zgłoszenia. Spróbuj ponownie lub napisz do joinpoppypl@gmail.com.",
+    contactBody: "Tworzysz rozwiązanie dla zdrowia kobiet? Szukasz partnerów? A może masz pomysł, od którego wszystko się zacznie? Poznajmy się.", contactAction: "Napisz do nas", companyAction: "Zgłoś firmę do naszej bazy danych", formNote: "Wyślij zgłoszenie bezpośrednio ze strony. Dane formularza trafią do nas przez usługę FormSubmit.",
+    formFields: ["Nazwa firmy", "Twój adres e-mail", "Strona internetowa", "Obszar działalności", "Opowiedz nam o firmie"], formEmailHint: "Podaj adres, na który możemy odpowiedzieć — nie musi być firmowy.", consent: "Zgadzam się na przekazanie danych zgłoszenia zespołowi Poppy Project przez usługę FormSubmit.", formButton: "Wyślij zgłoszenie", formSending: "Wysyłanie…", formSuccess: "Dziękujemy! Zgłoszenie zostało przyjęte. Odpowiemy na podany adres e-mail.", formError: "Nie udało się wysłać zgłoszenia. Spróbuj ponownie lub napisz do joinpoppypl@gmail.com.",
     instagramTitle: <>Zobacz, co dzieje się<br /><em>na Instagramie.</em></>, instagramBody: "Wybrane wiadomości, perspektywy i rozmowy z ekosystemu zdrowia kobiet.", socialAction: "Obserwuj nas na Instagramie"
   },
   en: {
@@ -82,8 +83,8 @@ const content = {
     eventsTitle: <>Great encounters.<br /><em>New possibilities.</em></>,
     eventsBody: null, filters: ["All events", "Poland", "Europe", "World", "Online"], noEvents: "No events in this category yet.", showAllEvents: "View all events", eventDate: "Date", eventName: "Event", eventLocation: "Location", eventOpen: "View event", eventNote: "Industry calendar · Details and registration on organisers’ websites.",
     contactTitle: <>Change needs people.<br /><em>People like you.</em></>,
-    contactBody: "Building a solution for women’s health? Looking for partners? Or holding an idea that could start something? Let’s get to know each other.", contactAction: "Email us", companyAction: "Add a company to the map", formNote: "Send your submission directly from this page. FormSubmit will deliver the form data to us.",
-    formFields: ["Company name", "Your email address", "Website", "Area of activity", "Tell us about your company"], formEmailHint: "Use an address where we can reply — it does not have to be a company email.", categories: ["Fertility and reproduction", "Menstrual health", "Endometriosis", "Pregnancy and birth", "Menopause", "Oncology", "Mental health", "Other"], choose: "Choose an area", consent: "I agree to send my submission data to the Poppy Project team through FormSubmit.", formButton: "Send submission", formSending: "Sending…", formSuccess: "Thank you! Your submission has been received. We’ll reply to the email address you provided.", formError: "We couldn’t send your submission. Please try again or email joinpoppypl@gmail.com.",
+    contactBody: "Building a solution for women’s health? Looking for partners? Or holding an idea that could start something? Let’s get to know each other.", contactAction: "Email us", companyAction: "Submit your company to our database", formNote: "Send your submission directly from this page. FormSubmit will deliver the form data to us.",
+    formFields: ["Company name", "Your email address", "Website", "Area of activity", "Tell us about your company"], formEmailHint: "Use an address where we can reply — it does not have to be a company email.", consent: "I agree to send my submission data to the Poppy Project team through FormSubmit.", formButton: "Send submission", formSending: "Sending…", formSuccess: "Thank you! Your submission has been received. We’ll reply to the email address you provided.", formError: "We couldn’t send your submission. Please try again or email joinpoppypl@gmail.com.",
     instagramTitle: <>See what’s happening<br /><em>on Instagram.</em></>, instagramBody: "Selected stories, perspectives and conversations from the women’s health ecosystem.", socialAction: "Follow us on Instagram"
   }
 };
@@ -92,7 +93,6 @@ export function PoppyLanding() {
   const [language, setLanguage] = usePoppyLanguage();
   const [filter, setFilter] = useState<EventFilter>("all");
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
-  const [formPageUrl, setFormPageUrl] = useState("");
   const root = useRef<HTMLDivElement>(null);
   const flower = useRef<HTMLDivElement>(null);
   const cluster = useRef<HTMLDivElement>(null);
@@ -108,7 +108,6 @@ export function PoppyLanding() {
   useEffect(() => {
     const node = root.current;
     if (!node) return;
-    setFormPageUrl(`${window.location.origin}${window.location.pathname}#zglos-firme`);
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add("is-visible"); observer.unobserve(entry.target); } });
     }, { threshold: 0.08 });
@@ -134,7 +133,8 @@ export function PoppyLanding() {
     const form = event.currentTarget;
     const data = new FormData(form);
     const company = String(data.get("company") ?? "").trim();
-    const email = String(data.get("email") ?? "").trim();
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
     setFormStatus("sending");
 
     try {
@@ -143,23 +143,28 @@ export function PoppyLanding() {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           company,
-          email,
+          email: String(data.get("email") ?? "").trim(),
           website: String(data.get("website") ?? "").trim(),
-          category: String(data.get("category") ?? ""),
+          activity: String(data.get("activity") ?? "").trim(),
           description: String(data.get("description") ?? "").trim(),
           consent: "yes",
-          _url: formPageUrl || window.location.href,
-          _subject: `Poppy Project — FemTech map: ${company}`,
+          _url: companyFormPageUrl,
+          _subject: `Poppy Project — company database: ${company}`,
           _template: "table",
+          _captcha: "false",
           _honey: String(data.get("_honey") ?? "")
-        })
+        }),
+        signal: controller.signal
       });
       const result: { success?: boolean | string } = await response.json();
-      if (!response.ok || result.success === false || result.success === "false") throw new Error("Form submission failed");
+      const accepted = result.success === true || result.success === "true";
+      if (!response.ok || !accepted) throw new Error("Form submission failed");
       form.reset();
       setFormStatus("success");
     } catch {
       setFormStatus("error");
+    } finally {
+      window.clearTimeout(timeout);
     }
   };
 
@@ -281,14 +286,15 @@ export function PoppyLanding() {
               <div className="pp-company__body">
                 <p>{c.formNote}</p>
                 <form action={`https://formsubmit.co/${links.email}`} method="POST" onSubmit={submitCompany} aria-busy={formStatus === "sending"}>
-                  <input type="hidden" name="_url" value={formPageUrl} />
-                  <input type="hidden" name="_subject" value="Poppy Project — FemTech map submission" />
+                  <input type="hidden" name="_url" value={companyFormPageUrl} />
+                  <input type="hidden" name="_subject" value="Poppy Project — company database submission" />
                   <input type="hidden" name="_template" value="table" />
+                  <input type="hidden" name="_captcha" value="false" />
                   <label className="pp-company__honey" aria-hidden="true"><span>Leave this field empty</span><input name="_honey" tabIndex={-1} autoComplete="off" /></label>
                   <label><span>{c.formFields[0]} *</span><input name="company" required autoComplete="organization" /></label>
                   <label><span>{c.formFields[1]} *</span><input name="email" required type="email" autoComplete="email" /><small className="pp-company__help">{c.formEmailHint}</small></label>
                   <label><span>{c.formFields[2]}</span><input name="website" type="url" placeholder="https://" /></label>
-                  <label><span>{c.formFields[3]}</span><select name="category" defaultValue=""><option value="" disabled>{c.choose}</option>{c.categories.map(category => <option key={category}>{category}</option>)}</select></label>
+                  <label><span>{c.formFields[3]}</span><input name="activity" type="text" /></label>
                   <label className="pp-company__wide"><span>{c.formFields[4]} *</span><textarea name="description" rows={3} required maxLength={1500} /></label>
                   <label className="pp-company__consent"><input type="checkbox" name="consent" value="yes" required /><span>{c.consent}</span></label>
                   <div className="pp-company__wide"><FluidButton type="submit" disabled={formStatus === "sending"}>{formStatus === "sending" ? c.formSending : c.formButton}<Send size={17} aria-hidden="true" /></FluidButton></div>
