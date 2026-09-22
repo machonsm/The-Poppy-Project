@@ -12,7 +12,7 @@ import "./podcast-page.css";
 
 const copy = {
   pl: {
-    title: <>FemTech 101: <em>podcast FemTech po Polsku</em></>,
+    title: <>FemTech 101: <em>Podcast FemTech po Polsku</em></>,
     intro: "Zdrowie kobiet, innowacje i pytania, od których zaczyna się zmiana. Rozmawiamy o FemTechu po polsku — przystępnie i bez tabu!",
     language: "Rozmowy po polsku", browse: "Wybierz odcinek", spotify: "Słuchaj na Spotify",
     episode: "Odcinek", episodesLabel: "Odcinki podcastu", direct: "Otwórz w Spotify",

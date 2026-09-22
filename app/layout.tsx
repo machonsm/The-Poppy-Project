@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "../public/fonts/fonts.css";
 import "./globals.css";
 import "./redesign.css";
@@ -71,6 +72,11 @@ export default function RootLayout({
       </head>
       <body>
         {children}
+        <Script
+          data-goatcounter="https://poppyproject.goatcounter.com/count"
+          src="https://gc.zgo.at/count.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

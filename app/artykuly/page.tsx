@@ -5,10 +5,10 @@ export const metadata: Metadata = {
   title: "Artykuły",
   description: "Analizy, obserwacje i najważniejsze tematy dotyczące zdrowia kobiet, technologii i rynku. Czytaj nas na Substacku.",
   alternates: {
-    canonical: "/blog"
+    canonical: "/artykuly"
   }
 };
 
-export default function BlogPage() {
+export default function ArticlesPage() {
   return <PoppyBlogPage />;
 }

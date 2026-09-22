@@ -35,7 +35,7 @@ const content = {
     aboutIntro: "Budujemy ekosystem FemTech i innowacji w zdrowiu kobiet w Polsce i Europie Środkowo-Wschodniej.",
     aboutMoreAction: "O nas",
     pillars: [
-      { title: "Łączymy", body: "Łączymy przedsiębiorców, medyków, naukowców, inwestorów i partnerów instytucjonalnych, budując pomost między Polską a bardziej dojrzałymi ekosystemami innowacji w zdrowiu kobiet.", action: "Skontaktuj się" },
+      { title: "Łączymy", body: "Łączymy przedsiębiorców, medyków, naukowców, inwestorów i partnerów instytucjonalnych, budując pomost między Polską a bardziej dojrzałymi ekosystemami innowacji w zdrowiu kobiet." },
       { title: "Informujemy", body: "Mapujemy rynek, tłumaczymy badania, trendy i sprawdzone modele na lokalny kontekst." },
       { title: "Wspieramy", body: "Wspieramy polskie firmy, projekty i ekspertów w budowaniu międzynarodowej rozpoznawalności, tak aby lokalne talenty, wiedza i innowacje mogły docierać do szerszej sieci partnerów, inwestorów i odbiorców." }
     ],
@@ -43,14 +43,14 @@ const content = {
     discoverIntro: "Więcej wiedzy, inspiracji i rozmów o świecie FemTechu znajdziesz właśnie tutaj.",
     destinations: [
       { label: "Materiały", href: "/materialy/" },
-      { label: "Artykuły", href: "/blog/" },
+      { label: "Artykuły", href: "/artykuly/" },
       { label: "Podcast", href: "/podcast/" }
     ],
     mapTitle: <>Mapa Polskiego<br /><em>FemTechu 2025.</em></>,
     mapBody: <><strong>Pobierz naszą autorską mapę FemTechu w Polsce.</strong><br /><br />To pierwsze zestawienie polskiego ekosystemu stworzone w oparciu o dostępne informacje i naszą bieżącą wiedzę o tej branży!</>,
     mapName: "Mapa Polskiego FemTechu", mapDownload: "Pobierz mapę", mapFree: "Edycja 2025 · Bezpłatny dostęp", mapFile: "Dokument · PDF", mapJoin: "Twojej firmy jeszcze tu nie ma?", mapJoinCta: "Daj nam znać",
     eventsTitle: <>Dobre spotkania.<br /><em>Nowe możliwości.</em></>,
-    eventsBody: null, filters: ["Wszystkie", "Polska", "Europa", "Świat", "Online"], noEvents: "Na razie nie ma wydarzeń w tej kategorii.", showAllEvents: "Zobacz wszystkie", eventDate: "Data", eventName: "Wydarzenie", eventLocation: "Miejsce", eventOpen: "Zobacz wydarzenie", eventHint: "Najedź. Odkryj. Dołącz.", eventNote: "Kalendarz branżowy · Informacje i rejestracja na stronach organizatorów.",
+    eventsBody: null, filters: ["Wszystkie", "Polska", "Europa", "Świat", "Online"], noEvents: "Na razie nie ma wydarzeń w tej kategorii.", showAllEvents: "Zobacz wszystkie", eventDate: "Data", eventName: "Wydarzenie", eventLocation: "Miejsce", eventOpen: "Zobacz wydarzenie", eventNote: "Kalendarz branżowy · Informacje i rejestracja na stronach organizatorów.",
     contactTitle: <>Zmiana potrzebuje ludzi.<br /><em>Takich jak Ty.</em></>,
     contactBody: "Tworzysz rozwiązanie dla zdrowia kobiet? Szukasz partnerów? A może masz pomysł, od którego wszystko się zacznie? Poznajmy się.", contactAction: "Napisz do nas", companyAction: "Zgłoś firmę do mapy", formNote: "Wyślij zgłoszenie bezpośrednio ze strony. Dane formularza trafią do nas przez usługę FormSubmit.",
     formFields: ["Nazwa firmy", "Twój adres e-mail", "Strona internetowa", "Obszar działalności", "Opowiedz nam o firmie"], formEmailHint: "Podaj adres, na który możemy odpowiedzieć — nie musi być firmowy.", categories: ["Płodność i reprodukcja", "Zdrowie menstruacyjne", "Endometrioza", "Ciąża i poród", "Menopauza", "Onkologia", "Zdrowie psychiczne", "Inne"], choose: "Wybierz obszar", consent: "Zgadzam się na przekazanie danych zgłoszenia zespołowi Poppy Project przez usługę FormSubmit.", formButton: "Wyślij zgłoszenie", formSending: "Wysyłanie…", formSuccess: "Dziękujemy! Zgłoszenie zostało przyjęte. Odpowiemy na podany adres e-mail.", formError: "Nie udało się wysłać zgłoszenia. Spróbuj ponownie lub napisz do joinpoppypl@gmail.com.",
@@ -65,7 +65,7 @@ const content = {
     aboutIntro: "We build the FemTech and women’s health innovation ecosystem in Poland and Central and Eastern Europe.",
     aboutMoreAction: "About us",
     pillars: [
-      { title: "We connect", body: "We connect entrepreneurs, clinicians, scientists, investors and institutional partners, building a bridge between Poland and more mature women’s health innovation ecosystems.", action: "Contact us" },
+      { title: "We connect", body: "We connect entrepreneurs, clinicians, scientists, investors and institutional partners, building a bridge between Poland and more mature women’s health innovation ecosystems." },
       { title: "We inform", body: "We map the market and translate research, trends and proven models into the local context." },
       { title: "We support", body: "We support Polish companies, projects and experts in building international recognition, helping local talent, knowledge and innovation reach a wider network of partners, investors and audiences." }
     ],
@@ -73,14 +73,14 @@ const content = {
     discoverIntro: "Find more knowledge, inspiration and conversations about the world of FemTech right here.",
     destinations: [
       { label: "Resources", href: "/materialy/" },
-      { label: "Articles", href: "/blog/" },
+      { label: "Articles", href: "/artykuly/" },
       { label: "Podcast", href: "/podcast/" }
     ],
     mapTitle: <>Polish FemTech<br /><em>Map 2025.</em></>,
     mapBody: <><strong>Download our original map of Poland’s FemTech ecosystem.</strong><br /><br />It is the first overview of the Polish ecosystem created from publicly available information and our current knowledge of the sector.</>,
     mapName: "Polish FemTech Map", mapDownload: "Download the map", mapFree: "2025 edition · Free access", mapFile: "Document · PDF", mapJoin: "Don’t see your company yet?", mapJoinCta: "Let us know",
     eventsTitle: <>Great encounters.<br /><em>New possibilities.</em></>,
-    eventsBody: null, filters: ["All events", "Poland", "Europe", "World", "Online"], noEvents: "No events in this category yet.", showAllEvents: "View all events", eventDate: "Date", eventName: "Event", eventLocation: "Location", eventOpen: "View event", eventHint: "Hover. Discover. Connect.", eventNote: "Industry calendar · Details and registration on organisers’ websites.",
+    eventsBody: null, filters: ["All events", "Poland", "Europe", "World", "Online"], noEvents: "No events in this category yet.", showAllEvents: "View all events", eventDate: "Date", eventName: "Event", eventLocation: "Location", eventOpen: "View event", eventNote: "Industry calendar · Details and registration on organisers’ websites.",
     contactTitle: <>Change needs people.<br /><em>People like you.</em></>,
     contactBody: "Building a solution for women’s health? Looking for partners? Or holding an idea that could start something? Let’s get to know each other.", contactAction: "Email us", companyAction: "Add a company to the map", formNote: "Send your submission directly from this page. FormSubmit will deliver the form data to us.",
     formFields: ["Company name", "Your email address", "Website", "Area of activity", "Tell us about your company"], formEmailHint: "Use an address where we can reply — it does not have to be a company email.", categories: ["Fertility and reproduction", "Menstrual health", "Endometriosis", "Pregnancy and birth", "Menopause", "Oncology", "Mental health", "Other"], choose: "Choose an area", consent: "I agree to send my submission data to the Poppy Project team through FormSubmit.", formButton: "Send submission", formSending: "Sending…", formSuccess: "Thank you! Your submission has been received. We’ll reply to the email address you provided.", formError: "We couldn’t send your submission. Please try again or email joinpoppypl@gmail.com.",
@@ -206,7 +206,6 @@ export function PoppyLanding() {
                   <WorkMotif variant={index + 1} />
                   <h3>{pillar.title}</h3>
                   <p>{pillar.body}</p>
-                  {pillar.action && <FluidLink className="pp-work-card__action" href="#kontakt" size="small">{pillar.action}<ArrowUpRight size={15} aria-hidden="true" /></FluidLink>}
                 </article>
               ))}
             </div>
@@ -241,8 +240,8 @@ export function PoppyLanding() {
         <section className="pp-events pp-section" id="wydarzenia" aria-labelledby="events-heading">
           <div className="pp-container">
             <div className="pp-section-heading pp-section-heading--split" data-reveal><div><h2 id="events-heading">{c.eventsTitle}</h2></div>{c.eventsBody && <p>{c.eventsBody}</p>}</div>
-            <div className="pp-events__toolbar"><div className="pp-event-filters" role="group" aria-label={language === "pl" ? "Filtruj wydarzenia" : "Filter events"}>{eventFilters.map((id, index) => <button type="button" key={id} aria-pressed={filter === id} aria-controls="pp-events-results" onClick={() => setFilter(id)}>{c.filters[index]}<span>{!today ? "—" : id === "all" ? upcomingEvents.length : upcomingEvents.filter(event => event.region === id).length}</span></button>)}</div><span className="pp-events__hint">{c.eventHint}</span></div>
-            <div className="pp-events__results" id="pp-events-results" role="region" aria-busy={!today} aria-label={language === "pl" ? "Lista wydarzeń" : "Events list"} tabIndex={visibleEvents.length > 5 ? 0 : undefined} data-lenis-prevent>{!today ? <div className="pp-events__empty" role="status"><p>{language === "pl" ? "Ładowanie wydarzeń…" : "Loading events…"}</p><noscript>{language === "pl" ? "Włącz JavaScript, aby zobaczyć aktualne wydarzenia." : "Enable JavaScript to see current events."}</noscript></div> : visibleEvents.length ? <PoppyEventList key={filter} events={visibleEvents} language={language} openLabel={c.eventOpen} /> : <div className="pp-events__empty" role="status"><p>{c.noEvents}</p>{filter !== "all" && <button type="button" onClick={() => setFilter("all")}>{c.showAllEvents}<ArrowUpRight size={17} aria-hidden="true" /></button>}</div>}</div>
+            <div className="pp-events__toolbar"><div className="pp-event-filters" role="group" aria-label={language === "pl" ? "Filtruj wydarzenia" : "Filter events"}>{eventFilters.map((id, index) => <button type="button" key={id} aria-pressed={filter === id} aria-controls="pp-events-results" onClick={() => setFilter(id)}>{c.filters[index]}<span>{!today ? "—" : id === "all" ? upcomingEvents.length : upcomingEvents.filter(event => event.region === id).length}</span></button>)}</div></div>
+            <div className="pp-events__results" id="pp-events-results" role="region" aria-busy={!today} aria-label={language === "pl" ? "Lista wydarzeń" : "Events list"} tabIndex={visibleEvents.length > 5 ? 0 : undefined}>{!today ? <div className="pp-events__empty" role="status"><p>{language === "pl" ? "Ładowanie wydarzeń…" : "Loading events…"}</p><noscript>{language === "pl" ? "Włącz JavaScript, aby zobaczyć aktualne wydarzenia." : "Enable JavaScript to see current events."}</noscript></div> : visibleEvents.length ? <PoppyEventList key={filter} events={visibleEvents} language={language} openLabel={c.eventOpen} /> : <div className="pp-events__empty" role="status"><p>{c.noEvents}</p>{filter !== "all" && <button type="button" onClick={() => setFilter("all")}>{c.showAllEvents}<ArrowUpRight size={17} aria-hidden="true" /></button>}</div>}</div>
             <p className="pp-events__note">{c.eventNote}</p>
           </div>
         </section>

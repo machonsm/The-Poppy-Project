@@ -20,27 +20,11 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
     let previousScroll = scrollY;
     let speed = 1;
     let dirty = true;
-    let lastBloomGrowth = -1;
-    let bloomVisible = false;
-    let bloomTime = 0;
     const hero = root.querySelector<HTMLElement>(".pp-hero");
     const flower = root.querySelector<HTMLElement>(".pp-flower-stage");
     const about = root.querySelector<HTMLElement>(".pp-about");
     const mapStack = root.querySelector<HTMLElement>(".pp-events-stack");
     const mapSection = mapStack?.querySelector<HTMLElement>(".pp-map");
-    const bloomBorder = root.querySelector<HTMLElement>(".pp-bloom-border");
-    const bloomAnchor = bloomBorder?.closest<HTMLElement>(".pp-footer__wordmark") ?? bloomBorder;
-    const blooms = Array.from(root.querySelectorAll<SVGSVGElement>(".pp-bloom-border__plant")).map((plant, index) => {
-      const stem = plant.querySelector<SVGPathElement>(".pp-bloom-border__stem")!;
-      return {
-        stem, head: plant.querySelector<SVGGElement>(".pp-bloom-border__head")!,
-        sway: plant.querySelector<SVGGElement>(".pp-bloom-border__sway")!,
-        length: stem.getTotalLength(), delay: Number(plant.dataset.bloomDelay), lean: Number(plant.dataset.bloomLean),
-        // The reference's seven independent sway tempos, repeated across our denser row.
-        frequency: .55 + (index % 7) * .13, phase: index * 1.7,
-        motionStrength: 0,
-      };
-    });
     const portraits = Array.from(root.querySelectorAll<HTMLElement>(".pp-team__portrait"));
     const cards = Array.from(root.querySelectorAll<HTMLElement>(".pp-editorial-card"));
     const collection = root.querySelector<HTMLElement>(".pp-explore__grid");
@@ -95,26 +79,6 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
         const fade = growth * growth * (3 - 2 * growth);
         root.style.setProperty("--hero-scene-opacity", String(cinematic ? 1 - fade : 1));
       }
-      if (bloomBorder && bloomAnchor) {
-        const bounds = bloomAnchor.getBoundingClientRect();
-        const entered = innerHeight - bounds.top;
-        const growthDistance = Math.min(innerHeight * .42, Math.max(60, bounds.height * .8));
-        const growth = allowed() ? clamp((entered - 24) / growthDistance) : (entered > 24 ? 1 : 0);
-        bloomVisible = entered > 24 && bounds.bottom > 0 && bounds.top < innerHeight;
-        bloomBorder.style.opacity = entered > 24 ? "1" : "0";
-        if (growth !== lastBloomGrowth) blooms.forEach(bloom => {
-          const { stem, head, length, delay, lean } = bloom;
-          const p = clamp((growth - delay) / (1 - delay));
-          const stemGrowth = 1 - Math.pow(1 - p, 2);
-          const blossom = clamp((p - .22) / .78);
-          const point = stem.getPointAtLength(length * stemGrowth);
-          stem.style.strokeDashoffset = String(1 - stemGrowth);
-          head.setAttribute("transform", `translate(${point.x} ${point.y}) rotate(${lean * (1 - blossom * .75)}) scale(${.22 + .78 * blossom})`);
-          head.style.opacity = String(clamp(blossom * 3));
-          bloom.motionStrength = blossom * blossom * (3 - 2 * blossom);
-        });
-        lastBloomGrowth = growth;
-      }
       portraits.forEach((portrait, index) => {
         const parent = portrait.closest<HTMLElement>(".pp-team")!;
         const p = progress(parent, .3);
@@ -140,17 +104,6 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
       }
     };
 
-    const swayBlooms = (delta: number) => {
-      if (!bloomVisible || !allowed() || html.dataset.poppyIntro !== "done") return;
-      bloomTime += delta / 1000;
-      blooms.forEach(({ sway, frequency, phase, motionStrength }) => {
-        // Rotate the complete plant around its planted base. The inner head
-        // transform stays exclusively owned by the scroll-growth animation.
-        const angle = Math.sin(bloomTime * frequency + phase) * 1.6 * motionStrength;
-        sway.setAttribute("transform", `rotate(${angle.toFixed(3)} 80 272)`);
-      });
-    };
-
     const tick = (time: number) => {
       if (document.hidden) { frame = 0; return; }
       // Keep Lenis's clock current even while its animation is paused, so the
@@ -162,7 +115,6 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
       speed += (targetSpeed - speed) * (1 - Math.exp(-delta / 180));
       marquee?.getAnimations().forEach(animation => animation.updatePlaybackRate(speed));
       if (dirty || Math.abs(scrollY - previousScroll) > .01) { paint(); dirty = false; }
-      swayBlooms(delta);
       previousTime = time;
       previousScroll = scrollY;
       frame = requestAnimationFrame(tick);
@@ -187,7 +139,6 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
       paint();
       if (allowed()) frame = requestAnimationFrame(tick);
       else {
-        blooms.forEach(({ sway }) => sway.removeAttribute("transform"));
         marquee?.getAnimations().forEach(animation => animation.updatePlaybackRate(1));
       }
     };
@@ -233,7 +184,6 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
     return () => {
       disposed = true;
       cancelAnimationFrame(frame); lenis?.destroy(); mutation.disconnect(); resize.disconnect();
-      blooms.forEach(({ sway }) => sway.removeAttribute("transform"));
       root.classList.remove("pp-motion-ready", "pp-cinematic");
       window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onResize);
       window.removeEventListener("poppy-scroll-to", scrollTo);

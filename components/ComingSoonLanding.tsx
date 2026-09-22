@@ -92,7 +92,7 @@ const copy: Record<Language, LandingCopy> = {
     subtitle: "Polska platforma innowacji w zdrowiu kobiet.",
     nav: [
       { label: "Materiały", href: "/materialy" },
-      { label: "Blog", href: "/blog" },
+      { label: "Artykuły", href: "/artykuly" },
       { label: "Podcast", href: "/podcast" },
       { label: "Wydarzenia", href: "#wydarzenia" },
       { label: "O nas", href: "/o-nas" }
@@ -197,7 +197,7 @@ const copy: Record<Language, LandingCopy> = {
     subtitle: "Polish platform for women’s health innovation.",
     nav: [
       { label: "Resources", href: "/materialy" },
-      { label: "Blog", href: "/blog" },
+      { label: "Articles", href: "/artykuly" },
       { label: "Podcast", href: "/podcast" },
       { label: "Events", href: "#wydarzenia" },
       { label: "About us", href: "/o-nas" }
@@ -301,7 +301,7 @@ const copy: Record<Language, LandingCopy> = {
 const contactHref = "mailto:joinpoppypl@gmail.com";
 const pageLinks: NavItem[] = [
   { label: "Materiały", href: "/materialy" },
-  { label: "Blog", href: "/blog" },
+  { label: "Artykuły", href: "/artykuly" },
   { label: "Podcast", href: "/podcast" },
   { label: "O nas", href: "/o-nas" }
 ];

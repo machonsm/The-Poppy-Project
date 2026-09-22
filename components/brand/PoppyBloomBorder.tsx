@@ -1,15 +1,15 @@
 import { useId, type CSSProperties } from "react";
 import { poppyReplicaPaths, poppyReplicaTransform } from "./poppyReplica";
 
-// The original logo petals, paired with curved stems inspired by the supplied reference.
+// The original logo petals, paired with clean, straight stems.
 const flowerForms = [
-  { left: 7, size: 94, delay: .12, lean: -13, stem: "M 80 272 C 52 209 113 163 73 106" },
-  { left: 21, size: 121, delay: .02, lean: 9, stem: "M 80 272 C 114 209 49 153 86 92" },
-  { left: 35, size: 87, delay: .24, lean: -9, stem: "M 80 272 C 52 214 105 166 73 110" },
-  { left: 49, size: 131, delay: .1, lean: -7, stem: "M 80 272 C 61 203 96 158 78 90" },
-  { left: 64, size: 98, delay: .19, lean: 15, stem: "M 80 272 C 102 214 45 163 91 103" },
-  { left: 79, size: 120, delay: .06, lean: -10, stem: "M 80 272 C 117 217 62 144 80 91" },
-  { left: 93, size: 86, delay: .28, lean: 13, stem: "M 80 272 C 49 209 106 170 80 109" },
+  { left: 7, size: 94, delay: .12, lean: -13, stem: "M 80 272 L 80 106" },
+  { left: 21, size: 121, delay: .02, lean: 9, stem: "M 80 272 L 80 92" },
+  { left: 35, size: 87, delay: .24, lean: -9, stem: "M 80 272 L 80 110" },
+  { left: 49, size: 131, delay: .1, lean: -7, stem: "M 80 272 L 80 90" },
+  { left: 64, size: 98, delay: .19, lean: 15, stem: "M 80 272 L 80 103" },
+  { left: 79, size: 120, delay: .06, lean: -10, stem: "M 80 272 L 80 91" },
+  { left: 93, size: 86, delay: .28, lean: 13, stem: "M 80 272 L 80 109" },
 ];
 // Six evenly spaced flowers keep this footer easter egg quiet and discoverable.
 const flowers = flowerForms.filter((_, index) => index !== 3).map((flower, index) => ({

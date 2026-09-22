@@ -180,7 +180,6 @@ button, summary { cursor: pointer; }
 .pp-event-filters button[aria-pressed="true"] { background: var(--bone); border-color: var(--bone); color: var(--olive); }
 .pp-event-filters button:not([aria-pressed="true"]):hover { background: rgba(253, 251, 247, .12); }
 .pp-event-filters button > span { font-size: 13px; line-height: 18px; opacity: .7; }
-.pp-events__hint { display: flex; gap: 18px; align-items: center; font-size: 13px; line-height: 18px; color: var(--pp-muted); }
 .pp-events__note { margin: 20px 0 0; font-size: var(--pp-body-size); line-height: var(--pp-body-leading); color: var(--pp-muted); }
 .pp-events__empty { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 180px; border-block: 1px solid var(--pp-line); }
 .pp-events__empty p { margin: 0; font-family: var(--font-serif); font-size: var(--pp-h3-size); line-height: var(--pp-h3-leading); }
@@ -413,7 +412,6 @@ html[data-motion="off"] .pp-contact__flower-petal { display: none; }
   .pp-map__join { margin-top: 30px; }
   .pp-map-art { width: min(100%, 380px); }
   .pp-events__toolbar { margin-bottom: 10px; }
-  .pp-events__hint { display: none; }
   .pp-event-filters { gap: 7px; }
   .pp-event-filters button { padding: 9px 13px; gap: 12px; }
   .pp-explore__grid { grid-template-columns: 1fr; gap: 36px; }

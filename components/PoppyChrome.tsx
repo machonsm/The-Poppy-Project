@@ -7,6 +7,7 @@ import { links } from "@/data/links";
 import { LanguageToggle } from "@/components/ui/LanguageToggle";
 import { PoppyBloomBorder } from "@/components/brand/PoppyBloomBorder";
 import { PoppyNewsletterSignup } from "@/components/PoppyNewsletterSignup";
+import { usePoppyBlooms } from "@/components/motion/usePoppyBlooms";
 import { isSiteHome, sitePath } from "@/lib/site-path";
 
 export type PoppyLanguage = "pl" | "en";
@@ -15,7 +16,7 @@ const navigation = {
   pl: [
     { label: "Materiały", href: "/materialy/" },
     { label: "Wydarzenia", href: "/#wydarzenia" },
-    { label: "Artykuły", href: "/blog/" },
+    { label: "Artykuły", href: "/artykuly/" },
     { label: "Podcast", href: "/podcast/" },
     { label: "O nas", href: "/o-nas/" },
     { label: "Kontakt", href: "/#kontakt" }
@@ -23,7 +24,7 @@ const navigation = {
   en: [
     { label: "Resources", href: "/materialy/" },
     { label: "Events", href: "/#wydarzenia" },
-    { label: "Articles", href: "/blog/" },
+    { label: "Articles", href: "/artykuly/" },
     { label: "Podcast", href: "/podcast/" },
     { label: "About", href: "/o-nas/" },
     { label: "Contact", href: "/#kontakt" }
@@ -98,13 +99,16 @@ export function PoppyHeader({ language = "pl", onLanguageChange }: {
   );
 }
 
-export function PoppyFooter({ language = "pl", showNewsletter = false, decorativeBlooms = false }: {
+export function PoppyFooter({ language = "pl", showNewsletter = false, decorativeBlooms = true }: {
   language?: PoppyLanguage;
   showNewsletter?: boolean;
   decorativeBlooms?: boolean;
 }) {
+  const footer = useRef<HTMLElement>(null);
+  usePoppyBlooms(footer);
+
   return (
-    <footer id="site-footer" className={`pp-footer${decorativeBlooms ? " pp-footer--with-blooms" : ""}`}>
+    <footer id="site-footer" ref={footer} className={`pp-footer${decorativeBlooms ? " pp-footer--with-blooms" : ""}`}>
       <div className="pp-container">
         {showNewsletter && <div className="pp-footer__newsletter"><PoppyNewsletterSignup language={language} variant="footer" /></div>}
         <div className="pp-footer__links">
