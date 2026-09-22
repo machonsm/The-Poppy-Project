@@ -1,30 +1,29 @@
 "use client";
 
-/* eslint-disable @next/next/no-html-link-for-pages -- Native document navigation enables transitions on the static export. */
-
 import { ArrowUp, Instagram, Linkedin, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { PoppyMark } from "@/components/brand/PoppyMark";
 import { links } from "@/data/links";
 import { LanguageToggle } from "@/components/ui/LanguageToggle";
+import { PoppyBloomBorder } from "@/components/brand/PoppyBloomBorder";
+import { PoppyNewsletterSignup } from "@/components/PoppyNewsletterSignup";
+import { isSiteHome, sitePath } from "@/lib/site-path";
 
 export type PoppyLanguage = "pl" | "en";
 
 const navigation = {
   pl: [
     { label: "Materiały", href: "/materialy/" },
-    { label: "Firmy", href: "/#firmy" },
     { label: "Wydarzenia", href: "/#wydarzenia" },
-    { label: "Blog", href: "/blog/" },
+    { label: "Artykuły", href: "/blog/" },
     { label: "Podcast", href: "/podcast/" },
     { label: "O nas", href: "/o-nas/" },
     { label: "Kontakt", href: "/#kontakt" }
   ],
   en: [
     { label: "Resources", href: "/materialy/" },
-    { label: "Companies", href: "/#firmy" },
     { label: "Events", href: "/#wydarzenia" },
-    { label: "Journal", href: "/blog/" },
+    { label: "Articles", href: "/blog/" },
     { label: "Podcast", href: "/podcast/" },
     { label: "About", href: "/o-nas/" },
     { label: "Contact", href: "/#kontakt" }
@@ -61,7 +60,7 @@ export function PoppyHeader({ language = "pl", onLanguageChange }: {
       <a className="pp-skip" href="#main-content">{language === "pl" ? "Przejdź do treści" : "Skip to content"}</a>
       <header className="pp-header" ref={header}>
         <div className="pp-container pp-header__inner">
-          <a className="pp-brand" href="/" aria-label={language === "pl" ? "Poppy Project — strona główna" : "Poppy Project — home"}>
+          <a className="pp-brand" href={sitePath("/")} aria-label={language === "pl" ? "Poppy Project — strona główna" : "Poppy Project — home"}>
             <PoppyMark />
             <span>Poppy Project</span>
           </a>
@@ -77,13 +76,15 @@ export function PoppyHeader({ language = "pl", onLanguageChange }: {
         </div>
         <nav className={`pp-nav ${open ? "is-open" : ""}`} id="poppy-navigation" aria-label={language === "pl" ? "Nawigacja główna" : "Main navigation"}>
           {navigation[language].map(({ label, href }) => (
-            <a href={href} key={href} onClick={event => {
+            <a href={sitePath(href)} key={href} onClick={event => {
               setOpen(false);
-              if (href.startsWith("/#") && window.location.pathname === "/") {
+              if (href.startsWith("/#") && isSiteHome(window.location.pathname)) {
                 const target = document.getElementById(href.slice(2));
                 if (target) {
                   event.preventDefault();
-                  window.history.pushState(null, "", href);
+                  event.stopPropagation();
+                  event.nativeEvent.stopImmediatePropagation();
+                  window.history.pushState(null, "", sitePath(href));
                   window.dispatchEvent(new CustomEvent("poppy-scroll-to", { detail: target }));
                 }
               }
@@ -97,12 +98,21 @@ export function PoppyHeader({ language = "pl", onLanguageChange }: {
   );
 }
 
-export function PoppyFooter({ language = "pl" }: { language?: PoppyLanguage }) {
+export function PoppyFooter({ language = "pl", showNewsletter = false, decorativeBlooms = false }: {
+  language?: PoppyLanguage;
+  showNewsletter?: boolean;
+  decorativeBlooms?: boolean;
+}) {
   return (
-    <footer className="pp-footer">
+    <footer id="site-footer" className={`pp-footer${decorativeBlooms ? " pp-footer--with-blooms" : ""}`}>
       <div className="pp-container">
+        {showNewsletter && <div className="pp-footer__newsletter"><PoppyNewsletterSignup language={language} variant="footer" /></div>}
         <div className="pp-footer__links">
-          <div><h3>{language === "pl" ? "Porozmawiajmy" : "Get in touch"}</h3><a href={`mailto:${links.email}`}>{language === "pl" ? "Napisz do nas" : "Email us"}</a></div>
+          <div>
+            <h3>{language === "pl" ? "Porozmawiajmy" : "Get in touch"}</h3>
+            <a href={`mailto:${links.email}`}>{language === "pl" ? "Napisz do nas" : "Email us"}</a>
+            <a href={sitePath("/#zglos-firme")}>{language === "pl" ? "Zgłoś firmę do mapy" : "Submit your company"}</a>
+          </div>
           <div><h3>{language === "pl" ? "Obserwuj Poppy Project" : "Follow Poppy Project"}</h3>
             <a href={links.instagram} target="_blank" rel="noopener noreferrer"><Instagram size={18} strokeWidth={1.8} aria-hidden="true" /><span>Instagram</span></a>
             <a href={links.linkedin} target="_blank" rel="noopener noreferrer"><Linkedin size={18} strokeWidth={1.8} aria-hidden="true" /><span>LinkedIn</span></a>
@@ -110,10 +120,13 @@ export function PoppyFooter({ language = "pl" }: { language?: PoppyLanguage }) {
           </div>
           <div><h3>{language === "pl" ? "Posłuchaj" : "Listen"}</h3><a href={links.spotify} target="_blank" rel="noopener noreferrer">Spotify</a></div>
         </div>
-        <div className="pp-footer__wordmark" aria-label="Poppy Project"><PoppyMark monochrome /><span>Poppy Project</span></div>
+        <div className="pp-footer__wordmark" aria-label="Poppy Project">
+          {decorativeBlooms ? <PoppyBloomBorder /> : <PoppyMark monochrome />}
+          <span>Poppy Project</span>
+        </div>
         <div className="pp-footer__bottom">
           <span>© {new Date().getFullYear()} Poppy Project</span>
-          <span className="pp-footer__note">{language === "pl" ? "Z Polski. Dla przyszłości zdrowia kobiet." : "From Poland. For the future of women’s health."}</span>
+          <span className="pp-footer__note">{language === "pl" ? "Polska platforma innowacji w zdrowiu kobiet" : "Polish platform for innovation in women’s health"}</span>
           <a href="#main-content" aria-label={language === "pl" ? "Wróć na górę" : "Back to top"}><ArrowUp size={18} aria-hidden="true" /></a>
         </div>
       </div>

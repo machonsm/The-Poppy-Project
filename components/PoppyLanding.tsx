@@ -2,21 +2,22 @@
 
 import Image from "next/image";
 import { ArrowUpRight, Download, Send } from "lucide-react";
-import { useEffect, useRef, useState, type FormEvent } from "react";
-import { PoppyHeader, PoppyFooter, type PoppyLanguage } from "@/components/PoppyChrome";
+import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent } from "react";
+import { PoppyHeader, PoppyFooter } from "@/components/PoppyChrome";
 import { PoppyEventList } from "@/components/PoppyEventList";
-import { PoppyNewsletterSignup } from "@/components/PoppyNewsletterSignup";
 import { InstagramStoryCarousel } from "@/components/InstagramStoryCarousel";
 import { FluidButton, FluidLink } from "@/components/ui/FluidButton";
 import { FemtechExplorer } from "@/components/FemtechExplorer";
 import { PoppyMark } from "@/components/brand/PoppyMark";
-import { PoppyBloomBorder } from "@/components/brand/PoppyBloomBorder";
 import { GravityDotGrid } from "@/components/brand/GravityDotGrid";
 import { WorkMotif } from "@/components/brand/WorkMotif";
-import { usePoppyIntro } from "@/components/motion/usePoppyIntro";
 import { usePoppyHover } from "@/components/motion/usePoppyHover";
 import { usePoppyScroll } from "@/components/motion/usePoppyScroll";
+import { siteFeatures } from "@/lib/features";
+import { sitePath } from "@/lib/site-path";
 import { events, type EventRegion } from "@/data/events";
+import { currentEventDay, isUpcomingEvent, serverEventDay, subscribeEventDay } from "@/lib/event-dates";
+import { usePoppyLanguage } from "@/lib/use-poppy-language";
 import { links } from "@/data/links";
 import { mapAssets } from "@/data/map-assets";
 
@@ -26,75 +27,82 @@ const formSubmitUrl = `https://formsubmit.co/ajax/${links.email}`;
 
 const content = {
   pl: {
-    hero: ["Zdrowie kobiet.", "Czas na", "nową", "perspektywę."],
-    intro: "Łączymy wiedzę, ludzi i innowacje. Otwieramy nowe możliwości dla zdrowia kobiet — w Polsce i poza jej granicami.",
-    mapCta: "Odkryj mapę FemTechu", scrollDown: "Przewiń w dół",
+    hero: ["Polska platforma", "innowacji", "w\u00a0zdrowiu kobiet"],
+    intro: "Łączymy polski ekosystem z globalnym rynkiem innowacji zdrowia kobiet — FemTech.",
+    mapCta: "Odkryj mapę FemTechu",
     strip: ["Obserwuj nas na Instagramie"],
     aboutTitle: <><span className="pp-heading-line"><span>Czym się</span></span><span className="pp-heading-line"><span><em>zajmujemy?</em></span></span></>,
-    aboutIntro: "Budujemy przestrzeń, w której wiedza, innowacje i relacje otwierają nowe możliwości dla zdrowia kobiet.",
-    aboutMore: "Chcesz dowiedzieć się więcej o osobach, które tworzą Poppy Project?",
-    aboutMoreAction: "Poznaj nas",
+    aboutIntro: "Budujemy ekosystem FemTech i innowacji w zdrowiu kobiet w Polsce i Europie Środkowo-Wschodniej.",
+    aboutMoreAction: "O nas",
     pillars: [
-      { title: "Budujemy", body: "Budujemy ekosystem FemTech i innowacji w zdrowiu kobiet w Polsce i Europie Środkowo-Wschodniej." },
-      { title: "Łączymy", body: "Łączymy founderki i inwestorów wspierających zdrowie kobiet." },
-      { title: "Informujemy", body: "Udostępniamy raporty, granty, listy inwestorów i zaproszenia na wydarzenia." },
-      { title: "Wspieramy", body: "Wzmacniamy głosy liderek i innowatorek, wspierając rozwój technologii poprawiających zdrowie kobiet." }
+      { title: "Łączymy", body: "Łączymy przedsiębiorców, medyków, naukowców, inwestorów i partnerów instytucjonalnych, budując pomost między Polską a bardziej dojrzałymi ekosystemami innowacji w zdrowiu kobiet.", action: "Skontaktuj się" },
+      { title: "Informujemy", body: "Mapujemy rynek, tłumaczymy badania, trendy i sprawdzone modele na lokalny kontekst." },
+      { title: "Wspieramy", body: "Wspieramy polskie firmy, projekty i ekspertów w budowaniu międzynarodowej rozpoznawalności, tak aby lokalne talenty, wiedza i innowacje mogły docierać do szerszej sieci partnerów, inwestorów i odbiorców." }
     ],
-    mapTitle: <>Wielkie zmiany.<br /><em>Na jednej mapie.</em></>,
-    mapBody: "Poznaj firmy i inicjatywy, które tworzą polski FemTech. Nasza autorska mapa to punkt wyjścia do odkrywania, łączenia i budowania czegoś nowego.",
+    discoverKicker: "Odkrywaj dalej",
+    discoverIntro: "Więcej wiedzy, inspiracji i rozmów o świecie FemTechu znajdziesz właśnie tutaj.",
+    destinations: [
+      { label: "Materiały", href: "/materialy/" },
+      { label: "Artykuły", href: "/blog/" },
+      { label: "Podcast", href: "/podcast/" }
+    ],
+    mapTitle: <>Mapa Polskiego<br /><em>FemTechu 2025.</em></>,
+    mapBody: <><strong>Pobierz naszą autorską mapę FemTechu w Polsce.</strong><br /><br />To pierwsze zestawienie polskiego ekosystemu stworzone w oparciu o dostępne informacje i naszą bieżącą wiedzę o tej branży!</>,
     mapName: "Mapa Polskiego FemTechu", mapDownload: "Pobierz mapę", mapFree: "Edycja 2025 · Bezpłatny dostęp", mapFile: "Dokument · PDF", mapJoin: "Twojej firmy jeszcze tu nie ma?", mapJoinCta: "Daj nam znać",
     eventsTitle: <>Dobre spotkania.<br /><em>Nowe możliwości.</em></>,
-    eventsBody: "Wydarzenia, które warto mieć na radarze. Polska, Europa i świat.", filters: ["Wszystkie", "Polska", "Europa", "Świat", "Online"], noEvents: "Na razie nie ma wydarzeń w tej kategorii.", showAllEvents: "Zobacz wszystkie", eventDate: "Data", eventName: "Wydarzenie", eventLocation: "Miejsce", eventOpen: "Zobacz wydarzenie", eventHint: "Najedź. Odkryj. Dołącz.", eventNote: "Kalendarz branżowy · Informacje i rejestracja na stronach organizatorów.",
+    eventsBody: null, filters: ["Wszystkie", "Polska", "Europa", "Świat", "Online"], noEvents: "Na razie nie ma wydarzeń w tej kategorii.", showAllEvents: "Zobacz wszystkie", eventDate: "Data", eventName: "Wydarzenie", eventLocation: "Miejsce", eventOpen: "Zobacz wydarzenie", eventHint: "Najedź. Odkryj. Dołącz.", eventNote: "Kalendarz branżowy · Informacje i rejestracja na stronach organizatorów.",
     contactTitle: <>Zmiana potrzebuje ludzi.<br /><em>Takich jak Ty.</em></>,
     contactBody: "Tworzysz rozwiązanie dla zdrowia kobiet? Szukasz partnerów? A może masz pomysł, od którego wszystko się zacznie? Poznajmy się.", contactAction: "Napisz do nas", companyAction: "Zgłoś firmę do mapy", formNote: "Wyślij zgłoszenie bezpośrednio ze strony. Dane formularza trafią do nas przez usługę FormSubmit.",
-    formFields: ["Nazwa firmy", "Twój adres e-mail", "Strona internetowa", "Obszar działalności", "Opowiedz nam o firmie"], formEmailHint: "Podaj adres, na który możemy odpowiedzieć — nie musi być firmowy.", categories: ["Płodność i reprodukcja", "Zdrowie menstruacyjne", "Endometrioza", "Ciąża i poród", "Menopauza", "Onkologia", "Zdrowie psychiczne", "Inne"], choose: "Wybierz obszar", consent: "Zgadzam się na przekazanie danych zgłoszenia zespołowi Poppy Project przez usługę FormSubmit.", formButton: "Wyślij zgłoszenie", formSending: "Wysyłanie…", formSuccess: "Dziękujemy! Zgłoszenie zostało przyjęte. Odpowiemy na podany adres e-mail.", formError: "Nie udało się wysłać zgłoszenia. Spróbuj ponownie lub napisz do femtechpopl@gmail.com.",
-    instagramTitle: <>Zobacz, co dzieje się<br /><em>na Instagramie.</em></>, instagramBody: "Najnowsze wiadomości, perspektywy i rozmowy z ekosystemu zdrowia kobiet.", socialAction: "Obserwuj nas na Instagramie"
+    formFields: ["Nazwa firmy", "Twój adres e-mail", "Strona internetowa", "Obszar działalności", "Opowiedz nam o firmie"], formEmailHint: "Podaj adres, na który możemy odpowiedzieć — nie musi być firmowy.", categories: ["Płodność i reprodukcja", "Zdrowie menstruacyjne", "Endometrioza", "Ciąża i poród", "Menopauza", "Onkologia", "Zdrowie psychiczne", "Inne"], choose: "Wybierz obszar", consent: "Zgadzam się na przekazanie danych zgłoszenia zespołowi Poppy Project przez usługę FormSubmit.", formButton: "Wyślij zgłoszenie", formSending: "Wysyłanie…", formSuccess: "Dziękujemy! Zgłoszenie zostało przyjęte. Odpowiemy na podany adres e-mail.", formError: "Nie udało się wysłać zgłoszenia. Spróbuj ponownie lub napisz do joinpoppypl@gmail.com.",
+    instagramTitle: <>Zobacz, co dzieje się<br /><em>na Instagramie.</em></>, instagramBody: "Wybrane wiadomości, perspektywy i rozmowy z ekosystemu zdrowia kobiet.", socialAction: "Obserwuj nas na Instagramie"
   },
   en: {
-    hero: ["Women’s health.", "Time for a", "new", "perspective."],
-    intro: "Connecting knowledge, people and innovation. Opening new possibilities for women’s health — in Poland and beyond.",
-    mapCta: "Explore the FemTech map", scrollDown: "Scroll down",
+    hero: ["Poland’s platform", "for innovation", "in women’s health"],
+    intro: "We connect Poland’s ecosystem with the global women’s health innovation market — FemTech.",
+    mapCta: "Explore the FemTech map",
     strip: ["Follow us on Instagram"],
     aboutTitle: <><span className="pp-heading-line"><span>What</span></span><span className="pp-heading-line"><span><em>we do.</em></span></span></>,
-    aboutIntro: "We create a space where knowledge, innovation and relationships open new possibilities for women’s health.",
-    aboutMore: "Would you like to meet the people behind Poppy Project?",
+    aboutIntro: "We build the FemTech and women’s health innovation ecosystem in Poland and Central and Eastern Europe.",
     aboutMoreAction: "About us",
     pillars: [
-      { title: "We build", body: "We build the FemTech and women’s health innovation ecosystem in Poland and Central and Eastern Europe." },
-      { title: "We connect", body: "We connect women founders and investors supporting women’s health." },
-      { title: "We inform", body: "We share reports, grants, investor lists and invitations to events." },
-      { title: "We support", body: "We amplify women leaders and innovators, supporting the development of technologies that improve women’s health." }
+      { title: "We connect", body: "We connect entrepreneurs, clinicians, scientists, investors and institutional partners, building a bridge between Poland and more mature women’s health innovation ecosystems.", action: "Contact us" },
+      { title: "We inform", body: "We map the market and translate research, trends and proven models into the local context." },
+      { title: "We support", body: "We support Polish companies, projects and experts in building international recognition, helping local talent, knowledge and innovation reach a wider network of partners, investors and audiences." }
     ],
-    mapTitle: <>Big changes.<br /><em>One map.</em></>,
-    mapBody: "Discover the companies and initiatives shaping Polish FemTech. Our original ecosystem map is a starting point for exploring, connecting and building something new.",
+    discoverKicker: "Discover more",
+    discoverIntro: "Find more knowledge, inspiration and conversations about the world of FemTech right here.",
+    destinations: [
+      { label: "Resources", href: "/materialy/" },
+      { label: "Articles", href: "/blog/" },
+      { label: "Podcast", href: "/podcast/" }
+    ],
+    mapTitle: <>Polish FemTech<br /><em>Map 2025.</em></>,
+    mapBody: <><strong>Download our original map of Poland’s FemTech ecosystem.</strong><br /><br />It is the first overview of the Polish ecosystem created from publicly available information and our current knowledge of the sector.</>,
     mapName: "Polish FemTech Map", mapDownload: "Download the map", mapFree: "2025 edition · Free access", mapFile: "Document · PDF", mapJoin: "Don’t see your company yet?", mapJoinCta: "Let us know",
     eventsTitle: <>Great encounters.<br /><em>New possibilities.</em></>,
-    eventsBody: "Events worth keeping on your radar. Poland, Europe and beyond.", filters: ["All events", "Poland", "Europe", "World", "Online"], noEvents: "No events in this category yet.", showAllEvents: "View all events", eventDate: "Date", eventName: "Event", eventLocation: "Location", eventOpen: "View event", eventHint: "Hover. Discover. Connect.", eventNote: "Industry calendar · Details and registration on organisers’ websites.",
+    eventsBody: null, filters: ["All events", "Poland", "Europe", "World", "Online"], noEvents: "No events in this category yet.", showAllEvents: "View all events", eventDate: "Date", eventName: "Event", eventLocation: "Location", eventOpen: "View event", eventHint: "Hover. Discover. Connect.", eventNote: "Industry calendar · Details and registration on organisers’ websites.",
     contactTitle: <>Change needs people.<br /><em>People like you.</em></>,
     contactBody: "Building a solution for women’s health? Looking for partners? Or holding an idea that could start something? Let’s get to know each other.", contactAction: "Email us", companyAction: "Add a company to the map", formNote: "Send your submission directly from this page. FormSubmit will deliver the form data to us.",
-    formFields: ["Company name", "Your email address", "Website", "Area of activity", "Tell us about your company"], formEmailHint: "Use an address where we can reply — it does not have to be a company email.", categories: ["Fertility and reproduction", "Menstrual health", "Endometriosis", "Pregnancy and birth", "Menopause", "Oncology", "Mental health", "Other"], choose: "Choose an area", consent: "I agree to send my submission data to the Poppy Project team through FormSubmit.", formButton: "Send submission", formSending: "Sending…", formSuccess: "Thank you! Your submission has been received. We’ll reply to the email address you provided.", formError: "We couldn’t send your submission. Please try again or email femtechpopl@gmail.com.",
-    instagramTitle: <>See what’s happening<br /><em>on Instagram.</em></>, instagramBody: "Fresh news, perspectives and conversations from the women’s health ecosystem.", socialAction: "Follow us on Instagram"
+    formFields: ["Company name", "Your email address", "Website", "Area of activity", "Tell us about your company"], formEmailHint: "Use an address where we can reply — it does not have to be a company email.", categories: ["Fertility and reproduction", "Menstrual health", "Endometriosis", "Pregnancy and birth", "Menopause", "Oncology", "Mental health", "Other"], choose: "Choose an area", consent: "I agree to send my submission data to the Poppy Project team through FormSubmit.", formButton: "Send submission", formSending: "Sending…", formSuccess: "Thank you! Your submission has been received. We’ll reply to the email address you provided.", formError: "We couldn’t send your submission. Please try again or email joinpoppypl@gmail.com.",
+    instagramTitle: <>See what’s happening<br /><em>on Instagram.</em></>, instagramBody: "Selected stories, perspectives and conversations from the women’s health ecosystem.", socialAction: "Follow us on Instagram"
   }
 };
 
 export function PoppyLanding() {
-  const [language, setLanguage] = useState<PoppyLanguage>("pl");
+  const [language, setLanguage] = usePoppyLanguage();
   const [filter, setFilter] = useState<EventFilter>("all");
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const root = useRef<HTMLDivElement>(null);
   const flower = useRef<HTMLDivElement>(null);
   const cluster = useRef<HTMLDivElement>(null);
   const mark = useRef<HTMLDivElement>(null);
-  usePoppyIntro(cluster);
   usePoppyHover(mark);
   usePoppyScroll(root);
   const c = content[language];
   const mapAsset = mapAssets[language];
-  const visibleEvents = filter === "all" ? events : events.filter(event => event.region === filter);
-
-  useEffect(() => {
-    document.documentElement.lang = language;
-  }, [language]);
+  const today = useSyncExternalStore(subscribeEventDay, currentEventDay, serverEventDay);
+  const upcomingEvents = today ? events.filter(event => isUpcomingEvent(event, today)) : [];
+  const visibleEvents = filter === "all" ? upcomingEvents : upcomingEvents.filter(event => event.region === filter);
 
   useEffect(() => {
     const node = root.current;
@@ -149,29 +157,26 @@ export function PoppyLanding() {
       <main id="main-content" className="pp-main">
         <div className="pp-opening">
         <section className="pp-hero" aria-labelledby="pp-hero-title">
+          <GravityDotGrid className="pp-hero-dots" fullWidth />
           <div className="pp-container pp-hero__grid">
             <div className="pp-hero__copy">
-              <h1 id="pp-hero-title"><span className="pp-title-line"><span>{c.hero[0]}</span></span><span className="pp-title-line"><span>{c.hero[1]} <em>{c.hero[2]}</em></span></span><span className="pp-title-line"><span><em>{c.hero[3]}</em></span></span></h1>
+              <p className="pp-hero__brand">Poppy Project</p>
+              <h1 id="pp-hero-title">
+                <span className="pp-title-line"><span>{c.hero[0]} <span className="pp-hero__title-break">{c.hero[1]}</span></span></span>{" "}
+                <span className="pp-title-line"><span><em>{c.hero[2]}</em></span></span>
+              </h1>
               <p className="pp-hero__intro">{c.intro}</p>
-              <PoppyNewsletterSignup language={language} />
-              <FluidLink className="pp-hero__map-link" href="#firmy">{c.mapCta}</FluidLink>
+              {siteFeatures.mapDownload && <FluidLink className="pp-hero__map-link" href="#mapa">{c.mapCta}</FluidLink>}
             </div>
             <div className="pp-flower-stage" ref={flower}>
-              <div className="pp-flower-stage__orbit" aria-hidden="true" />
-              <div className="pp-flower-stage__orbit pp-flower-stage__orbit--inner" aria-hidden="true" />
-              <span className="pp-flower-stage__cross pp-flower-stage__cross--one" aria-hidden="true">+</span><span className="pp-flower-stage__cross pp-flower-stage__cross--two" aria-hidden="true">+</span>
               <div className="pp-flower-cluster" ref={cluster}>
-                <GravityDotGrid className="pp-hero-dots" />
                 <div className="pp-flower-stage__mark" ref={mark} tabIndex={0} role="img" aria-label={language === "pl" ? "Mak — płatki delikatnie kołyszą się po najechaniu lub zaznaczeniu klawiaturą" : "Poppy — petals gently flutter on hover or keyboard focus"}><PoppyMark animated /></div>
               </div>
             </div>
-            <a className="pp-hero-scroll" href="#perspektywa"><span>{c.scrollDown}</span></a>
           </div>
         </section>
 
-        <div className="pp-about-scene">
         <section className="pp-about pp-section" id="perspektywa" aria-labelledby="about-heading">
-          <PoppyBloomBorder />
           <div className="pp-container pp-about__layout">
             <div className="pp-about__introduction">
               <div className="pp-about__heading" data-reveal>
@@ -179,50 +184,64 @@ export function PoppyLanding() {
               </div>
               <p className="pp-about__lead">{c.aboutIntro}</p>
               <div className="pp-about__invitation">
-                <p>{c.aboutMore}</p>
-                <FluidLink href="/o-nas/">{c.aboutMoreAction}<ArrowUpRight size={18} aria-hidden="true" /></FluidLink>
+                <FluidLink href={sitePath("/o-nas/")}>{c.aboutMoreAction}<ArrowUpRight size={18} aria-hidden="true" /></FluidLink>
               </div>
             </div>
             <div className="pp-work-grid">
               {c.pillars.map((pillar, index) => (
                 <article className={`pp-work-card pp-work-card--${index}`} key={index} data-reveal>
-                  <WorkMotif variant={index} />
+                  <WorkMotif variant={index + 1} />
                   <h3>{pillar.title}</h3>
                   <p>{pillar.body}</p>
+                  {pillar.action && <FluidLink className="pp-work-card__action" href="#kontakt" size="small">{pillar.action}<ArrowUpRight size={15} aria-hidden="true" /></FluidLink>}
                 </article>
               ))}
             </div>
           </div>
+          <div className="pp-container pp-about__destinations" data-reveal>
+            <div className="pp-about__destinations-heading">
+              <h3>{c.discoverKicker}</h3>
+              <p>{c.discoverIntro}</p>
+            </div>
+            <nav className="pp-about__destination-actions" aria-label={c.discoverKicker}>
+              {c.destinations.map((destination) => (
+                <FluidLink href={sitePath(destination.href)} key={destination.href}>{destination.label}<ArrowUpRight size={16} aria-hidden="true" /></FluidLink>
+              ))}
+            </nav>
+          </div>
         </section>
 
         </div>
-        </div>
 
+        <div className="pp-events-stack">
+        {siteFeatures.mapDownload &&
         <section className="pp-map pp-section" id="mapa" aria-labelledby="map-heading">
           <div className="pp-container pp-map__grid">
             <div className="pp-map__copy" data-reveal><h2 id="map-heading">{c.mapTitle}</h2><p className="pp-map__description">{c.mapBody}</p><span className="pp-map__edition">{c.mapFree}</span><a className="pp-button pp-button--light" href={mapAsset.pdf} download={mapAsset.filename}>{c.mapDownload}</a><span className="pp-map__file">{c.mapFile}</span><p className="pp-map__join">{c.mapJoin} <a href="#zglos-firme">{c.mapJoinCta} ↗</a></p></div>
             <a href={mapAsset.pdf} download={mapAsset.filename} className="pp-map-art" aria-label={c.mapDownload} data-reveal><Image className="pp-map-art__poster" src={mapAsset.poster} alt={c.mapName + " 2025"} width={595} height={842} sizes="(max-width: 600px) calc(100vw - 40px), (max-width: 1000px) 40vw, 420px" /><span className="pp-map-art__caption"><span>{c.mapName} · 2025</span><Download size={18} aria-hidden="true" /></span></a>
           </div>
         </section>
+        }
 
-        <FemtechExplorer language={language} />
+        {siteFeatures.companyMap && <FemtechExplorer language={language} />}
 
         <section className="pp-events pp-section" id="wydarzenia" aria-labelledby="events-heading">
           <div className="pp-container">
-            <div className="pp-section-heading pp-section-heading--split" data-reveal><div><h2 id="events-heading">{c.eventsTitle}</h2></div><p>{c.eventsBody}</p></div>
-            <div className="pp-events__toolbar"><div className="pp-event-filters" role="group" aria-label={language === "pl" ? "Filtruj wydarzenia" : "Filter events"}>{eventFilters.map((id, index) => <button type="button" key={id} aria-pressed={filter === id} aria-controls="pp-events-results" onClick={() => setFilter(id)}>{c.filters[index]}<span>{id === "all" ? events.length : events.filter(event => event.region === id).length}</span></button>)}</div><span className="pp-events__hint">{c.eventHint}</span></div>
-            <div id="pp-events-results">{visibleEvents.length ? <PoppyEventList key={filter} events={visibleEvents} language={language} openLabel={c.eventOpen} /> : <div className="pp-events__empty" role="status"><p>{c.noEvents}</p><button type="button" onClick={() => setFilter("all")}>{c.showAllEvents}<ArrowUpRight size={17} aria-hidden="true" /></button></div>}</div>
+            <div className="pp-section-heading pp-section-heading--split" data-reveal><div><h2 id="events-heading">{c.eventsTitle}</h2></div>{c.eventsBody && <p>{c.eventsBody}</p>}</div>
+            <div className="pp-events__toolbar"><div className="pp-event-filters" role="group" aria-label={language === "pl" ? "Filtruj wydarzenia" : "Filter events"}>{eventFilters.map((id, index) => <button type="button" key={id} aria-pressed={filter === id} aria-controls="pp-events-results" onClick={() => setFilter(id)}>{c.filters[index]}<span>{!today ? "—" : id === "all" ? upcomingEvents.length : upcomingEvents.filter(event => event.region === id).length}</span></button>)}</div><span className="pp-events__hint">{c.eventHint}</span></div>
+            <div className="pp-events__results" id="pp-events-results" role="region" aria-busy={!today} aria-label={language === "pl" ? "Lista wydarzeń" : "Events list"} tabIndex={visibleEvents.length > 5 ? 0 : undefined} data-lenis-prevent>{!today ? <div className="pp-events__empty" role="status"><p>{language === "pl" ? "Ładowanie wydarzeń…" : "Loading events…"}</p><noscript>{language === "pl" ? "Włącz JavaScript, aby zobaczyć aktualne wydarzenia." : "Enable JavaScript to see current events."}</noscript></div> : visibleEvents.length ? <PoppyEventList key={filter} events={visibleEvents} language={language} openLabel={c.eventOpen} /> : <div className="pp-events__empty" role="status"><p>{c.noEvents}</p>{filter !== "all" && <button type="button" onClick={() => setFilter("all")}>{c.showAllEvents}<ArrowUpRight size={17} aria-hidden="true" /></button>}</div>}</div>
             <p className="pp-events__note">{c.eventNote}</p>
           </div>
         </section>
+        </div>
 
-        <section className="pp-instagram pp-section" id="instagram" aria-labelledby="instagram-heading">
+        {siteFeatures.homeInstagram && <section className="pp-instagram pp-section" id="instagram" aria-labelledby="instagram-heading">
           <div className="pp-marquee" aria-label={c.strip.join(" · ")}><div className="pp-marquee__track" aria-hidden="true">{[0, 1, 2, 3].map(group => <div className="pp-marquee__group" key={group}>{c.strip.map((word, index) => <span key={word}><span className={index % 2 ? "pp-marquee__italic" : ""}>{word}</span><span className="pp-marquee__asterisk">✳</span></span>)}</div>)}</div></div>
           <div className="pp-container pp-instagram__inner">
             <div className="pp-section-heading pp-section-heading--split" data-reveal><div><h2 id="instagram-heading">{c.instagramTitle}</h2></div><div className="pp-instagram__intro"><p>{c.instagramBody}</p><FluidLink href={links.instagram} target="_blank" rel="noreferrer">{c.socialAction}<ArrowUpRight size={18} aria-hidden="true" /></FluidLink></div></div>
           </div>
           <InstagramStoryCarousel language={language} />
-        </section>
+        </section>}
 
         <section className="pp-contact pp-section" id="kontakt" aria-labelledby="contact-heading">
           <div className="pp-container">
@@ -241,8 +260,8 @@ export function PoppyLanding() {
                     </filter>
                   </defs>
                 </svg>
-                <Image className="pp-contact__flower-base" src="/contact-poppy-cutout.png" alt="" width={1024} height={1536} />
-                <Image className="pp-contact__flower-petal pp-contact__flower-petal--left" src="/contact-poppy-cutout.png" alt="" width={1024} height={1536} />
+                <Image className="pp-contact__flower-base" src={sitePath("/contact-poppy-cutout.png")} alt="" width={1024} height={1536} />
+                <Image className="pp-contact__flower-petal pp-contact__flower-petal--left" src={sitePath("/contact-poppy-cutout.png")} alt="" width={1024} height={1536} />
               </div>
             </div>
             <div className="pp-company" id="zglos-firme">
@@ -268,7 +287,7 @@ export function PoppyLanding() {
           </div>
         </section>
       </main>
-      <PoppyFooter language={language} />
+      <PoppyFooter language={language} showNewsletter decorativeBlooms />
     </div>
   );
 }

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { PoppyPodcastPage } from "@/components/PoppyPodcastPage";
 
 export const metadata: Metadata = {
-  title: "FemTech po Polsku by Poppy Project — Podcast",
-  description: "FemTech po Polsku by Poppy Project — podcast o zdrowiu kobiet i innowacjach. Wybierz jeden z pięciu odcinków i posłuchaj bezpośrednio na stronie przez Spotify.",
+  title: "FemTech 101: podcast FemTech po Polsku",
+  description: "FemTech 101: podcast FemTech po Polsku. Rozmowy o zdrowiu kobiet i innowacjach. Odkryj odcinki i słuchaj przez odtwarzacze Spotify bezpośrednio na stronie.",
   alternates: {
     canonical: "/podcast"
   }

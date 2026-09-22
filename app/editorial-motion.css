@@ -2,6 +2,24 @@
 html.lenis { scroll-behavior: auto !important; }
 .pp-opening { position: relative; }
 .pp-opening .pp-about { position: relative; z-index: 2; background: var(--bone); }
+/* The map and the incoming events card share one stacking context. */
+.pp-events-stack { position: relative; isolation: isolate; }
+.pp-events-stack > .pp-events {
+  --events-card-radius: 48px;
+  position: relative;
+  z-index: 1;
+  border-radius: var(--events-card-radius) var(--events-card-radius) 0 0;
+  /* Native hash navigation includes html's 24px scroll padding. */
+  scroll-margin-top: calc(0px - var(--events-card-radius) - 26px);
+}
+.pp-events-stack > .pp-map + .pp-events {
+  margin-top: -48px;
+  box-shadow: 0 -16px 36px -20px rgba(26, 10, 10, .3);
+}
+@media (max-width: 650px) {
+  .pp-events-stack > .pp-events { --events-card-radius: 28px; }
+  .pp-events-stack > .pp-map + .pp-events { margin-top: -28px; }
+}
 .pp-bloom-border { position: absolute; bottom: 100%; left: 0; width: 100%; height: 230px; pointer-events: none; user-select: none; opacity: 0; }
 .pp-bloom-border__source { position: absolute; overflow: hidden; }
 .pp-bloom-border__plant { position: absolute; bottom: -1px; left: var(--plant-left); width: clamp(54px, 9vw, var(--plant-width)); height: auto; aspect-ratio: 160 / 270; overflow: visible; transform: translateX(-50%); }
@@ -34,14 +52,16 @@ html[data-poppy-intro="playing"] .pp-bloom-border { visibility: hidden; }
 .pfe-workspace.is-exploring .pfe-map__tracing { stroke-dashoffset: 0; }
 
 @media (min-width: 901px) and (min-height: 700px) and (pointer: fine) {
+  /* Taller maps scroll to their bottom before the card covers them. No extra scroll runway. */
+  .pp-cinematic .pp-events-stack:has(> .pp-map + .pp-events) > .pp-map {
+    position: sticky;
+    top: var(--map-stack-top, var(--header-height));
+    z-index: 0;
+  }
   .pp-cinematic .pp-opening .pp-hero { position: sticky; top: var(--header-height); z-index: 0; }
   /* A full signup form must scroll into view before the next scene starts. */
   .pp-cinematic .pp-opening:has([data-newsletter-inline]) .pp-hero { position: relative; top: auto; }
   .pp-cinematic .pp-opening:has([data-newsletter-inline]) .pp-hero__grid { padding-bottom: 220px; }
-  /* A short scroll runway holds the flowers and section, then releases naturally. */
-  .pp-cinematic .pp-about-scene { position: relative; z-index: 2; }
-  .pp-cinematic .pp-about-scene::after { content: ""; display: block; height: clamp(240px, 35svh, 420px); }
-  .pp-cinematic .pp-opening .pp-about { position: sticky; top: calc(var(--header-height) + clamp(170px, 23svh, 240px)); border-radius: 48px 48px 0 0; box-shadow: 0 -24px 55px rgba(26, 10, 10, .035); }
   .pp-cinematic .pp-hero__copy { translate: 0 var(--hero-copy-y, 0px); }
   .pp-cinematic .pp-hero__grid { opacity: var(--hero-scene-opacity, 1); }
   .pp-cinematic .pp-opening:has([data-newsletter-inline]) .pp-hero__copy { translate: none; }

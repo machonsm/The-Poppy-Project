@@ -1,32 +1,23 @@
 "use client";
 
-/* eslint-disable @next/next/no-html-link-for-pages -- Native navigation supports the static export. */
-
 import Image from "next/image";
 import { ArrowUpRight, BookOpen, Minus, Plus, Search, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PoppyFooter, PoppyHeader, type PoppyLanguage } from "@/components/PoppyChrome";
 import { resources, type PoppyResource, type ResourceCategory } from "@/data/resources";
-import { mapAssets } from "@/data/map-assets";
 import { links } from "@/data/links";
 import { FluidLink } from "@/components/ui/FluidButton";
+import { usePoppyLanguage } from "@/lib/use-poppy-language";
 import "./resources-page.css";
 
 const copy = {
   pl: {
-    page: "Materiały",
-    title: <>Wiedza, która otwiera <em>perspektywy.</em></>,
-    intro: "Nasza biblioteka raportów, grantów, list inwestorów oraz narzędzi wspierających rozwój FemTechu, zdrowia kobiet i innowacji w Polsce i Europie Środkowo-Wschodniej.",
-    explore: "Odkryj bibliotekę",
-    mapTitle: "Mapa Polskiego FemTechu 2025",
-    mapAction: "Pobierz mapę",
-    mapAlt: "Podgląd Mapy Polskiego FemTechu 2025",
-    libraryTitle: "Biblioteka raportów",
-    libraryIntro: "Polska perspektywa. Globalny kontekst. Wiedza, do której warto wracać.",
+    libraryTitle: "Biblioteka wiedzy",
+    libraryIntro: "Starannie wybrane źródła o zdrowiu kobiet i rynku FemTech w Polsce i globalnie.",
     filterLabel: "Wybierz kategorię raportów",
     all: "Wszystkie",
-    poland: "Zdrowie kobiet w Polsce",
-    global: "Rynek FemTech",
+    poland: "Raporty po polsku",
+    global: "Raporty po angielsku",
     searchLabel: "Szukaj w bibliotece",
     searchPlaceholder: "Szukaj tematu, tytułu, organizacji…",
     clearSearch: "Wyczyść wyszukiwanie",
@@ -47,19 +38,12 @@ const copy = {
     contactAction: "Daj nam znać"
   },
   en: {
-    page: "Resources",
-    title: <>Knowledge that opens <em>perspectives.</em></>,
-    intro: "Explore our growing library of reports, grants, investor lists, and tools driving FemTech, women’s health, and innovation across Poland and Central & Eastern Europe.",
-    explore: "Explore the library",
-    mapTitle: "Polish FemTech Map 2025",
-    mapAction: "Download the map",
-    mapAlt: "Preview of the Polish FemTech Map 2025",
-    libraryTitle: "The report library",
-    libraryIntro: "A Polish perspective. A global context. Knowledge worth coming back to.",
+    libraryTitle: "Knowledge library",
+    libraryIntro: "Carefully selected sources on women’s health and the FemTech market in Poland and globally.",
     filterLabel: "Choose a report category",
     all: "All reports",
-    poland: "Women’s health in Poland",
-    global: "The FemTech market",
+    poland: "Reports in Polish",
+    global: "Reports in English",
     searchLabel: "Search the library",
     searchPlaceholder: "Search a topic, title, organisation…",
     clearSearch: "Clear search",
@@ -108,7 +92,7 @@ function ResourceCard({ resource, language }: { resource: PoppyResource; languag
       </button>
       <div className="pp-resource__bottom">
         <span className="pp-resource__category">{c[resource.category]}</span>
-        <FluidLink size="small" href={resource.href[language]} target="_blank" rel="noopener noreferrer" aria-label={`${c.read}: ${resource.title[language]} — ${c.newTab}`}>
+        <FluidLink className="pp-resource__read" size="small" href={resource.href[language]} target="_blank" rel="noopener noreferrer" aria-label={`${c.read}: ${resource.title[language]} — ${c.newTab}`}>
           <span>{c.read}</span><ArrowUpRight size={21} strokeWidth={1.5} aria-hidden="true" />
         </FluidLink>
       </div>
@@ -117,11 +101,10 @@ function ResourceCard({ resource, language }: { resource: PoppyResource; languag
 }
 
 export function PoppyResourcesPage() {
-  const [language, setLanguage] = useState<PoppyLanguage>("pl");
+  const [language, setLanguage] = usePoppyLanguage();
   const [category, setCategory] = useState<"all" | ResourceCategory>("all");
   const [query, setQuery] = useState("");
   const c = copy[language];
-  const map = mapAssets[language];
   const terms = normalise(query).trim().split(/\s+/).filter(Boolean);
   const matching = resources.filter(resource => {
     const text = normalise(`${resource.title.pl} ${resource.title.en} ${resource.publisher} ${resource.description.pl} ${resource.description.en}`);
@@ -130,42 +113,13 @@ export function PoppyResourcesPage() {
   const visible = matching.filter(resource => category === "all" || resource.category === category);
   const filters = ["all", "poland", "global"] as const;
 
-  useEffect(() => { document.documentElement.lang = language; }, [language]);
-
   return (
     <div className="pp-site pp-resources-page">
       <PoppyHeader language={language} onLanguageChange={setLanguage} />
       <main id="main-content">
-        <section className="pp-library-hero" aria-labelledby="resources-title">
-          <div className="pp-container">
-            <nav className="pp-library-breadcrumb" aria-label={language === "pl" ? "Ścieżka nawigacji" : "Breadcrumb"}>
-              <a href="/">Poppy Project</a><span aria-hidden="true">/</span><span aria-current="page">{c.page}</span>
-            </nav>
-            <div className="pp-library-hero__grid">
-              <div className="pp-library-hero__copy">
-                <h1 id="resources-title">{c.title}</h1>
-                <p className="pp-library-hero__intro">{c.intro}</p>
-                <FluidLink href="#biblioteka">{c.explore}</FluidLink>
-              </div>
-              <a className="pp-library-map" href={map.pdf} download={map.filename}>
-                <div className="pp-library-map__art">
-                  <span className="pp-library-map__orbit" aria-hidden="true" />
-                  <span className="pp-library-map__sheet pp-library-map__sheet--red" aria-hidden="true" />
-                  <span className="pp-library-map__sheet pp-library-map__sheet--olive" aria-hidden="true" />
-                  <Image className="pp-library-map__poster" src={map.poster} alt={c.mapAlt} width={595} height={842} sizes="(max-width: 650px) 200px, 235px" priority />
-                  <span className="pp-library-map__format" aria-hidden="true">PDF<br /><span>PL / EN</span></span>
-                </div>
-                <div className="pp-library-map__caption">
-                  <div><h2>{c.mapTitle}</h2><span className="pp-library-map__download">{c.mapAction}</span></div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </section>
-
         <section className="pp-library" id="biblioteka" aria-labelledby="library-title">
           <div className="pp-container">
-            <div className="pp-library__heading"><h2 id="library-title">{c.libraryTitle}</h2><p>{c.libraryIntro}</p></div>
+            <div className="pp-library__heading"><h1 id="library-title">{c.libraryTitle}</h1><p>{c.libraryIntro}</p></div>
             <div className="pp-library__toolbar">
               <div className="pp-library__filters" role="group" aria-label={c.filterLabel}>
                 {filters.map(filter => <button type="button" key={filter} aria-pressed={category === filter} onClick={() => setCategory(filter)}>{c[filter]}<span>{filter === "all" ? matching.length : matching.filter(resource => resource.category === filter).length}</span></button>)}

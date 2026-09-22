@@ -1,6 +1,20 @@
 /* Restored editorial rows: a quiet list with a floating, tilted image on hover. */
+.pp-events__results {
+  max-height: min(68vh, 700px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(253, 251, 247, .48) transparent;
+  outline: none;
+}
+.pp-events__results:focus-visible { outline: 1px solid rgba(253, 251, 247, .65); outline-offset: 7px; }
+.pp-events__results::-webkit-scrollbar { width: 7px; }
+.pp-events__results::-webkit-scrollbar-track { background: transparent; }
+.pp-events__results::-webkit-scrollbar-thumb { background: rgba(253, 251, 247, .48); border-radius: 999px; }
 .pp-events__labels, .pp-event { display: grid; grid-template-columns: 140px minmax(0, 1fr) 180px 44px; align-items: center; gap: 25px; }
-.pp-events__labels { padding: 18px 0; border-bottom: 1px solid var(--pp-line); font-size: 13px; font-weight: 500; line-height: 18px; text-transform: uppercase; letter-spacing: .08em; color: var(--pp-muted); }
+.pp-events__labels { position: sticky; top: 0; z-index: 5; padding: 18px 0; border-bottom: 1px solid var(--pp-line); background: var(--olive); font-size: 13px; font-weight: 500; line-height: 18px; text-transform: uppercase; letter-spacing: .08em; color: var(--pp-muted); }
 .pp-events__labels > span:last-child { text-align: center; }
 .pp-event { position: relative; min-height: 121px; border-bottom: 1px solid var(--pp-line); padding: 20px 0; transition: color .3s, padding .5s var(--pp-ease), background .3s; }
 .pp-event:hover, .pp-event:focus-visible { color: var(--poppy); background: var(--bone); padding-inline: 15px; }
@@ -13,11 +27,15 @@
 .pp-event__location { font-size: 13px; line-height: 18px; color: var(--pp-muted); }
 .pp-event__arrow { display: grid; place-items: center; border: 1px solid var(--pp-line); border-radius: 50%; width: 44px; height: 44px; transition: background .3s, color .3s, transform .4s; }
 .pp-event:hover .pp-event__arrow, .pp-event:focus-visible .pp-event__arrow { background: var(--poppy); color: var(--bone); border-color: var(--poppy); transform: rotate(45deg); }
-.pp-event__preview { position: absolute; width: 245px; height: 177px; left: 60%; top: 50%; z-index: 4; pointer-events: none; opacity: 0; transform: translate(-50%, -45%) rotate(-7deg) scale(.9); transition: opacity .25s, transform .5s var(--pp-ease); background: var(--linen); box-shadow: 0 10px 35px rgba(26,10,10,.15); }
+.pp-event__preview { position: absolute; width: 210px; height: auto; left: 60%; top: 6px; bottom: 6px; z-index: 4; pointer-events: none; opacity: 0; transform: translateX(-50%) rotate(-2deg) scale(.94); transition: opacity .25s, transform .5s var(--pp-ease); background: var(--linen); box-shadow: 0 10px 35px rgba(26,10,10,.15); }
 .pp-event__preview img { width: 100%; height: 100%; object-fit: cover; }
+.pp-event__preview img.pp-event__preview-image--contain { object-fit: contain; padding: 10px; background: #fff; }
+.pp-event__preview-fallback { display: flex; width: 100%; height: 100%; padding: 22px; flex-direction: column; justify-content: space-between; color: var(--bone); background: var(--poppy); }
+.pp-event__preview-fallback small { font-size: 10px; font-weight: 500; line-height: 15px; letter-spacing: .08em; text-transform: uppercase; }
+.pp-event__preview-fallback strong { font-family: var(--font-serif); font-size: 22px; font-weight: 400; line-height: 27px; }
 
 @media (hover: hover) and (pointer: fine) {
-  .pp-event:hover .pp-event__preview, .pp-event:focus-visible .pp-event__preview { opacity: 1; transform: translate(-50%, -50%) rotate(-7deg) scale(1); }
+  .pp-event:hover .pp-event__preview, .pp-event:focus-visible .pp-event__preview { opacity: 1; transform: translateX(-50%) rotate(-2deg) scale(1); }
 }
 
 @media (max-width: 1150px) {
@@ -31,6 +49,7 @@
 }
 
 @media (max-width: 600px) {
+  .pp-events__results { max-height: 62vh; }
   .pp-events__labels, .pp-event { grid-template-columns: 57px minmax(0, 1fr) 30px; gap: 13px; }
   .pp-event { min-height: 118px; padding-block: 22px; }
   .pp-event__date { display: block; }

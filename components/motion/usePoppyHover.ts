@@ -3,7 +3,7 @@
 import { useEffect, type RefObject } from "react";
 
 /** Paired petals flutter independently while the flower itself stays still. */
-export function usePoppyHover(markRef: RefObject<HTMLDivElement | null>) {
+export function usePoppyHover(markRef: RefObject<HTMLDivElement | null>, continuous = false) {
   useEffect(() => {
     const mark = markRef.current;
     if (!mark) return;
@@ -22,7 +22,7 @@ export function usePoppyHover(markRef: RefObject<HTMLDivElement | null>) {
 
     const permitted = () => !disposed && visible && !document.hidden &&
       html.dataset.poppyIntro === "done" && html.dataset.motion !== "off" && !reduced.matches;
-    const engaged = () => focused || (hovered && fineHover.matches);
+    const engaged = () => continuous || focused || (hovered && fineHover.matches);
     const cancel = () => {
       generation += 1;
       animations.forEach(animation => animation.cancel());
@@ -162,5 +162,5 @@ export function usePoppyHover(markRef: RefObject<HTMLDivElement | null>) {
       reduced.removeEventListener("change", update);
       fineHover.removeEventListener("change", update);
     };
-  }, [markRef]);
+  }, [markRef, continuous]);
 }

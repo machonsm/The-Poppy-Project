@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import type { CSSProperties } from "react";
 import { links } from "@/data/links";
 import type { PoppyLanguage } from "@/components/PoppyChrome";
+import { sitePath } from "@/lib/site-path";
 
 const cards = [
   { label: "Materiały", title: "Szerszy obraz.", body: "Mapy, raporty i narzędzia. Więcej kontekstu dla lepszych decyzji.", action: "Otwórz bibliotekę", href: "/materialy/" },
@@ -26,7 +27,7 @@ export function EditorialExploreSection({ language = "pl" }: { language?: PoppyL
         <div className="pp-explore__grid">
           {(language === "pl" ? cards : englishCards).map((card, index) => {
             const external = card.href.startsWith("http");
-            return <a key={card.href} className={`pp-editorial-card pp-editorial-card--${index}`} href={card.href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined}>
+            return <a key={card.href} className={`pp-editorial-card pp-editorial-card--${index}`} href={sitePath(card.href)} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined}>
               <div className="pp-editorial-card__top"><span>{card.label}</span></div>
               <div className="pp-editorial-card__art" aria-hidden="true">
                 {index === 0 ? <div className="pp-art-pages"><i /><i /><i /><span>the bigger<br /><em>picture.</em></span></div> : index === 1 ? <div className="pp-art-notes"><span>P</span><span>↗</span><span>p.</span></div> : <div className="pp-art-sound">{Array.from({ length: 25 }, (_, bar) => <i key={bar} style={{ "--bar-height": `${22 + Math.sin(bar * .7) ** 2 * 65}%`, "--bar-delay": `${bar * -.12}s` } as CSSProperties} />)}</div>}

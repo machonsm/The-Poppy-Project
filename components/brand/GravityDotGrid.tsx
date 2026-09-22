@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 
 type GravityDotGridProps = {
   className?: string;
+  fullWidth?: boolean;
 };
 
 type Dot = {
@@ -12,6 +13,7 @@ type Dot = {
   x: number;
   y: number;
   accent: boolean;
+  opacity: number;
 };
 
 const COLS = 6;
@@ -21,7 +23,7 @@ const HOVER_RADIUS = 98;
 const HOVER_PUSH = 21;
 const FOLLOW_SPEED = 13;
 
-export function GravityDotGrid({ className = "" }: GravityDotGridProps) {
+export function GravityDotGrid({ className = "", fullWidth = false }: GravityDotGridProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -51,18 +53,38 @@ export function GravityDotGrid({ className = "" }: GravityDotGridProps) {
     const mouse = { x: -9999, y: -9999, on: false };
 
     const buildGrid = () => {
-      spacing = Math.min(width / (COLS + 1), height / (ROWS + 1));
-      const ox = (width - (COLS - 1) * spacing) / 2;
-      const oy = (height - (ROWS - 1) * spacing) / 2;
+      spacing = fullWidth ? 46 : Math.min(width / (COLS + 1), height / (ROWS + 1));
+      const cols = fullWidth ? Math.max(1, Math.floor(width / spacing)) : COLS;
+      const rows = fullWidth ? Math.max(1, Math.floor(height / spacing)) : ROWS;
+      const ox = (width - (cols - 1) * spacing) / 2;
+      const oy = (height - (rows - 1) * spacing) / 2;
+      const closestIndex = (fraction: number, count: number) =>
+        Math.max(0, Math.min(count - 1, Math.round((count - 1) * fraction)));
+      const accentDots = fullWidth
+        ? (width <= 650
+            ? [[closestIndex(.2, cols), closestIndex(.65, rows)], [closestIndex(.72, cols), closestIndex(.8, rows)]]
+            : [[closestIndex(.64, cols), closestIndex(.3, rows)], [closestIndex(.87, cols), closestIndex(.62, rows)]])
+        : [[2, 2]];
+      const copy = fullWidth ? wrap.closest(".pp-hero")?.querySelector<HTMLElement>(".pp-hero__copy") : null;
+      const copyBottom = copy ? copy.getBoundingClientRect().bottom - wrap.getBoundingClientRect().top : height * .45;
+      const smoothstep = (value: number) => {
+        const t = Math.max(0, Math.min(1, value));
+        return t * t * (3 - 2 * t);
+      };
 
       dots = [];
 
-      for (let row = 0; row < ROWS; row += 1) {
-        for (let col = 0; col < COLS; col += 1) {
+      for (let row = 0; row < rows; row += 1) {
+        for (let col = 0; col < cols; col += 1) {
           const bx = ox + col * spacing;
           const by = oy + row * spacing;
-          const accent = row === 2 && col === 2;
-          dots.push({ bx, by, x: bx, y: by, accent });
+          const accent = accentDots.some(([accentCol, accentRow]) => col === accentCol && row === accentRow);
+          // Fade smoothly out of the copy area; red accents retain their own contrast.
+          const fade = width <= 650
+            ? smoothstep((by - copyBottom) / 160)
+            : smoothstep((bx / width - .52) / .24);
+          const opacity = fullWidth ? (accent ? .85 : .07 + .15 * fade) : 1;
+          dots.push({ bx, by, x: bx, y: by, accent, opacity });
         }
       }
     };
@@ -103,11 +125,13 @@ export function GravityDotGrid({ className = "" }: GravityDotGridProps) {
       context.clearRect(0, 0, width, height);
 
       for (const dot of dots) {
+        context.globalAlpha = dot.opacity;
         context.fillStyle = dot.accent ? "#8B1A1A" : "#6E7248";
         context.beginPath();
         context.arc(dot.x, dot.y, dot.accent ? BASE_R * 1.08 : BASE_R, 0, Math.PI * 2);
         context.fill();
       }
+      context.globalAlpha = 1;
     };
 
     const canAnimate = () =>
@@ -253,7 +277,7 @@ export function GravityDotGrid({ className = "" }: GravityDotGridProps) {
       window.removeEventListener("pointercancel", handlePointerLeave);
       window.removeEventListener("blur", handlePointerLeave);
     };
-  }, []);
+  }, [fullWidth]);
 
   return (
     <div ref={wrapRef} className={`gravity-dot-grid ${className}`} aria-hidden="true">

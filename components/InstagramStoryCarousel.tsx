@@ -1,24 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, Minus, Pause, Play, Plus } from "lucide-react";
+import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { PoppyLanguage } from "@/components/PoppyChrome";
 import { socialPosts } from "@/data/social";
 import "./instagram-stories.css";
 
 const copy = {
-  pl: { label: "Wybrane posty FemTech po Polsku", hint: "Przeciągnij i odkrywaj", previous: "Poprzedni post", next: "Następny post", pause: "Zatrzymaj karuzelę", play: "Uruchom karuzelę", more: "Rozwiń opis", less: "Zwiń opis", open: "Otwórz na Instagramie w nowej karcie" },
-  en: { label: "Selected FemTech po Polsku posts", hint: "Drag to explore", previous: "Previous post", next: "Next post", pause: "Pause carousel", play: "Play carousel", more: "Show caption", less: "Hide caption", open: "Open on Instagram in a new tab" },
+  pl: { label: "Wybrane posty FemTech po Polsku", hint: "Przeciągnij i odkrywaj", previous: "Poprzedni post", next: "Następny post", pause: "Zatrzymaj karuzelę", play: "Uruchom karuzelę", open: "Otwórz na Instagramie w nowej karcie" },
+  en: { label: "Selected FemTech po Polsku posts", hint: "Drag to explore", previous: "Previous post", next: "Next post", pause: "Pause carousel", play: "Play carousel", open: "Open on Instagram in a new tab" },
 };
 
 export function InstagramStoryCarousel({ language }: { language: PoppyLanguage }) {
   const c = copy[language];
   const viewport = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
-  const motion = useRef({ x: 0, size: 0, step: 0, hover: false, focus: false, visible: false, reduced: false, paused: false, dragging: false, dragged: false, start: 0, initialX: 0 });
+  const motion = useRef({ x: 0, target: null as number | null, size: 0, step: 0, hover: false, focus: false, visible: false, reduced: false, paused: false, dragging: false, dragged: false, start: 0, initialX: 0 });
   const [paused, setPaused] = useState(false);
-  const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
     const rail = viewport.current;
@@ -30,8 +29,8 @@ export function InstagramStoryCarousel({ language }: { language: PoppyLanguage }
     let previous = 0;
     const paint = () => {
       if (!state.size) return;
-      state.x = ((state.x - state.size) % state.size + state.size) % state.size + state.size;
-      strip.style.transform = `translate3d(${-state.x}px, 0, 0)`;
+      const visibleX = ((state.x - state.size) % state.size + state.size) % state.size + state.size;
+      strip.style.transform = `translate3d(${-visibleX}px, 0, 0)`;
     };
     const measure = () => {
       const first = strip.children[0] as HTMLElement;
@@ -40,13 +39,21 @@ export function InstagramStoryCarousel({ language }: { language: PoppyLanguage }
       state.size = second.offsetLeft - first.offsetLeft;
       state.step = (first.children[1] as HTMLElement).offsetLeft - (first.children[0] as HTMLElement).offsetLeft;
       state.x = previousSize ? state.x / previousSize * state.size : state.size;
+      if (state.target !== null) state.target = state.x;
       paint();
     };
     const preferences = () => { state.reduced = reduced.matches || document.documentElement.dataset.motion === "off"; };
     const tick = (time: number) => {
       const delta = Math.min(40, time - (previous || time));
       previous = time;
-      if (state.visible && !document.hidden && !state.paused && !state.reduced && !state.hover && !state.focus && !state.dragging) state.x += delta * .024;
+      if (state.target !== null) {
+        if (state.reduced) { state.x = state.target; state.target = null; }
+        else {
+          state.x += (state.target - state.x) * (1 - Math.exp(-delta / 180));
+          if (Math.abs(state.target - state.x) < .5) { state.x = state.target; state.target = null; }
+        }
+      } else if (state.visible && !document.hidden && !state.paused && !state.reduced && !state.hover && !state.focus && !state.dragging) state.x += delta * .024;
+      if (state.size && Math.abs(state.x) > state.size * 4 && state.target === null) state.x = ((state.x - state.size) % state.size + state.size) % state.size + state.size;
       paint();
       frame = requestAnimationFrame(tick);
     };
@@ -65,7 +72,7 @@ export function InstagramStoryCarousel({ language }: { language: PoppyLanguage }
     const state = motion.current;
     state.paused = true;
     setPaused(true);
-    state.x += direction * state.step;
+    state.target = (state.target ?? state.x) + direction * state.step;
   };
 
   return <div className="pp-stories" role="region" aria-roledescription="carousel" aria-label={c.label}>
@@ -75,7 +82,7 @@ export function InstagramStoryCarousel({ language }: { language: PoppyLanguage }
       onPointerDown={event => {
         if (event.button !== 0 || (event.target as Element).closest("button")) return;
         const state = motion.current;
-        state.dragging = true; state.dragged = false; state.start = event.clientX; state.initialX = state.x;
+        state.dragging = true; state.dragged = false; state.target = null; state.start = event.clientX; state.initialX = state.x;
       }}
       onPointerMove={event => {
         const state = motion.current;
@@ -104,18 +111,10 @@ export function InstagramStoryCarousel({ language }: { language: PoppyLanguage }
       <div className="pp-stories__track" ref={track}>
         {[0, 1, 2].map(group => <div className="pp-stories__group" key={group} aria-hidden={group !== 1 || undefined}>
           {socialPosts.map((post, index) => {
-            const key = `${group}-${post.id}`;
-            const open = expanded === key;
-            return <article className={`pp-story${open ? " is-expanded" : ""}`} key={post.id} aria-roledescription="slide" aria-label={`${index + 1} / ${socialPosts.length}`}>
+            return <article className="pp-story" key={post.id} aria-roledescription="slide" aria-label={`${index + 1} / ${socialPosts.length}`}>
               <a className="pp-story__image" href={post.href} target="_blank" rel="noopener noreferrer" tabIndex={group === 1 ? 0 : -1} aria-label={`${post.title[language]} — ${c.open}`}>
                 <Image src={post.image} alt={post.title[language]} width={500} height={500} sizes="(max-width: 650px) 82vw, (max-width: 1200px) 38vw, 420px" loading="lazy" draggable={false} />
               </a>
-              <div className="pp-story__caption">
-                <button type="button" className="pp-story__toggle" aria-expanded={open} aria-controls={`story-caption-${key}`} aria-label={`${open ? c.less : c.more}: ${post.title[language]}`} tabIndex={group === 1 ? 0 : -1} onClick={() => setExpanded(open ? null : key)}>
-                  <span>{post.title[language]}</span><span className="pp-story__sign" aria-hidden="true">{open ? <Minus size={16} /> : <Plus size={16} />}</span>
-                </button>
-                <div id={`story-caption-${key}`} className="pp-story__description" inert={!open}><div><p>{post.description[language]}</p><a href={post.href} target="_blank" rel="noopener noreferrer" tabIndex={group === 1 && open ? 0 : -1} aria-label={`${post.title[language]} — ${c.open}`}>@femtechpo.pl</a></div></div>
-              </div>
             </article>;
           })}
         </div>)}

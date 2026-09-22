@@ -1,93 +1,90 @@
 "use client";
 
-/* eslint-disable @next/next/no-html-link-for-pages -- Native navigation supports the static export. */
-
-import { ArrowUpRight, Check, Headphones } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { PoppyFooter, PoppyHeader, type PoppyLanguage } from "@/components/PoppyChrome";
-import { PoppyPodcastPlayer } from "@/components/podcast/PoppyPodcastPlayer";
-import { podcastEpisodes, spotifyEpisodeUrl, type PodcastEpisode } from "@/data/podcasts";
+import { ArrowDown, ArrowUpRight, Headphones } from "lucide-react";
+import Image from "next/image";
+import { PoppyFooter, PoppyHeader } from "@/components/PoppyChrome";
+import { podcastEpisodes, spotifyEmbedUrl, spotifyEpisodeUrl } from "@/data/podcasts";
 import { links } from "@/data/links";
 import { FluidLink } from "@/components/ui/FluidButton";
+import { sitePath } from "@/lib/site-path";
+import { usePoppyLanguage } from "@/lib/use-poppy-language";
 import "./podcast-page.css";
 
 const copy = {
   pl: {
-    title: <>Włącz głos.<br />Otwórz <em>perspektywę.</em></>,
-    intro: "FemTech po Polsku by Poppy Project — podcast o zdrowiu kobiet i innowacjach. W Polsce i poza jej granicami. Posłuchaj, co warto wiedzieć.",
+    title: <>FemTech 101: <em>podcast FemTech po Polsku</em></>,
+    intro: "Zdrowie kobiet, innowacje i pytania, od których zaczyna się zmiana. Rozmawiamy o FemTechu po polsku — przystępnie i bez tabu!",
     language: "Rozmowy po polsku", browse: "Wybierz odcinek", spotify: "Słuchaj na Spotify",
-    episodes: "Do usłyszenia.", episodesIntro: "Od pierwszego pytania o FemTech po tematy, o których wciąż mówimy za mało.",
-    episode: "Odcinek", select: "Załaduj w odtwarzaczu", selected: "W odtwarzaczu", direct: "Spotify",
-    invite: "Masz temat, który warto usłyszeć?", contact: "Napisz do nas", breadcrumb: "Ścieżka nawigacji",
+    episode: "Odcinek", episodesLabel: "Odcinki podcastu", direct: "Otwórz w Spotify",
+    artwork: "FemTech po Polsku — ilustracja podcastu o zdrowiu kobiet",
+    invite: "Masz temat, który warto usłyszeć?", inviteIntro: "Dobre rozmowy zaczynają się od dobrych pytań. Podziel się swoim.", contact: "Napisz do nas",
   },
   en: {
-    title: <>Press play.<br />Open your <em>perspective.</em></>,
-    intro: "FemTech po Polsku by Poppy Project — a podcast about women’s health and innovation. In Poland and beyond. Find your next conversation.",
+    title: <>FemTech 101: <em>the FemTech po Polsku podcast</em></>,
+    intro: "Women’s health, innovation and the questions that spark change. Exploring FemTech in Polish — with curiosity, clarity and no taboos.",
     language: "Conversations in Polish", browse: "Choose an episode", spotify: "Listen on Spotify",
-    episodes: "Worth a listen.", episodesIntro: "From a first introduction to FemTech to the conversations we need to have more often.",
-    episode: "Episode", select: "Load in player", selected: "Selected episode", direct: "Spotify",
-    invite: "Have a topic we should talk about?", contact: "Email us", breadcrumb: "Breadcrumb",
+    episode: "Episode", episodesLabel: "Podcast episodes", direct: "Open in Spotify",
+    artwork: "FemTech po Polsku — women’s health podcast artwork",
+    invite: "Have a topic we should talk about?", inviteIntro: "Good conversations start with good questions. Share yours with us.", contact: "Email us",
   }
 };
 
 export function PoppyPodcastPage() {
-  const [language, setLanguage] = useState<PoppyLanguage>("pl");
-  const [selected, setSelected] = useState<PodcastEpisode>(podcastEpisodes[0]);
-  const player = useRef<HTMLElement>(null);
+  const [language, setLanguage] = usePoppyLanguage();
   const c = copy[language];
-
-  useEffect(() => { document.documentElement.lang = language; }, [language]);
-
-  const selectEpisode = (episode: PodcastEpisode) => {
-    setSelected(episode);
-    // On stacked layouts, bring the selected episode back into view. Selecting
-    // never starts audio; the listener chooses play in the cord or Spotify.
-    if (!matchMedia("(min-width: 1001px) and (min-height: 850px)").matches) {
-      player.current?.focus({ preventScroll: true });
-      player.current?.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches || document.documentElement.dataset.motion === "off" ? "instant" : "smooth" });
-    }
-  };
 
   return <div className="pp-site pp-podcast-page">
     <PoppyHeader language={language} onLanguageChange={setLanguage} />
     <main id="main-content">
       <div className="pp-container pp-podcast-stage">
-        <nav className="pp-podcast-breadcrumb" aria-label={c.breadcrumb}><a href="/">Poppy Project</a><span aria-hidden="true">/</span><span aria-current="page">Podcast</span></nav>
-        <div className="pp-podcast-layout">
-          <section className="pp-podcast-intro" aria-labelledby="podcast-title">
-            <p className="pp-eyebrow">FemTech po Polsku <span>by Poppy Project</span></p>
+        <section className="pp-podcast-hero" aria-labelledby="podcast-title">
+          <div className="pp-podcast-intro">
+            <p className="pp-podcast-language"><Headphones size={18} aria-hidden="true" />{c.language}</p>
             <h1 id="podcast-title">{c.title}</h1>
             <p className="pp-podcast-intro__text">{c.intro}</p>
-            <div className="pp-podcast-intro__actions"><FluidLink href="#odcinki">{c.browse}</FluidLink><FluidLink href={links.spotify} target="_blank" rel="noopener noreferrer">{c.spotify}<ArrowUpRight size={17} aria-hidden="true" /></FluidLink></div>
-            <span className="pp-podcast-language"><Headphones size={16} aria-hidden="true" />{c.language}</span>
-          </section>
-
-          <aside className="pp-podcast-console" ref={player} tabIndex={-1} aria-labelledby="podcast-player-title">
-            <PoppyPodcastPlayer key={selected.id} episode={selected} language={language} />
-          </aside>
-
-          <section className="pp-podcast-episodes" id="odcinki" aria-labelledby="episodes-title">
-            <div className="pp-podcast-episodes__heading"><h2 id="episodes-title">{c.episodes}</h2><span>{podcastEpisodes.length} {language === "pl" ? "odcinków" : "episodes"}</span></div>
-            <p className="pp-podcast-episodes__intro">{c.episodesIntro}</p>
-            <div className="pp-podcast-list">
-              {podcastEpisodes.map(episode => {
-                const active = selected.id === episode.id;
-                return <article className={`pp-episode${active ? " is-selected" : ""}`} key={episode.id}>
-                  <div className="pp-episode__meta"><span>{c.episode} {String(episode.number).padStart(2, "0")}</span><span>{episode.topic[language]}</span></div>
-                  <h3>{episode.title}</h3>
-                  <p>{episode.description[language]}</p>
-                  <div className="pp-episode__actions">
-                    <button type="button" aria-pressed={active} aria-label={`${active ? c.selected : c.select}: ${episode.title}`} onClick={() => selectEpisode(episode)}>
-                      {active ? <Check size={16} aria-hidden="true" /> : <Headphones size={16} aria-hidden="true" />}<span>{active ? c.selected : c.select}</span>
-                    </button>
-                    <a href={spotifyEpisodeUrl(episode.id)} target="_blank" rel="noopener noreferrer" aria-label={`${c.spotify}: ${episode.title}`}>{c.direct}<ArrowUpRight size={15} aria-hidden="true" /></a>
-                  </div>
-                </article>;
-              })}
+            <div className="pp-podcast-intro__actions">
+              <FluidLink href="#odcinki">{c.browse}<ArrowDown size={18} aria-hidden="true" /></FluidLink>
+              <a className="pp-podcast-text-link" href={links.spotify} target="_blank" rel="noopener noreferrer">{c.spotify}<ArrowUpRight size={18} aria-hidden="true" /></a>
             </div>
-          </section>
+          </div>
+          <figure className="pp-podcast-artwork">
+            <div className="pp-podcast-artwork__image">
+              <Image src={sitePath("/femtech-po-polsku.webp")} alt={c.artwork} width={2048} height={2048} sizes="(max-width: 760px) 84vw, (max-width: 1100px) 38vw, 430px" priority />
+            </div>
+            <figcaption><span>FemTech po Polsku</span><span>by Poppy Project</span></figcaption>
+          </figure>
+        </section>
+
+        <section className="pp-podcast-episodes" id="odcinki" aria-label={c.episodesLabel}>
+          <div className="pp-podcast-list">
+            {podcastEpisodes.map((episode, index) => (
+              <article className="pp-episode" key={episode.id} aria-labelledby={"episode-" + episode.id}>
+                <div className="pp-episode__copy">
+                  <div className="pp-episode__meta"><span>{c.episode} {String(episode.number).padStart(2, "0")}</span></div>
+                  <h3 id={"episode-" + episode.id}>{episode.title}</h3>
+                  <p>{episode.description[language]}</p>
+                  <a className="pp-podcast-text-link" href={spotifyEpisodeUrl(episode.id)} target="_blank" rel="noopener noreferrer" aria-label={c.direct + ": " + episode.title}>{c.direct}<ArrowUpRight size={17} aria-hidden="true" /></a>
+                </div>
+                <div className="pp-episode__player">
+                  <iframe
+                    src={spotifyEmbedUrl(episode.id)}
+                    title={"Spotify — " + c.episode + " " + episode.number + ": " + episode.title}
+                    width="100%"
+                    height="352"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    allowFullScreen
+                    loading={index === 0 ? "eager" : "lazy"}
+                    referrerPolicy="strict-origin-when-cross-origin"
+                  />
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+        <div className="pp-podcast-invite">
+          <div><h2>{c.invite}</h2><p>{c.inviteIntro}</p></div>
+          <FluidLink href={"mailto:" + links.email}>{c.contact}<ArrowUpRight size={18} aria-hidden="true" /></FluidLink>
         </div>
-        <div className="pp-podcast-invite"><p>{c.invite}</p><FluidLink href={`mailto:${links.email}`}>{c.contact}<ArrowUpRight size={18} aria-hidden="true" /></FluidLink></div>
       </div>
     </main>
     <PoppyFooter language={language} />

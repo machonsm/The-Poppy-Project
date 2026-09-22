@@ -1,21 +1,20 @@
 "use client";
 
-/* eslint-disable @next/next/no-html-link-for-pages -- Native navigation supports the static export. */
-
 import { ArrowUpRight, Search, X } from "lucide-react";
-import { useEffect, useState } from "react";
-import { PoppyFooter, PoppyHeader, type PoppyLanguage } from "@/components/PoppyChrome";
+import { useState } from "react";
+import { PoppyFooter, PoppyHeader } from "@/components/PoppyChrome";
 import { SubstackPostCard } from "@/components/SubstackPostCard";
 import { PoppyNewsletterSignup } from "@/components/PoppyNewsletterSignup";
 import { substackArchive } from "@/data/substack";
 import { links } from "@/data/links";
 import { FluidLink } from "@/components/ui/FluidButton";
+import { usePoppyLanguage } from "@/lib/use-poppy-language";
 import "./blog-page.css";
 
 const copy = {
   pl: {
-    title: <>Nowe pytania.<br /><em>Szersza perspektywa.</em></>,
-    intro: "Analizy, obserwacje i najważniejsze wiadomości ze świata zdrowia kobiet. Czytaj nasz Substack — FemTech po Polsku.",
+    title: <>Co dzieje się w FemTechu?<br /><em>Tematy, które warto śledzić.</em></>,
+    intro: "Analizy, obserwacje i najważniejsze tematy dotyczące zdrowia kobiet, technologii i rynku. Czytaj nas na Substacku.",
     explore: "Przeglądaj artykuły",
     archiveTitle: "Wszystkie artykuły",
     archiveIntro: "Prosto z naszego Substacka. Od najnowszych do tych, do których warto wrócić.",
@@ -32,8 +31,8 @@ const copy = {
     archiveNote: "Artykuły pochodzą z naszego Substacka. Tutaj znajdziesz krótkie zajawki — pełne teksty otwierają się w nowej karcie."
   },
   en: {
-    title: <>New questions.<br /><em>Wider perspectives.</em></>,
-    intro: "Analysis, observations and the latest in women’s health. Read our Substack publication — FemTech po Polsku.",
+    title: <>What’s happening in FemTech?<br /><em>Topics worth following.</em></>,
+    intro: "Analysis, observations and the most important topics in women’s health, technology and the market. Read us on Substack.",
     explore: "Explore the articles",
     archiveTitle: "All articles",
     archiveIntro: "From our Substack. The latest perspectives and stories worth revisiting.",
@@ -55,24 +54,20 @@ const normalise = (text: string) => text.toLocaleLowerCase("pl").normalize("NFD"
 const years = Array.from(new Set(substackArchive.posts.map(post => post.publishedAt.slice(0, 4)))).sort().reverse();
 
 export function PoppyBlogPage() {
-  const [language, setLanguage] = useState<PoppyLanguage>("pl");
+  const [language, setLanguage] = usePoppyLanguage();
   const [query, setQuery] = useState("");
   const [year, setYear] = useState("all");
   const c = copy[language];
   const terms = normalise(query).trim().split(/\s+/).filter(Boolean);
   const visible = substackArchive.posts.filter(post => (year === "all" || post.publishedAt.startsWith(year)) && terms.every(term => normalise(`${post.title} ${post.description}`).includes(term)));
 
-  useEffect(() => { document.documentElement.lang = language; }, [language]);
-
   return <div className="pp-site pp-blog-page">
     <PoppyHeader language={language} onLanguageChange={setLanguage} />
     <main id="main-content">
       <section className="pp-blog-hero" aria-labelledby="blog-title">
         <div className="pp-container">
-          <nav className="pp-blog-breadcrumb" aria-label={language === "pl" ? "Ścieżka nawigacji" : "Breadcrumb"}><a href="/">Poppy Project</a><span aria-hidden="true">/</span><span aria-current="page">Blog</span></nav>
           <div className="pp-blog-hero__grid">
             <div className="pp-blog-hero__copy">
-              <p className="pp-eyebrow">Poppy Notes · FemTech po Polsku</p>
               <h1 id="blog-title">{c.title}</h1>
               <p className="pp-blog-hero__intro">{c.intro}</p>
               <FluidLink href="#artykuly">{c.explore}</FluidLink>

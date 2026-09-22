@@ -26,7 +26,10 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
     const hero = root.querySelector<HTMLElement>(".pp-hero");
     const flower = root.querySelector<HTMLElement>(".pp-flower-stage");
     const about = root.querySelector<HTMLElement>(".pp-about");
+    const mapStack = root.querySelector<HTMLElement>(".pp-events-stack");
+    const mapSection = mapStack?.querySelector<HTMLElement>(".pp-map");
     const bloomBorder = root.querySelector<HTMLElement>(".pp-bloom-border");
+    const bloomAnchor = bloomBorder?.closest<HTMLElement>(".pp-footer__wordmark") ?? bloomBorder;
     const blooms = Array.from(root.querySelectorAll<SVGSVGElement>(".pp-bloom-border__plant")).map((plant, index) => {
       const stem = plant.querySelector<SVGPathElement>(".pp-bloom-border__stem")!;
       return {
@@ -45,6 +48,23 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
     const pins = Array.from(root.querySelectorAll<HTMLElement>(".pfe-pin"));
     const marquee = root.querySelector<HTMLElement>(".pp-marquee__track");
     const allowed = () => !reduced.matches && html.dataset.motion !== "off";
+    const getHeaderHeight = () =>
+      root.querySelector<HTMLElement>(".pp-header")?.getBoundingClientRect().height ?? 100;
+    const getTargetTop = (target: HTMLElement) => {
+      const headerHeight = getHeaderHeight();
+      let offset = headerHeight + 16;
+      if (target.matches(".pp-contact")) {
+        // Contact should meet the sticky header with no glimpse of the olive
+        // events section. The one-pixel overlap also avoids subpixel seams.
+        offset = Math.max(0, headerHeight - 1);
+      }
+      if (target.matches(".pp-events-stack > .pp-events")) {
+        // Tuck the rounded edge behind the header so the sticky map cannot peek through.
+        const radius = parseFloat(getComputedStyle(target).borderTopLeftRadius) || 0;
+        offset -= 16 + radius + 2;
+      }
+      return Math.max(0, target.getBoundingClientRect().top + window.scrollY - offset);
+    };
     const progress = (element: HTMLElement, end = .4) => {
       const rect = element.getBoundingClientRect();
       return clamp((innerHeight - rect.top) / (innerHeight * (1 - end) + Math.min(rect.height, 400)));
@@ -52,19 +72,29 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
 
     const paint = () => {
       const cinematic = allowed() && desktop.matches;
+      if (mapStack && mapSection) {
+        const headerHeight = root.querySelector<HTMLElement>(".pp-header")?.getBoundingClientRect().height ?? 100;
+        mapStack.style.setProperty("--map-stack-top", `${Math.min(headerHeight, innerHeight - mapSection.offsetHeight)}px`);
+      }
       const height = document.documentElement.scrollHeight - innerHeight;
       root.style.setProperty("--page-progress", String(height > 0 ? scrollY / height : 0));
       const travel = Math.min(scrollY, hero?.offsetHeight ?? 900);
       root.style.setProperty("--hero-copy-y", `${cinematic ? -travel * .07 : 0}px`);
       flower?.style.setProperty("--flower-scroll", `${cinematic ? Math.min(travel * .16, 115) : 0}px`);
       root.style.setProperty("--orbit-turn", `${cinematic ? travel * .016 : 0}deg`);
-      if (about && bloomBorder) {
+      if (about) {
         const edge = about.getBoundingClientRect().top;
         const entered = innerHeight - edge;
         const growth = allowed() ? clamp((entered - 24) / Math.min(innerHeight * .42, 380)) : (entered > 24 ? 1 : 0);
-        bloomVisible = entered > 24 && edge > 0 && edge - bloomBorder.offsetHeight < innerHeight;
         const fade = growth * growth * (3 - 2 * growth);
         root.style.setProperty("--hero-scene-opacity", String(cinematic ? 1 - fade : 1));
+      }
+      if (bloomBorder && bloomAnchor) {
+        const bounds = bloomAnchor.getBoundingClientRect();
+        const entered = innerHeight - bounds.top;
+        const growthDistance = Math.min(innerHeight * .42, Math.max(60, bounds.height * .8));
+        const growth = allowed() ? clamp((entered - 24) / growthDistance) : (entered > 24 ? 1 : 0);
+        bloomVisible = entered > 24 && bounds.bottom > 0 && bounds.top < innerHeight;
         bloomBorder.style.opacity = entered > 24 ? "1" : "0";
         if (growth !== lastBloomGrowth) blooms.forEach(bloom => {
           const { stem, head, length, delay, lean } = bloom;
@@ -164,8 +194,9 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
     const scrollTo = (event: Event) => {
       const target = (event as CustomEvent<HTMLElement>).detail;
       if (!target) return;
-      if (lenis) lenis.scrollTo(target, { offset: -(root.querySelector(".pp-header")?.clientHeight ?? 100) - 16 });
-      else target.scrollIntoView({ behavior: allowed() ? "smooth" : "instant", block: "start" });
+      const top = getTargetTop(target);
+      if (lenis) lenis.scrollTo(top);
+      else window.scrollTo({ top, behavior: allowed() ? "smooth" : "instant" });
     };
     const mutation = new MutationObserver(configure);
     mutation.observe(html, { attributes: true, attributeFilter: ["data-motion"] });
@@ -182,9 +213,9 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
         try { targetId = decodeURIComponent(initialHash.slice(1)); } catch { return; }
         const target = document.getElementById(targetId);
         if (!target) return;
-        const offset = -(root.querySelector<HTMLElement>(".pp-header")?.clientHeight ?? 100) - 16;
-        if (lenis) lenis.scrollTo(target, { offset, immediate: true });
-        else window.scrollTo({ top: target.getBoundingClientRect().top + scrollY + offset, behavior: "instant" });
+        const top = getTargetTop(target);
+        if (lenis) lenis.scrollTo(top, { immediate: true });
+        else window.scrollTo({ top, behavior: "instant" });
       }));
     });
     window.addEventListener("scroll", onScroll, { passive: true });

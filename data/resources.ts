@@ -1,5 +1,7 @@
 // Text and original links migrated from femtechpo.pl/pl/materiay and /en/resources.
 // Descriptions are the project's editorial copy, not independently verified report findings.
+import { sitePath } from "@/lib/site-path";
+
 export type ResourceCategory = "poland" | "global";
 export type PoppyResource = {
   id: string;
@@ -11,7 +13,7 @@ export type PoppyResource = {
   description: { pl: string; en: string };
 };
 
-export const resources: PoppyResource[] = [
+const resourceEntries: PoppyResource[] = [
   {
     "id": "report-1",
     "cover": {
@@ -560,3 +562,8 @@ export const resources: PoppyResource[] = [
     }
   }
 ];
+
+export const resources: PoppyResource[] = resourceEntries.map(resource => ({
+  ...resource,
+  cover: { ...resource.cover, src: sitePath(resource.cover.src) }
+}));

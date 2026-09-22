@@ -2,6 +2,7 @@
 
 import { ArrowUpRight, Pause, Play } from "lucide-react";
 import Image from "next/image";
+import { sitePath } from "@/lib/site-path";
 import { useEffect, useRef, useState } from "react";
 import type { PoppyLanguage } from "@/components/PoppyChrome";
 import { spotifyEmbedUrl, spotifyEpisodeUrl, type PodcastEpisode } from "@/data/podcasts";
@@ -81,7 +82,7 @@ export function PoppyPodcastPlayer({ episode, language }: { episode: PodcastEpis
       <div className="pp-record-machine" aria-hidden="true">
         <div className="pp-record-machine__top"><span className="pp-record-speaker" /><span>Poppy Project</span><i className="pp-record-light" /></div>
         <div className="pp-record-well">
-          <div className="pp-record-disc"><div className="pp-record-label"><Image src="/femtech-po-polsku.webp" alt="" width={2048} height={2048} sizes="180px" priority /></div></div>
+          <div className="pp-record-disc"><div className="pp-record-label"><Image src={sitePath("/femtech-po-polsku.webp")} alt="" width={2048} height={2048} sizes="180px" priority /></div></div>
           <span className="pp-record-spindle" />
         </div>
         <div className="pp-record-machine__bottom"><span>{pl ? "Wiedza. Głos. Zmiana." : "Knowledge. Voice. Change."}</span><span>● ● ●</span></div>

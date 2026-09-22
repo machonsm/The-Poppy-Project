@@ -2,11 +2,11 @@ import { mapAssets } from "./map-assets";
 import substack from "./substack-config.json";
 
 export const links = {
-  email: "femtechpopl@gmail.com",
+  email: "joinpoppypl@gmail.com",
   mapDownload: mapAssets.pl.pdf,
   mapPreview: mapAssets.pl.poster,
   oldEventsPage: "https://www.femtechpo.pl/pl/events",
-  contact: "https://www.femtechpo.pl/pl/o-nas#kontakt",
+  contact: "mailto:joinpoppypl@gmail.com",
   instagram: "https://instagram.com/femtechpo.pl",
   linkedin: "https://www.linkedin.com/company/femtech-po-polsku/",
   substack: substack.url,

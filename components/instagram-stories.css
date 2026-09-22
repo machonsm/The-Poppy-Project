@@ -9,15 +9,6 @@
 .pp-story__image img { display: block; width: 100%; height: 100%; object-fit: contain; transition: transform .65s var(--pp-ease); }
 .pp-story:hover .pp-story__image img { transform: scale(1.015); }
 .pp-story__image:focus-visible { outline: 3px solid var(--poppy); outline-offset: -4px; }
-.pp-story__caption { position: absolute; right: 0; bottom: 0; width: 67%; background: var(--bone); border-top: 1px solid rgba(26,10,10,.08); }
-.pp-story__toggle { display: flex; width: 100%; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 14px 14px 20px; text-align: left; border: 0; background: none; color: var(--pitch); font: 400 19px/25px var(--font-serif); }
-.pp-story__sign { flex: 0 0 28px; display: grid; place-items: center; width: 28px; height: 28px; background: var(--poppy); color: var(--bone); transition: background .2s; }
-.pp-story__toggle:hover .pp-story__sign { background: var(--pitch); }
-.pp-story__description { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows .5s var(--pp-ease), visibility .5s; }
-.pp-story__description > div { min-height: 0; overflow: hidden; }
-.pp-story.is-expanded .pp-story__description { grid-template-rows: 1fr; visibility: visible; }
-.pp-story__description p { padding: 8px 20px 0; margin: 0; font: 400 15px/23px var(--font-sans); color: var(--pp-muted); }
-.pp-story__description a { display: inline-block; margin: 18px 20px 22px; color: var(--poppy); font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
 .pp-stories__controls { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 12px; }
 .pp-stories__controls > span { display: flex; align-items: center; gap: 18px; font-size: 13px; color: var(--olive); }
 .pp-stories__line { width: 70px; height: 1px; background: currentColor; opacity: .4; }
@@ -26,9 +17,6 @@
 .pp-stories__controls button:hover, .pp-stories__controls button:focus-visible { background: var(--poppy); color: var(--bone); }
 @media (max-width: 650px) {
   .pp-story { width: min(82vw, 380px); }
-  .pp-story__caption { width: 76%; }
-  .pp-story__toggle { font-size: 18px; line-height: 24px; padding: 12px 12px 12px 16px; }
-  .pp-story__description p { padding-inline: 16px; }
   .pp-stories__line { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .pp-story *, .pp-story *::before { transition: none !important; } }

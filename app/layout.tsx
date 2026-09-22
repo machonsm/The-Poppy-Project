@@ -6,6 +6,7 @@ import "./poppy-intro.css";
 import "lenis/dist/lenis.css";
 import "./editorial-motion.css";
 import "@/components/ui/fluid-button.css";
+import { sitePath } from "@/lib/site-path";
 
 const siteName = "Poppy Project";
 const description =
@@ -37,11 +38,11 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/favicon.svg?v=brandbook-20260915",
+        url: sitePath("/favicon.svg?v=transparent-20260921"),
         type: "image/svg+xml"
       }
     ],
-    shortcut: "/favicon.svg?v=brandbook-20260915"
+    shortcut: sitePath("/favicon.svg?v=transparent-20260921")
   }
 };
 
@@ -54,14 +55,8 @@ export const viewport: Viewport = {
 const motionPreferenceScript = `
 try {
   if (sessionStorage.getItem("poppy-motion") === "off") document.documentElement.dataset.motion = "off";
-  if (location.pathname === "/") {
-    var playPoppyIntro = !location.hash && sessionStorage.getItem("poppy-intro-v8-clean") !== "seen" && document.documentElement.dataset.motion !== "off" && !matchMedia("(prefers-reduced-motion: reduce)").matches;
-    document.documentElement.dataset.poppyIntro = playPoppyIntro ? "pending" : "done";
-    setTimeout(function () {
-      if (document.documentElement.dataset.poppyIntro === "pending") document.documentElement.dataset.poppyIntro = "done";
-    }, 4500);
-  }
-} catch (error) { if (location.pathname === "/") document.documentElement.dataset.poppyIntro = "done"; }
+} catch (error) {}
+document.documentElement.dataset.poppyIntro = "done";
 `;
 
 export default function RootLayout({

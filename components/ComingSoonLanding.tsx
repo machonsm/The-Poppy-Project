@@ -298,7 +298,7 @@ const copy: Record<Language, LandingCopy> = {
   }
 };
 
-const contactHref = "mailto:hello@thepoppyproject.pl";
+const contactHref = "mailto:joinpoppypl@gmail.com";
 const pageLinks: NavItem[] = [
   { label: "Materiały", href: "/materialy" },
   { label: "Blog", href: "/blog" },
@@ -512,7 +512,7 @@ export function ComingSoonLanding() {
             >
               <div className="landing-events-cursor" ref={eventCursorRef} aria-hidden="true" />
               <div className="landing-events-preview" ref={eventPreviewRef} aria-hidden="true">
-                {activeEvent ? (
+                {activeEvent?.image ? (
                   <Image
                     src={activeEvent.image}
                     alt=""
@@ -520,7 +520,7 @@ export function ComingSoonLanding() {
                     height={360}
                     sizes="220px"
                   />
-                ) : null}
+                ) : activeEvent ? <span className="landing-event-fallback"><small>{activeEvent.category}</small><strong>{activeEvent.title}</strong></span> : null}
               </div>
 
               {visibleEvents.map((event) => {
@@ -535,13 +535,13 @@ export function ComingSoonLanding() {
                     onBlur={clearActiveEvent}
                   >
                     <div className="landing-event-card__thumb">
-                      <Image
+                      {event.image ? <Image
                         src={event.image}
-                        alt={event.imageAlt}
+                        alt={event.imageAlt ?? ""}
                         width={180}
                         height={130}
                         sizes="(max-width: 900px) 86px, 1px"
-                      />
+                      /> : <span className="landing-event-fallback"><small>{event.category}</small><strong>{event.title}</strong></span>}
                     </div>
                     <div className="landing-event-card__date">
                       <strong>{date.label}</strong>
@@ -664,7 +664,7 @@ export function ComingSoonLanding() {
             <h3>{currentCopy.footer.contact}</h3>
             <a href={contactHref}>
               <Mail size={16} aria-hidden="true" />
-              hello@thepoppyproject.pl
+              joinpoppypl@gmail.com
             </a>
             <a href="#instagram">
               <Globe2 size={16} aria-hidden="true" />

@@ -11,10 +11,10 @@ const flowerForms = [
   { left: 79, size: 120, delay: .06, lean: -10, stem: "M 80 272 C 117 217 62 144 80 91" },
   { left: 93, size: 86, delay: .28, lean: 13, stem: "M 80 272 C 49 209 106 170 80 109" },
 ];
-const flowers = Array.from({ length: 19 }, (_, index) => ({
-  ...flowerForms[index % flowerForms.length],
-  left: 4 + index * (92 / 18),
-  delay: (flowerForms[index % flowerForms.length].delay + index * .025) % .32,
+// Six evenly spaced flowers keep this footer easter egg quiet and discoverable.
+const flowers = flowerForms.filter((_, index) => index !== 3).map((flower, index) => ({
+  ...flower,
+  left: 8 + index * (84 / 5),
 }));
 const colors = { poppy: "var(--poppy)", shade: "var(--burgundy)", center: "var(--pitch)", detail: "var(--linen)" };
 
@@ -28,7 +28,7 @@ export function PoppyBloomBorder() {
         </g>
       </symbol></defs>
     </svg>
-    {flowers.map((flower, index) => <svg key={index} className={`pp-bloom-border__plant${index % 2 ? " pp-bloom-border__plant--desktop" : ""}`} viewBox="0 0 160 270" focusable="false" data-bloom-delay={flower.delay} data-bloom-lean={flower.lean} style={{ "--plant-left": `${flower.left}%`, "--plant-width": `${flower.size}px` } as CSSProperties}>
+    {flowers.map((flower, index) => <svg key={index} className={`pp-bloom-border__plant${index % 2 ? " pp-bloom-border__plant--desktop" : ""}`} viewBox="0 0 160 272" focusable="false" data-bloom-delay={flower.delay} data-bloom-lean={flower.lean} style={{ "--plant-left": `${flower.left}%`, "--plant-width": `${flower.size}px` } as CSSProperties}>
       <g className="pp-bloom-border__sway">
         <path className="pp-bloom-border__stem" d={flower.stem} pathLength="1" />
         <g className="pp-bloom-border__head" opacity="0">
