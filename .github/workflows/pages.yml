@@ -34,7 +34,14 @@ jobs:
       - run: npm ci
       - run: npm run test:substack
       - name: Refresh every published Substack article
+        id: substack_sync
+        # A failed refresh preserves the committed snapshot. Allow source changes
+        # to publish; scheduled refreshes must still report a failure.
+        continue-on-error: ${{ github.event_name != 'schedule' }}
         run: npm run sync:substack
+      - name: Report saved article fallback
+        if: steps.substack_sync.outcome == 'failure' && github.event_name != 'schedule'
+        run: echo "::warning::Substack refresh failed. Publishing the website with the saved article list; new articles will appear after a successful refresh."
       - name: Build the static site
         env:
           PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}

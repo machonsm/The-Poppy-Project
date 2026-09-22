@@ -78,10 +78,10 @@ Normal `npm run build` deliberately uses the committed snapshot and works withou
 
 ### Enable automatic refresh on GitHub Pages
 
-The prepared `.github/workflows/pages.yml` refreshes the complete archive and rebuilds/deploys the static site on pushes to `main`, manual runs, and every six hours (at minute 23 UTC). It has **not** been pushed or activated by this local change. To activate after reviewing the site:
+The `.github/workflows/pages.yml` workflow refreshes the complete archive and rebuilds/deploys the static site on pushes to `main`, manual runs, and every six hours (at minute 23 UTC). To configure deployment:
 
 1. Commit/push the source, generated JSON snapshot and workflow to GitHub.
 2. In the repository's **Settings → Pages → Build and deployment**, choose **GitHub Actions**. A custom domain is optional: the build reads GitHub Pages' base path and supports both a root domain and the default `/repository-name/` URL.
 3. Open **Actions → Publish Poppy Project and refresh Substack → Run workflow** for the first deployment. Check that both jobs succeed. No Substack secret is required.
 
-Successful later runs publish new/updated articles and remove deleted archive entries automatically. If syncing fails, deployment does not run and the last published site stays online. GitHub schedules are approximate and can be delayed; scheduled workflows in inactive public repositories may be disabled after 60 days. Monitor the Actions status and re-enable if necessary. See [GitHub's custom Pages workflow guide](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+Successful later runs publish new/updated articles and remove deleted archive entries automatically. If syncing fails during a push or manual run, the workflow reports a warning and builds the website using the committed article snapshot, so source changes can still be published. The saved list may not include the newest articles until a refresh succeeds. If syncing fails during a scheduled run, deployment does not run and the last published site stays online. GitHub schedules are approximate and can be delayed; scheduled workflows in inactive public repositories may be disabled after 60 days. Monitor the Actions status and re-enable if necessary. See [GitHub's custom Pages workflow guide](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
