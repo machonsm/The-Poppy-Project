@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ArrowUpRight, Download, Send } from "lucide-react";
-import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent, type MouseEvent as ReactMouseEvent } from "react";
 import { PoppyHeader, PoppyFooter } from "@/components/PoppyChrome";
 import { PoppyEventList } from "@/components/PoppyEventList";
 import { InstagramStoryCarousel } from "@/components/InstagramStoryCarousel";
@@ -117,6 +117,16 @@ export function PoppyLanding() {
     return () => observer.disconnect();
   }, []);
 
+  const scrollToSection = (event: ReactMouseEvent<HTMLAnchorElement>, id: string) => {
+    const target = document.getElementById(id);
+    if (!target) return;
+    event.preventDefault();
+    event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+    window.history.pushState(null, "", `#${id}`);
+    window.dispatchEvent(new CustomEvent("poppy-scroll-to", { detail: target }));
+  };
+
   const submitCompany = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -166,7 +176,7 @@ export function PoppyLanding() {
                 <span className="pp-title-line"><span><em>{c.hero[2]}</em></span></span>
               </h1>
               <p className="pp-hero__intro">{c.intro}</p>
-              {siteFeatures.mapDownload && <FluidLink className="pp-hero__map-link" href="#mapa">{c.mapCta}</FluidLink>}
+              {siteFeatures.mapDownload && <FluidLink className="pp-hero__map-link" href="#mapa" onClick={event => scrollToSection(event, "mapa")}>{c.mapCta}</FluidLink>}
             </div>
             <div className="pp-flower-stage" ref={flower}>
               <div className="pp-flower-cluster" ref={cluster}>

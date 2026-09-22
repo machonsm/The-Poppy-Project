@@ -53,6 +53,12 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
     const getTargetTop = (target: HTMLElement) => {
       const headerHeight = getHeaderHeight();
       let offset = headerHeight + 16;
+      let targetTop = target.getBoundingClientRect().top + window.scrollY;
+      if (target.matches(".pp-map") && mapStack) {
+        // The map becomes sticky while scrolling. Its parent keeps the map's
+        // natural document position, so anchor navigation remains exact.
+        targetTop = mapStack.getBoundingClientRect().top + window.scrollY;
+      }
       if (target.matches(".pp-contact")) {
         // Contact should meet the sticky header with no glimpse of the olive
         // events section. The one-pixel overlap also avoids subpixel seams.
@@ -63,7 +69,7 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
         const radius = parseFloat(getComputedStyle(target).borderTopLeftRadius) || 0;
         offset -= 16 + radius + 2;
       }
-      return Math.max(0, target.getBoundingClientRect().top + window.scrollY - offset);
+      return Math.max(0, targetTop - offset);
     };
     const progress = (element: HTMLElement, end = .4) => {
       const rect = element.getBoundingClientRect();
