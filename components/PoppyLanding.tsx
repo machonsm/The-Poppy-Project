@@ -92,6 +92,7 @@ export function PoppyLanding() {
   const [language, setLanguage] = usePoppyLanguage();
   const [filter, setFilter] = useState<EventFilter>("all");
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [formPageUrl, setFormPageUrl] = useState("");
   const root = useRef<HTMLDivElement>(null);
   const flower = useRef<HTMLDivElement>(null);
   const cluster = useRef<HTMLDivElement>(null);
@@ -107,6 +108,7 @@ export function PoppyLanding() {
   useEffect(() => {
     const node = root.current;
     if (!node) return;
+    setFormPageUrl(`${window.location.origin}${window.location.pathname}#zglos-firme`);
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add("is-visible"); observer.unobserve(entry.target); } });
     }, { threshold: 0.08 });
@@ -146,6 +148,7 @@ export function PoppyLanding() {
           category: String(data.get("category") ?? ""),
           description: String(data.get("description") ?? "").trim(),
           consent: "yes",
+          _url: formPageUrl || window.location.href,
           _subject: `Poppy Project — FemTech map: ${company}`,
           _template: "table",
           _honey: String(data.get("_honey") ?? "")
@@ -279,6 +282,7 @@ export function PoppyLanding() {
               <div className="pp-company__body">
                 <p>{c.formNote}</p>
                 <form action={`https://formsubmit.co/${links.email}`} method="POST" onSubmit={submitCompany} aria-busy={formStatus === "sending"}>
+                  <input type="hidden" name="_url" value={formPageUrl} />
                   <input type="hidden" name="_subject" value="Poppy Project — FemTech map submission" />
                   <input type="hidden" name="_template" value="table" />
                   <label className="pp-company__honey" aria-hidden="true"><span>Leave this field empty</span><input name="_honey" tabIndex={-1} autoComplete="off" /></label>
