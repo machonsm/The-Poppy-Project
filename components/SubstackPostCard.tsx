@@ -6,7 +6,10 @@ import { useState } from "react";
 import type { PoppyLanguage } from "@/components/PoppyChrome";
 import { PoppyMark } from "@/components/brand/PoppyMark";
 import type { SubstackPost } from "@/data/substack";
-import { FluidSurface } from "@/components/ui/FluidButton";
+import { links } from "@/data/links";
+import { FluidLink } from "@/components/ui/FluidButton";
+
+const publicationName = "Poppy Project (FemTech PL)";
 
 function coverPreview(url: string) {
   // Substack's image service keeps large original photographs out of the grid.
@@ -25,21 +28,21 @@ export function SubstackPostCard({ post, language }: { post: SubstackPost; langu
         <time dateTime={post.publishedAt}>{new Intl.DateTimeFormat(pl ? "pl-PL" : "en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Warsaw" }).format(new Date(post.publishedAt))}</time>
         <span>Substack</span>
       </div>
-      <a className="pp-substack-post__card" href={post.url} target="_blank" rel="noopener noreferrer" aria-label={`${post.title} — ${pl ? "czytaj na Substacku, nowa karta" : "read on Substack, new tab"}`} data-fluid-trigger>
-        <div className="pp-substack-post__cover">
+      <div className="pp-substack-post__card">
+        <a className="pp-substack-post__cover" href={post.url} target="_blank" rel="noopener noreferrer" aria-label={`${post.title} — ${pl ? "czytaj na Substacku, nowa karta" : "read on Substack, new tab"}`}>
           {post.coverImage && !imageFailed ? (
             <Image src={coverPreview(post.coverImage)} alt="" width={1000} height={524} sizes="(max-width: 650px) 100vw, (max-width: 1100px) 50vw, 33vw" onError={() => setImageFailed(true)} />
           ) : (
-            <div className="pp-substack-post__cover-fallback" aria-hidden="true"><PoppyMark /><span>FemTech po Polsku</span></div>
+            <div className="pp-substack-post__cover-fallback" aria-hidden="true"><PoppyMark /><span>{publicationName}</span></div>
           )}
-        </div>
+        </a>
         <div className="pp-substack-post__body">
-          <h3>{post.title}</h3>
+          <a className="pp-substack-post__title-link" href={post.url} target="_blank" rel="noopener noreferrer"><h3>{post.title}</h3></a>
           <p className="pp-substack-post__description">{post.description}</p>
-          <span className="pp-substack-post__publication">FemTech po Polsku</span>
-          <FluidSurface size="small" className="pp-substack-post__action">{pl ? "Czytaj na Substacku" : "Read on Substack"}<ArrowUpRight size={18} aria-hidden="true" /></FluidSurface>
+          <a className="pp-substack-post__publication" href={links.substackPublication} target="_blank" rel="noopener noreferrer">{publicationName}</a>
+          <FluidLink size="small" className="pp-substack-post__action" href={post.url} target="_blank" rel="noopener noreferrer">{pl ? "Czytaj na Substacku" : "Read on Substack"}<ArrowUpRight size={18} aria-hidden="true" /></FluidLink>
         </div>
-      </a>
+      </div>
     </article>
   );
 }

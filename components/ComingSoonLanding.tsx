@@ -207,7 +207,7 @@ const copy: Record<Language, LandingCopy> = {
       title: "Who We Are",
       intro: "The Poppy Project is a Polish platform for women’s health innovation.",
       body:
-        "The Poppy Project connects the Polish women’s health ecosystem with the European and global women’s health and FemTech community. We work at the intersection of business and knowledge, helping Polish organisations, experts, and entrepreneurs build visibility and access international opportunities for growth, funding, and collaboration.",
+        "The Poppy Project connects the Polish women’s health ecosystem with the European and global women’s health and FemTech community. We work at the intersection of business and science, helping Polish organisations, experts, and entrepreneurs build visibility and access international opportunities for growth, funding, and collaboration.",
       points: [
         "We map the market, translate research, trends, and proven operating models, and connect entrepreneurs, clinicians, scientists, investors, and institutional partners. We create a bridge between Poland and more mature women’s health innovation ecosystems.",
         "We track solutions that have worked in more mature markets and help assess which of them could effectively respond to the needs of women in Poland. At the same time, we support Polish companies, projects, and experts in building international recognition, so that local talent, knowledge, and innovation can reach a wider circle of partners, investors, and audiences."

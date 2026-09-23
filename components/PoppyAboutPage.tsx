@@ -34,7 +34,7 @@ const aboutCopy = {
     title: "What do we do?",
     intro: "Poppy Project is a Polish platform for innovation in women’s health.",
     story: [
-      "We connect Poland’s women’s health ecosystem with the broader European and global women’s health and FemTech community, working at the intersection of business and knowledge.",
+      "We connect Poland’s women’s health ecosystem with the broader European and global women’s health and FemTech community, working at the intersection of business and science.",
       "Our goal is to help Polish organisations, experts and entrepreneurs gain visibility and access to international opportunities for growth, funding and collaboration."
     ],
     teamTitle: "Who are we?",

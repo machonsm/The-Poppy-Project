@@ -92,7 +92,7 @@ export function PoppyBlogPage({ initialLanguage = "pl" }: { initialLanguage?: Po
           </div>
           <div className="pp-blog-status"><p role="status" aria-live="polite" aria-atomic="true">{c.count}: <strong>{visible.length}</strong>{visible.length !== substackArchive.posts.length && ` / ${substackArchive.posts.length}`}</p><span>{c.updated}: <time dateTime={substackArchive.syncedAt}>{new Intl.DateTimeFormat(language === "pl" ? "pl-PL" : "en-GB", { dateStyle: "medium", timeZone: "Europe/Warsaw" }).format(new Date(substackArchive.syncedAt))}</time></span></div>
           {visible.length ? <div className="pp-blog-grid">{visible.map(post => <SubstackPostCard key={post.id} post={post} language={language} />)}</div> : <div className="pp-blog-empty"><h3>{c.empty}</h3><button type="button" className="pp-text-link" onClick={() => { setQuery(""); setYear("all"); }}>{c.reset}<ArrowUpRight size={18} aria-hidden="true" /></button></div>}
-          <div className="pp-blog-archive__bottom"><p>{c.archiveNote}</p><FluidLink href={`${links.substack}archive`} target="_blank" rel="noopener noreferrer">{c.original}<ArrowUpRight size={18} aria-hidden="true" /></FluidLink></div>
+          <div className="pp-blog-archive__bottom"><p>{c.archiveNote}</p><FluidLink href={links.substack} target="_blank" rel="noopener noreferrer">{c.original}<ArrowUpRight size={18} aria-hidden="true" /></FluidLink></div>
         </div>
       </section>
     </main>

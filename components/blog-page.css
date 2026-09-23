@@ -30,15 +30,17 @@
 .pp-substack-post__meta > span { color: var(--olive); }
 .pp-substack-post__card { display: block; border: 1px solid var(--pp-line); background: var(--bone); transition: border-color .25s; }
 .pp-substack-post__card:hover { border-color: var(--poppy); }
-.pp-substack-post__cover { position: relative; aspect-ratio: 1000 / 524; overflow: hidden; background: var(--linen); }
+.pp-substack-post__cover { display: block; position: relative; aspect-ratio: 1000 / 524; overflow: hidden; background: var(--linen); }
 .pp-substack-post__cover img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--pp-ease); }
 .pp-substack-post__card:hover .pp-substack-post__cover img { transform: scale(1.025); }
 .pp-substack-post__cover-fallback { display: flex; width: 100%; height: 100%; align-items: center; justify-content: center; gap: 20px; color: var(--poppy); font-family: var(--font-serif); font-size: 23px; }
 .pp-substack-post__cover-fallback .poppy-mark { width: 44px; height: 70px; }
 .pp-substack-post__body { display: flex; flex-direction: column; padding: 24px; }
+.pp-substack-post__title-link { display: block; color: inherit; }
 .pp-substack-post__body h3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; height: 96px; font-size: 25px; line-height: 32px; margin: 0; }
 .pp-substack-post__description { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; height: 72px; color: var(--pp-muted); font-size: 15px; line-height: 24px; margin: 16px 0 0; }
-.pp-substack-post__publication { margin-top: 24px; color: var(--olive); font-size: 12px; line-height: 18px; }
+.pp-substack-post__publication { align-self: flex-start; margin-top: 24px; color: var(--olive); font-size: 12px; line-height: 18px; }
+.pp-substack-post__publication:hover { color: var(--poppy); text-decoration: underline; text-underline-offset: 3px; }
 .pp-substack-post__action { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-top: 18px; padding: 13px 18px; border: 1px solid var(--pp-line); border-radius: 999px; color: var(--poppy); font-size: 14px; line-height: 20px; transition: color .25s, background .25s, border-color .25s; }
 .pp-substack-post__action svg { flex-shrink: 0; }
 .pp-blog-hero .pp-fluid.pp-fluid.pp-fluid { --fluid-fill: var(--linen); --fluid-contrast: var(--poppy); background: var(--poppy); color: var(--bone); }
