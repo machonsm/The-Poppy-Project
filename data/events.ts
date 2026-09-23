@@ -84,6 +84,19 @@ const eventEntries: EventItem[] = [
     imageFit: "contain"
   },
   {
+    title: "Women’s Health at Work: Practical Training for HR, Managers & People Leaders",
+    date: "2026-10-01T14:00:00+02:00",
+    endDate: "2026-10-01T18:30:00+02:00",
+    location: "Hilversum, Holandia",
+    region: "europe",
+    category: "Zdrowie kobiet w pracy",
+    description:
+      "Praktyczne szkolenie dla osób z HR, kadry zarządzającej i liderów zespołów o wspieraniu zdrowia kobiet w miejscu pracy — od menstruacji i macierzyństwa po menopauzę oraz nowe wytyczne ISO 45010.",
+    url: "https://luma.com/h063bi2b",
+    image: "/events/womens-health-at-work.webp",
+    imageAlt: "Women’s Health at Work — praktyczne szkolenie dla HR, managerów i liderów zespołów"
+  },
+  {
     title: "Three Women & Me Global Women’s Health Summit",
     date: "2026-10-01T15:00:00+02:00",
     endDate: "2026-10-01T22:00:00+02:00",
