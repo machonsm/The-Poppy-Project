@@ -17,24 +17,93 @@ const resourceEntries: PoppyResource[] = [
   {
     "id": "report-1",
     "cover": {
-      "src": "/resources/covers/report-1.png",
-      "width": 750,
-      "height": 563,
-      "source": "https://images.squarespace-cdn.com/content/v1/68dfd93a8422050f7761b738/668612d8-f427-461f-ade7-73705f21b182/Screenshot+2025-11-13+163840.png"
+      "src": "/resources/covers/piersi-w-polsce-2026.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://zdrowie.pap.pl/profilaktyka/mammografia-bezplatne-badanie-na-wage-zycia-dlaczego-kobiety-wciaz-jej-unikaja"
     },
     "category": "poland",
-    "publisher": "SEXEDPL",
+    "publisher": "SEXEDPL · Ipsos",
     "href": {
-      "pl": "https://sexed.pl/piersi-w-polsce/",
-      "en": "https://sexed.pl/piersi-w-polsce/"
+      "pl": "https://zdrowie.pap.pl/profilaktyka/mammografia-bezplatne-badanie-na-wage-zycia-dlaczego-kobiety-wciaz-jej-unikaja",
+      "en": "https://zdrowie.pap.pl/profilaktyka/mammografia-bezplatne-badanie-na-wage-zycia-dlaczego-kobiety-wciaz-jej-unikaja"
     },
     "title": {
-      "pl": "Piersi w Polsce",
-      "en": "Piersi w Polsce"
+      "pl": "Piersi w Polsce: Nie mam czasu na raka",
+      "en": "Breast Health in Poland: I Don’t Have Time for Cancer"
     },
     "description": {
-      "pl": "To przekrojowe wydawnictwo zbierające informacje nt. udziału i praw kobiet w różnych sferach życia politycznego, społecznego i prywatnego. Ekspertki z wybranych obszarów przedstawiają badania, analizy i tendencje oraz formułują rekomendacje działań potrzebnych dla poprawy standardów i ochrony praw kobiet.",
-      "en": "This is a comprehensive publication gathering information on women’s participation and rights in various spheres of political, social, and private life. Experts from selected fields present research, analyses, and trends, and formulate recommendations for actions needed to improve standards and protect women’s rights."
+      "pl": "Raport o profilaktyce raka piersi i barierach między świadomością a wykonywaniem mammografii. Pokazuje, dlaczego Polki odkładają badania mimo wiedzy o ich znaczeniu, oraz wskazuje rozwiązania wspierające udział w profilaktyce.",
+      "en": "A report on breast cancer prevention and the gap between awareness and mammography uptake. It examines why women in Poland postpone screening despite understanding its importance and identifies ways to improve participation in preventive care."
+    }
+  },
+  {
+    "id": "report-2026-miedzy-rolami",
+    "cover": {
+      "src": "/resources/covers/miedzy-rolami-2026.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://twarzedepresji.pl/artykul/zdrowie-psychiczne-kobiet-badanie-twarze-depresji/"
+    },
+    "category": "poland",
+    "publisher": "Fundacja Twarze Depresji",
+    "href": {
+      "pl": "https://twarzedepresji.pl/artykul/zdrowie-psychiczne-kobiet-badanie-twarze-depresji/",
+      "en": "https://twarzedepresji.pl/artykul/zdrowie-psychiczne-kobiet-badanie-twarze-depresji/"
+    },
+    "title": {
+      "pl": "Między rolami: o kobiecej tożsamości",
+      "en": "Between Roles: On Women’s Identity"
+    },
+    "description": {
+      "pl": "Raport o zdrowiu psychicznym kobiet i obciążeniu rolami zawodowymi, rodzinnymi i społecznymi. Badanie ponad 1000 kobiet pokazuje, które role i oczekiwania są największym źródłem stresu oraz jak wpływają na dobrostan.",
+      "en": "A report on women’s mental health and the burden of professional, family, and social roles. Based on a study of more than 1,000 women, it identifies the roles and expectations that create the most stress and affect wellbeing."
+    }
+  },
+  {
+    "id": "report-2026-objawy-w-sieci",
+    "cover": {
+      "src": "/resources/covers/objawy-w-sieci-2026.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://www.santanderconsumer.pl/files/pdf/20260413-Raport-Objawy-w-sieci-Biustowniczki-2026.pdf"
+    },
+    "category": "poland",
+    "publisher": "Santander Consumer Bank · Biustowniczki",
+    "href": {
+      "pl": "https://www.santanderconsumer.pl/files/pdf/20260413-Raport-Objawy-w-sieci-Biustowniczki-2026.pdf",
+      "en": "https://www.santanderconsumer.pl/files/pdf/20260413-Raport-Objawy-w-sieci-Biustowniczki-2026.pdf"
+    },
+    "title": {
+      "pl": "Objawy w sieci 2026",
+      "en": "Symptoms Online 2026"
+    },
+    "description": {
+      "pl": "Raport o tym, jak Polki szukają informacji o zdrowiu w internecie. Analizuje diagnozowanie online, wiarygodność źródeł, dezinformację zdrowotną oraz wpływ treści z sieci na decyzje dotyczące konsultacji i leczenia.",
+      "en": "A report on how women in Poland search for health information online. It examines online self-diagnosis, source credibility, health misinformation, and how digital content shapes decisions about medical consultations and treatment."
+    }
+  },
+  {
+    "id": "report-2026-menonawigator",
+    "cover": {
+      "src": "/resources/covers/top-10-menopauza-2026.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://menopedia.pl/menobiblioteka/artykul/top-10-objawow-menopauzy-w-polsce-wg-menonawigatora-raport-maj-2026"
+    },
+    "category": "poland",
+    "publisher": "MenoNawigator · MenoPedia",
+    "href": {
+      "pl": "https://menopedia.pl/menobiblioteka/artykul/top-10-objawow-menopauzy-w-polsce-wg-menonawigatora-raport-maj-2026",
+      "en": "https://menopedia.pl/menobiblioteka/artykul/top-10-objawow-menopauzy-w-polsce-wg-menonawigatora-raport-maj-2026"
+    },
+    "title": {
+      "pl": "TOP 10 objawów menopauzy w Polsce 2026",
+      "en": "Top 10 Menopause Symptoms in Poland 2026"
+    },
+    "description": {
+      "pl": "Pierwszy krajowy ranking oparty na bieżącym raportowaniu objawów przez użytkowniczki MenoNawigatora. Analiza ponad 1000 wpisów pokazuje najczęstsze i najbardziej uciążliwe symptomy oraz znaczenie systematycznej samoobserwacji.",
+      "en": "The first national ranking based on ongoing symptom tracking by MenoNawigator users. An analysis of more than 1,000 entries highlights the most common and burdensome symptoms and the value of systematic self-observation."
     }
   },
   {

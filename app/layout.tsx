@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/next-script-for-ga */
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "../public/fonts/fonts.css";
@@ -70,6 +71,13 @@ try {
 document.documentElement.dataset.poppyIntro = "done";
 `;
 
+const googleTagScript = `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-ECRT7MG1R3');
+`;
+
 const organizationSchema = {
   "@context": "https://schema.org",
   "@graph": [
@@ -102,6 +110,8 @@ export default function RootLayout({
   return (
     <html lang="pl" suppressHydrationWarning>
       <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECRT7MG1R3" />
+        <script dangerouslySetInnerHTML={{ __html: googleTagScript }} />
         <script dangerouslySetInnerHTML={{ __html: motionPreferenceScript }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(organizationSchema) }} />
       </head>
