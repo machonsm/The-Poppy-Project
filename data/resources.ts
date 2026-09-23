@@ -278,11 +278,12 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-11",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-svb.svg",
-      "width": 1200,
-      "height": 900,
+      "src": "/resources/covers/2026-official-svb.png",
+      "fit": "contain",
+      "background": "#ffffff",
+      "width": 1536,
+      "height": 864,
       "source": "https://www.svb.com/trends-insights/reports/womens-health-report/"
     },
     "category": "global",
@@ -588,9 +589,10 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-femmehealth-q1",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-femmehealth-q1.svg",
+      "src": "/resources/covers/2026-official-femmehealth-q1.png",
+      "fit": "contain",
+      "background": "#ffffff",
       "width": 1200,
       "height": 900,
       "source": "https://femmehealthalliance.org/womens-health-investment-report-q1-2026-funding-exits-and-market-analysis-femmehealth-alliance/"
@@ -612,11 +614,12 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-care-for-women",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-care-for-women.svg",
-      "width": 1200,
-      "height": 900,
+      "src": "/resources/covers/2026-official-care-for-women.png",
+      "fit": "contain",
+      "background": "#ffffff",
+      "width": 953,
+      "height": 1348,
       "source": "https://www.weforum.org/publications/care-for-women-investing-in-care-delivery-to-improve-womens-lives-and-livelihoods/"
     },
     "category": "global",
@@ -636,11 +639,12 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-innovation-radar",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-innovation-radar.svg",
-      "width": 1200,
-      "height": 900,
+      "src": "/resources/covers/2026-official-innovation-radar.png",
+      "fit": "contain",
+      "background": "#ffffff",
+      "width": 953,
+      "height": 1348,
       "source": "https://www.weforum.org/publications/the-women-s-health-innovation-radar-revealing-gaps-and-opportunities-across-the-science-to-patient-journey/"
     },
     "category": "global",
@@ -660,11 +664,12 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-accelerating-femtech",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-accelerating-femtech.svg",
-      "width": 1200,
-      "height": 900,
+      "src": "/resources/covers/2026-official-accelerating-femtech.png",
+      "fit": "contain",
+      "background": "#ffffff",
+      "width": 1191,
+      "height": 1684,
       "source": "https://healthinnovationnetwork.com/wp-content/uploads/2026/05/Accelerating-FemTech-Impact-Report-2026.pdf"
     },
     "category": "global",
@@ -684,9 +689,10 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-france-barometer",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-france-barometer.svg",
+      "src": "/resources/covers/2026-official-france-barometer.png",
+      "fit": "contain",
+      "background": "#ffffff",
       "width": 1200,
       "height": 900,
       "source": "https://www.femtechfrance.org/post/publication-du-barom%C3%A8tre-2026-de-la-femtech-en-france"
@@ -708,11 +714,12 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-india-futures",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-india-futures.svg",
-      "width": 1200,
-      "height": 900,
+      "src": "/resources/covers/2026-official-india-futures.png",
+      "fit": "contain",
+      "background": "#ffffff",
+      "width": 953,
+      "height": 1348,
       "source": "https://www.orfonline.org/research/women-s-health-futures-in-india-technology-workforce-and-finance-for-lifelong-well-being"
     },
     "category": "global",
@@ -732,11 +739,12 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-uk-health-gap",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-uk-gap.svg",
-      "width": 1200,
-      "height": 900,
+      "src": "/resources/covers/2026-official-uk-health-gap.jpg",
+      "fit": "contain",
+      "background": "#ffffff",
+      "width": 800,
+      "height": 800,
       "source": "https://www.mckinsey.com/mhi/our-insights/closing-the-womens-health-gap-the-united-kingdoms-36-billion-pound-opportunity"
     },
     "category": "global",
@@ -756,9 +764,10 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-funding-q2",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-funding-q2.svg",
+      "src": "/resources/covers/2026-official-funding-q2.png",
+      "fit": "contain",
+      "background": "#ffffff",
       "width": 1200,
       "height": 900,
       "source": "https://www.futurefemhealth.com/p/q2-2026-womens-health-funding-in"
@@ -779,34 +788,11 @@ const resourceEntries: PoppyResource[] = [
     }
   },
   {
-    "id": "report-2026-nogafem",
-    "hidden": true,
-    "cover": {
-      "src": "/resources/covers/2026-report-nogafem.svg",
-      "width": 1200,
-      "height": 900,
-      "source": "https://www.nogafem-womens-health.org/report2026"
-    },
-    "category": "global",
-    "publisher": "NOGAFEM",
-    "href": {
-      "pl": "https://www.nogafem-womens-health.org/report2026",
-      "en": "https://www.nogafem-womens-health.org/report2026"
-    },
-    "title": {
-      "pl": "State of Women’s Health Innovation 2026",
-      "en": "State of Women’s Health Innovation 2026"
-    },
-    "description": {
-      "pl": "Analiza izraelskiego ekosystemu women’s health tech na tle rynków globalnych. Obejmuje innowacje kliniczne i technologiczne, trendy finansowania, deeptech, integrację płci w badaniach oraz ryzyko uprzedzeń w danych i rozwiązaniach AI.",
-      "en": "An analysis of Israel’s women’s health tech ecosystem benchmarked against global markets. It covers clinical and technological innovation, funding trends, deep tech, sex and gender integration, and bias risks in data and AI."
-    }
-  },
-  {
     "id": "report-2026-era-of-scale",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-era-of-scale.svg",
+      "src": "/resources/covers/2026-official-era-of-scale.png",
+      "fit": "contain",
+      "background": "#ffffff",
       "width": 1200,
       "height": 900,
       "source": "https://wplatform.co/forms/womens-health-equity-funding-trends-report-2026"
@@ -827,34 +813,11 @@ const resourceEntries: PoppyResource[] = [
     }
   },
   {
-    "id": "report-2026-capital-index-q2",
-    "hidden": true,
-    "cover": {
-      "src": "/resources/covers/2026-report-capital-index-q2.svg",
-      "width": 1200,
-      "height": 900,
-      "source": "https://theluteal.com/reports/femtech-capital-index-q2-2026"
-    },
-    "category": "global",
-    "publisher": "The Luteal",
-    "href": {
-      "pl": "https://theluteal.com/reports/femtech-capital-index-q2-2026",
-      "en": "https://theluteal.com/reports/femtech-capital-index-q2-2026"
-    },
-    "title": {
-      "pl": "The Femtech Capital Index: Q2 2026",
-      "en": "The Femtech Capital Index: Q2 2026"
-    },
-    "description": {
-      "pl": "Szczegółowe zestawienie zweryfikowanych rund finansowania FemTech w drugim kwartale 2026 roku. Raport pokazuje, jak kryteria klasyfikacji i zakres definicji FemTechu zmieniają obraz wielkości oraz struktury rynku.",
-      "en": "A detailed review of verified FemTech funding rounds in Q2 2026. It shows how classification criteria and the scope of the FemTech definition change the apparent size and structure of the market."
-    }
-  },
-  {
     "id": "report-2026-reimbursement-roadmap",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-reimbursement.svg",
+      "src": "/resources/covers/2026-official-reimbursement.png",
+      "fit": "contain",
+      "background": "#ffffff",
       "width": 1200,
       "height": 900,
       "source": "https://milkeninstitute.org/index.php/content-hub/research-and-reports/research-and-data-tools/coverage-and-reimbursement-roadmap-womens-health-innovation"
@@ -876,11 +839,12 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-post-femtech",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-post-femtech.svg",
-      "width": 1200,
-      "height": 900,
+      "src": "/resources/covers/2026-official-post-femtech.jpg",
+      "fit": "contain",
+      "background": "#ffffff",
+      "width": 1080,
+      "height": 720,
       "source": "https://post.parliament.uk/research-briefings/post-pn-0775/"
     },
     "category": "global",
@@ -900,9 +864,10 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-censorship",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-censorship.svg",
+      "src": "/resources/covers/2026-official-censorship.png",
+      "fit": "contain",
+      "background": "#ffffff",
       "width": 1200,
       "height": 900,
       "source": "https://censhership.com/one-year-on"
@@ -924,11 +889,12 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-southeast-asia",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-southeast-asia.svg",
-      "width": 1200,
-      "height": 900,
+      "src": "/resources/covers/2026-official-southeast-asia.jpg",
+      "fit": "contain",
+      "background": "#ffffff",
+      "width": 1920,
+      "height": 1080,
       "source": "https://www.linkedin.com/posts/femtechasia_2026-overview-of-the-femtech-industry-in-activity-7503256153502404608-zNuS"
     },
     "category": "global",
@@ -948,11 +914,12 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-limited-definition",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-limited-definition.svg",
-      "width": 1200,
-      "height": 900,
+      "src": "/resources/covers/2026-official-limited-definition.png",
+      "fit": "contain",
+      "background": "#ffffff",
+      "width": 980,
+      "height": 1268,
       "source": "https://www.trillianthealth.com/2026-womens-health-research-report"
     },
     "category": "global",
@@ -972,11 +939,12 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-global-index-year-5",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-global-index.svg",
-      "width": 1200,
-      "height": 900,
+      "src": "/resources/covers/2026-official-global-index.png",
+      "fit": "contain",
+      "background": "#ffffff",
+      "width": 1008,
+      "height": 1296,
       "source": "https://hologic.womenshealthindex.com/report-and-data"
     },
     "category": "global",
@@ -996,9 +964,10 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-hrp-annual",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-hrp.svg",
+      "src": "/resources/covers/2026-official-hrp.png",
+      "fit": "contain",
+      "background": "#ffffff",
       "width": 1200,
       "height": 900,
       "source": "https://www.who.int/publications/i/item/9789240121843"
@@ -1020,9 +989,10 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-femtech-spain",
-    "hidden": true,
     "cover": {
-      "src": "/resources/covers/2026-report-femtech-spain.svg",
+      "src": "/resources/covers/2026-official-femtech-spain.png",
+      "fit": "contain",
+      "background": "#ffffff",
       "width": 1200,
       "height": 900,
       "source": "https://www.femtechspain.es/en/ecosystem"
@@ -1040,6 +1010,52 @@ const resourceEntries: PoppyResource[] = [
     "description": {
       "pl": "Druga edycja raportu o hiszpańskim ekosystemie FemTech. Obejmuje mapę 64 aktywnych firm według kategorii, lokalizacji i technologii, a także analizę finansowania, inwestycji, regulacji i polityki zdrowotnej w Hiszpanii.",
       "en": "The second annual report on Spain’s FemTech ecosystem. It maps 64 active companies by category, geography, and technology type, and examines funding, investment, regulation, and women’s health policy in Spain."
+    }
+  },
+  {
+    "id": "resource-2026-boro-global-map",
+    "cover": {
+      "src": "/resources/covers/2026-official-boro-innovation-map.png",
+      "width": 2400,
+      "height": 1358,
+      "source": "https://boro.fi/assets/img/blog/wh_map_cover.png"
+    },
+    "category": "global",
+    "publisher": "Boro · Anastasiya Markvarde",
+    "href": {
+      "pl": "https://boro.fi/blog/map",
+      "en": "https://boro.fi/blog/map"
+    },
+    "title": {
+      "pl": "Globalna mapa innowacji w zdrowiu kobiet",
+      "en": "Women’s Health Innovation Map by Country"
+    },
+    "description": {
+      "pl": "Interaktywna mapa innowacji w zdrowiu kobiet obejmująca wybrane kraje i regiony. Zestawia rozwój polityk publicznych, rundy finansowania, inwestorów oraz najważniejsze organizacje ekosystemu, a dane są aktualizowane kwartalnie.",
+      "en": "An interactive women’s health innovation map covering selected countries and regions. It brings together policy developments, funding rounds, investors, and major ecosystem organisations, with data updated quarterly."
+    }
+  },
+  {
+    "id": "resource-2026-finland-ecosystem-map",
+    "cover": {
+      "src": "/resources/covers/2026-official-finland-ecosystem-map.png",
+      "width": 1600,
+      "height": 1000,
+      "source": "https://eir-accelerator.com/finland-ecosystem-map"
+    },
+    "category": "global",
+    "publisher": "Eir Accelerator · Women’s Health Hub Finland · Business Turku",
+    "href": {
+      "pl": "https://eir-accelerator.com/finland-ecosystem-map",
+      "en": "https://eir-accelerator.com/finland-ecosystem-map"
+    },
+    "title": {
+      "pl": "Mapa fińskiego ekosystemu zdrowia kobiet",
+      "en": "Finland Women’s Health Ecosystem Map"
+    },
+    "description": {
+      "pl": "Interaktywna mapa 111 fińskich organizacji działających w 12 obszarach zdrowia kobiet. Obejmuje startupy, naukę, biobanki, inwestorów, ochronę zdrowia, firmy farmaceutyczne oraz instytucje wspierające rozwój ekosystemu.",
+      "en": "An interactive map of 111 Finnish organisations active across 12 women’s health areas. It covers startups, research, biobanks, investors, healthcare, pharma, and public and ecosystem support organisations."
     }
   }
 ];

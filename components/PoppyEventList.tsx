@@ -48,7 +48,7 @@ export function PoppyEventList({ events, language, openLabel }: PoppyEventListPr
         return (
           <a
             className="pp-event"
-            key={event.url}
+            key={`${event.url}-${event.date}`}
             href={event.url}
             target="_blank"
             rel="noopener noreferrer"
