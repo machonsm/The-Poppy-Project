@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="CARE for Women">
+  <rect width="1200" height="900" fill="#e5efec"/>
+  <circle cx="1060" cy="84" r="260" fill="#e98f6a" opacity=".19"/>
+  <circle cx="1050" cy="790" r="310" fill="#123f48" opacity=".08"/>
+  <path d="M116 154h610" stroke="#e98f6a" stroke-width="10"/>
+  <text x="116" y="112" fill="#123f48" font-family="Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="5">WOMEN’S HEALTH · REPORT 2026</text>
+  <text x="116" y="300" fill="#123f48" font-family="Georgia, serif" font-size="64" font-weight="700">CARE for Women</text>
+  <path d="M877 304c92-106 215-67 215 40 0 90-88 147-215 252-127-105-215-162-215-252 0-107 123-146 215-40Z" fill="none" stroke="#e98f6a" stroke-width="18" opacity=".75"/>
+  <circle cx="877" cy="432" r="44" fill="#e98f6a" opacity=".8"/>
+  <line x1="116" y1="688" x2="708" y2="688" stroke="#e98f6a" stroke-width="6"/>
+  <text x="116" y="747" fill="#123f48" font-family="Arial, sans-serif" font-size="27" font-weight="700">World Economic Forum · McKinsey Health</text>
+  <text x="116" y="785" fill="#123f48" font-family="Arial, sans-serif" font-size="27" font-weight="700">Institute</text>
+</svg>

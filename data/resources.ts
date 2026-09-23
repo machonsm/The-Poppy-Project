@@ -323,11 +323,10 @@ const resourceEntries: PoppyResource[] = [
   {
     "id": "report-11",
     "cover": {
-      "src": "/resources/covers/report-11.png",
-      "position": "12% 50%",
-      "width": 750,
-      "height": 425,
-      "source": "https://images.squarespace-cdn.com/content/v1/68dfd93a8422050f7761b738/de1f4c92-4e7f-4dd1-af3d-dd0983212e00/Screenshot+2025-10-12+at+14.06.35.png"
+      "src": "/resources/covers/2026-report-svb.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://www.svb.com/trends-insights/reports/womens-health-report/"
     },
     "category": "global",
     "publisher": "Silicon Valley Bank",
@@ -336,12 +335,12 @@ const resourceEntries: PoppyResource[] = [
       "en": "https://www.svb.com/trends-insights/reports/womens-health-report/"
     },
     "title": {
-      "pl": "SVB: Innovation in Women's Health 2025",
-      "en": "SVB: Innovation in Women's Health 2025"
+      "pl": "Innovation in Women’s Health 2026",
+      "en": "Innovation in Women’s Health 2026"
     },
     "description": {
-      "pl": "Najnowszy raport od Silicon Valley Bank (SVB), analizujący trendy inwestycyjne i innowacje w obszarze zdrowia kobiet w 2025 roku. Przedstawia on wzrost finansowania, rosnące znaczenie medycyny precyzyjnej, personalizowanej opieki i cyfrowych rozwiązań zdrowotnych, a także wyzwania rynkowe.",
-      "en": "The latest report from Silicon Valley Bank (SVB) analyzes investment trends and innovations in women’s health for 2025. It highlights the growth of funding, the increasing importance of precision medicine, personalized care, and digital health solutions — as well as emerging market challenges."
+      "pl": "Raport Silicon Valley Bank o inwestycjach VC, startupach, innowacjach i transakcjach w zdrowiu kobiet w USA i Europie. Analizuje około 2 mld USD kapitału zainwestowanego w 2025 roku oraz perspektywy finansowania sektora w 2026 roku.",
+      "en": "Silicon Valley Bank’s report on venture capital, startups, innovation, and transactions in women’s health across the US and Europe. It analyzes roughly $2 billion invested in 2025 and the sector’s funding outlook for 2026."
     }
   },
   {
@@ -628,6 +627,420 @@ const resourceEntries: PoppyResource[] = [
     "description": {
       "pl": "Raport opracowany przez Kearney, Flagship Pioneering, Mubadala i Novo Holdings, analizujący możliwości przyspieszenia inwestycji kapitału prywatnego w zdrowiu kobiet. Pokazuje, że sektor ten jest dużym, niedoinwestowanym rynkiem o wartości biliona dolarów, oferującym znaczące możliwości zwrotu z inwestycji przy jednoczesnym zamykaniu luki w dostępie do opieki zdrowotnej dla kobiet i poprawie wyników zdrowotnych.",
       "en": "A report by Kearney, Flagship Pioneering, Mubadala, and Novo Holdings analyzing how private capital investment in women’s health can be accelerated. It shows that the sector is a large, underinvested, trillion-dollar market offering significant return opportunities while also addressing gaps in women’s healthcare access and improving health outcomes."
+    }
+  },
+  {
+    "id": "report-2026-femmehealth-q1",
+    "cover": {
+      "src": "/resources/covers/2026-report-femmehealth-q1.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://femmehealthalliance.org/womens-health-investment-report-q1-2026-funding-exits-and-market-analysis-femmehealth-alliance/"
+    },
+    "category": "global",
+    "publisher": "FemmeHealth Alliance",
+    "href": {
+      "pl": "https://femmehealthalliance.org/womens-health-investment-report-q1-2026-funding-exits-and-market-analysis-femmehealth-alliance/",
+      "en": "https://femmehealthalliance.org/womens-health-investment-report-q1-2026-funding-exits-and-market-analysis-femmehealth-alliance/"
+    },
+    "title": {
+      "pl": "Women’s Health Investment Report: Q1 2026",
+      "en": "Women’s Health Investment Report: Q1 2026"
+    },
+    "description": {
+      "pl": "Kwartalna analiza przepływów kapitału, exitów i sygnałów rynkowych w zdrowiu kobiet. Raport przedstawia otoczenie finansowania w pierwszym kwartale 2026 roku, perspektywę europejską oraz wnioski dla inwestorów i operatorów.",
+      "en": "A quarterly analysis of capital flows, exits, and market signals in women’s health. The report examines the Q1 2026 funding environment, the European perspective, and implications for investors and operators."
+    }
+  },
+  {
+    "id": "report-2026-care-for-women",
+    "cover": {
+      "src": "/resources/covers/2026-report-care-for-women.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://www.weforum.org/publications/care-for-women-investing-in-care-delivery-to-improve-womens-lives-and-livelihoods/"
+    },
+    "category": "global",
+    "publisher": "World Economic Forum · McKinsey Health Institute",
+    "href": {
+      "pl": "https://www.weforum.org/publications/care-for-women-investing-in-care-delivery-to-improve-womens-lives-and-livelihoods/",
+      "en": "https://www.weforum.org/publications/care-for-women-investing-in-care-delivery-to-improve-womens-lives-and-livelihoods/"
+    },
+    "title": {
+      "pl": "CARE for Women: Investing in Care Delivery to Improve Women’s Lives and Livelihoods",
+      "en": "CARE for Women: Investing in Care Delivery to Improve Women’s Lives and Livelihoods"
+    },
+    "description": {
+      "pl": "Praktyczna mapa działań dotycząca luk w dostępie, diagnostyce, badaniach przesiewowych i leczeniu kobiet. Raport analizuje ekonomiczne korzyści poprawy opieki i przedstawia model CARE wspierający projektowanie skuteczniejszych ścieżek klinicznych.",
+      "en": "A practical roadmap addressing gaps in women’s access, diagnosis, screening, and treatment. It examines the economic benefits of better care and presents the CARE framework for designing more effective clinical pathways."
+    }
+  },
+  {
+    "id": "report-2026-innovation-radar",
+    "cover": {
+      "src": "/resources/covers/2026-report-innovation-radar.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://www.weforum.org/publications/the-women-s-health-innovation-radar-revealing-gaps-and-opportunities-across-the-science-to-patient-journey/"
+    },
+    "category": "global",
+    "publisher": "World Economic Forum · Kearney Health Institute · Gates Foundation · Wellcome Leap",
+    "href": {
+      "pl": "https://www.weforum.org/publications/the-women-s-health-innovation-radar-revealing-gaps-and-opportunities-across-the-science-to-patient-journey/",
+      "en": "https://www.weforum.org/publications/the-women-s-health-innovation-radar-revealing-gaps-and-opportunities-across-the-science-to-patient-journey/"
+    },
+    "title": {
+      "pl": "The Women’s Health Innovation Radar",
+      "en": "The Women’s Health Innovation Radar"
+    },
+    "description": {
+      "pl": "Mapa innowacji w zdrowiu kobiet od badań podstawowych po wdrożenie produktu i dostęp pacjentek. Obejmuje dziesięć kluczowych obszarów chorobowych, wskazując luki badawcze, niedoinwestowane etapy rozwoju oraz możliwości dla nauki i rynku.",
+      "en": "A map of women’s health innovation from basic science through product development and patient access. It covers ten priority condition areas and highlights research gaps, underfunded stages, and opportunities for science and industry."
+    }
+  },
+  {
+    "id": "report-2026-accelerating-femtech",
+    "cover": {
+      "src": "/resources/covers/2026-report-accelerating-femtech.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://healthinnovationnetwork.com/wp-content/uploads/2026/05/Accelerating-FemTech-Impact-Report-2026.pdf"
+    },
+    "category": "global",
+    "publisher": "Health Innovation Network · Innovate UK",
+    "href": {
+      "pl": "https://healthinnovationnetwork.com/wp-content/uploads/2026/05/Accelerating-FemTech-Impact-Report-2026.pdf",
+      "en": "https://healthinnovationnetwork.com/wp-content/uploads/2026/05/Accelerating-FemTech-Impact-Report-2026.pdf"
+    },
+    "title": {
+      "pl": "Accelerating FemTech Impact Report 2026",
+      "en": "Accelerating FemTech Impact Report 2026"
+    },
+    "description": {
+      "pl": "Podsumowanie trzyletniego programu wspierającego 43 innowacje FemTech w Wielkiej Brytanii. Raport opisuje finansowanie, komercjalizację, współpracę z NHS, rozwój produktów i efekty wsparcia dla firm na różnych etapach dojrzałości.",
+      "en": "A review of a three-year UK programme supporting 43 FemTech innovations. It covers funding, commercialization, NHS collaboration, product development, and the impact of tailored support for companies at different stages."
+    }
+  },
+  {
+    "id": "report-2026-france-barometer",
+    "cover": {
+      "src": "/resources/covers/2026-report-france-barometer.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://www.femtechfrance.org/post/publication-du-barom%C3%A8tre-2026-de-la-femtech-en-france"
+    },
+    "category": "global",
+    "publisher": "Femtech France · Wavestone",
+    "href": {
+      "pl": "https://www.femtechfrance.org/post/publication-du-barom%C3%A8tre-2026-de-la-femtech-en-france",
+      "en": "https://www.femtechfrance.org/post/publication-du-barom%C3%A8tre-2026-de-la-femtech-en-france"
+    },
+    "title": {
+      "pl": "Baromètre 2026 de la Femtech en France",
+      "en": "2026 Barometer of FemTech in France"
+    },
+    "description": {
+      "pl": "Przegląd francuskiego rynku FemTech obejmujący około 200 aktywnych startupów. Analizuje finansowanie, przychody, rentowność, zatrudnienie i modele biznesowe, tworząc aktualny obraz jednego z najważniejszych ekosystemów w Europie.",
+      "en": "An overview of the French FemTech market covering around 200 active startups. It examines funding, revenue, profitability, employment, and business models across one of Europe’s leading ecosystems."
+    }
+  },
+  {
+    "id": "report-2026-india-futures",
+    "cover": {
+      "src": "/resources/covers/2026-report-india-futures.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://www.orfonline.org/research/women-s-health-futures-in-india-technology-workforce-and-finance-for-lifelong-well-being"
+    },
+    "category": "global",
+    "publisher": "Observer Research Foundation",
+    "href": {
+      "pl": "https://www.orfonline.org/research/women-s-health-futures-in-india-technology-workforce-and-finance-for-lifelong-well-being",
+      "en": "https://www.orfonline.org/research/women-s-health-futures-in-india-technology-workforce-and-finance-for-lifelong-well-being"
+    },
+    "title": {
+      "pl": "Women’s Health Futures in India: Technology, Workforce, and Finance for Lifelong Well-Being",
+      "en": "Women’s Health Futures in India: Technology, Workforce, and Finance for Lifelong Well-Being"
+    },
+    "description": {
+      "pl": "Raport o przyszłości zdrowia kobiet w Indiach w ujęciu całego życia. Analizuje AI i digital health, kadry medyczne, przedsiębiorczość kobiet, finansowanie, choroby przewlekłe, zdrowie psychiczne, nieodpłatną pracę opiekuńczą i starzenie.",
+      "en": "A life-course analysis of women’s health in India. It examines AI and digital health, the healthcare workforce, women-led enterprise, financing, chronic disease, mental health, unpaid care, and ageing."
+    }
+  },
+  {
+    "id": "report-2026-uk-health-gap",
+    "cover": {
+      "src": "/resources/covers/2026-report-uk-gap.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://www.mckinsey.com/mhi/our-insights/closing-the-womens-health-gap-the-united-kingdoms-36-billion-pound-opportunity"
+    },
+    "category": "global",
+    "publisher": "McKinsey Health Institute",
+    "href": {
+      "pl": "https://www.mckinsey.com/mhi/our-insights/closing-the-womens-health-gap-the-united-kingdoms-36-billion-pound-opportunity",
+      "en": "https://www.mckinsey.com/mhi/our-insights/closing-the-womens-health-gap-the-united-kingdoms-36-billion-pound-opportunity"
+    },
+    "title": {
+      "pl": "Closing the Women’s Health Gap: The United Kingdom’s £36 Billion Opportunity",
+      "en": "Closing the Women’s Health Gap: The United Kingdom’s £36 Billion Opportunity"
+    },
+    "description": {
+      "pl": "Analiza luki zdrowotnej kobiet w Wielkiej Brytanii oraz potencjalnych korzyści zdrowotnych, społecznych i ekonomicznych wynikających z jej zmniejszenia. Raport szacuje skalę możliwości gospodarczej na 36 miliardów funtów.",
+      "en": "An analysis of the women’s health gap in the United Kingdom and the potential health, social, and economic gains from closing it. The report estimates the economic opportunity at £36 billion."
+    }
+  },
+  {
+    "id": "report-2026-funding-q2",
+    "cover": {
+      "src": "/resources/covers/2026-report-funding-q2.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://www.futurefemhealth.com/p/q2-2026-womens-health-funding-in"
+    },
+    "category": "global",
+    "publisher": "FutureFemHealth",
+    "href": {
+      "pl": "https://www.futurefemhealth.com/p/q2-2026-womens-health-funding-in",
+      "en": "https://www.futurefemhealth.com/p/q2-2026-womens-health-funding-in"
+    },
+    "title": {
+      "pl": "Q2 2026: Women’s Health Funding in Review",
+      "en": "Q2 2026: Women’s Health Funding in Review"
+    },
+    "description": {
+      "pl": "Analiza 40 zweryfikowanych rund finansowania w zdrowiu kobiet o łącznej wartości około 739 mln USD w drugim kwartale 2026 roku. Wprowadza też ramy klasyfikacji pokazujące, jak różne definicje sektora wpływają na dane inwestycyjne.",
+      "en": "An analysis of 40 verified women’s health funding rounds totaling approximately $739 million in Q2 2026. It also applies a classification framework showing how different sector definitions affect investment data."
+    }
+  },
+  {
+    "id": "report-2026-nogafem",
+    "cover": {
+      "src": "/resources/covers/2026-report-nogafem.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://www.nogafem-womens-health.org/report2026"
+    },
+    "category": "global",
+    "publisher": "NOGAFEM",
+    "href": {
+      "pl": "https://www.nogafem-womens-health.org/report2026",
+      "en": "https://www.nogafem-womens-health.org/report2026"
+    },
+    "title": {
+      "pl": "State of Women’s Health Innovation 2026",
+      "en": "State of Women’s Health Innovation 2026"
+    },
+    "description": {
+      "pl": "Analiza izraelskiego ekosystemu women’s health tech na tle rynków globalnych. Obejmuje innowacje kliniczne i technologiczne, trendy finansowania, deeptech, integrację płci w badaniach oraz ryzyko uprzedzeń w danych i rozwiązaniach AI.",
+      "en": "An analysis of Israel’s women’s health tech ecosystem benchmarked against global markets. It covers clinical and technological innovation, funding trends, deep tech, sex and gender integration, and bias risks in data and AI."
+    }
+  },
+  {
+    "id": "report-2026-era-of-scale",
+    "cover": {
+      "src": "/resources/covers/2026-report-era-of-scale.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://wplatform.co/forms/womens-health-equity-funding-trends-report-2026"
+    },
+    "category": "global",
+    "publisher": "W Group",
+    "href": {
+      "pl": "https://wplatform.co/forms/womens-health-equity-funding-trends-report-2026",
+      "en": "https://wplatform.co/forms/womens-health-equity-funding-trends-report-2026"
+    },
+    "title": {
+      "pl": "The Road to the Era of Scale: Global Women’s Health Investment Report",
+      "en": "The Road to the Era of Scale: Global Women’s Health Investment Report"
+    },
+    "description": {
+      "pl": "Globalny raport inwestycyjny oparty na analizie ponad 500 informacji o finansowaniu i 164 rund w ponad 30 krajach. Pokazuje, gdzie trafiał kapitał w 2024 i 2025 roku, które kategorie rosną i jakie bariery mogą ograniczyć dalsze skalowanie.",
+      "en": "A global investment report based on more than 500 funding stories and 164 rounds across over 30 countries. It shows where capital moved in 2024 and 2025, which categories are growing, and what may constrain further scaling."
+    }
+  },
+  {
+    "id": "report-2026-capital-index-q2",
+    "cover": {
+      "src": "/resources/covers/2026-report-capital-index-q2.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://theluteal.com/reports/femtech-capital-index-q2-2026"
+    },
+    "category": "global",
+    "publisher": "The Luteal",
+    "href": {
+      "pl": "https://theluteal.com/reports/femtech-capital-index-q2-2026",
+      "en": "https://theluteal.com/reports/femtech-capital-index-q2-2026"
+    },
+    "title": {
+      "pl": "The Femtech Capital Index: Q2 2026",
+      "en": "The Femtech Capital Index: Q2 2026"
+    },
+    "description": {
+      "pl": "Szczegółowe zestawienie zweryfikowanych rund finansowania FemTech w drugim kwartale 2026 roku. Raport pokazuje, jak kryteria klasyfikacji i zakres definicji FemTechu zmieniają obraz wielkości oraz struktury rynku.",
+      "en": "A detailed review of verified FemTech funding rounds in Q2 2026. It shows how classification criteria and the scope of the FemTech definition change the apparent size and structure of the market."
+    }
+  },
+  {
+    "id": "report-2026-reimbursement-roadmap",
+    "cover": {
+      "src": "/resources/covers/2026-report-reimbursement.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://milkeninstitute.org/index.php/content-hub/research-and-reports/research-and-data-tools/coverage-and-reimbursement-roadmap-womens-health-innovation"
+    },
+    "category": "global",
+    "publisher": "Milken Institute",
+    "href": {
+      "pl": "https://milkeninstitute.org/index.php/content-hub/research-and-reports/research-and-data-tools/coverage-and-reimbursement-roadmap-womens-health-innovation",
+      "en": "https://milkeninstitute.org/index.php/content-hub/research-and-reports/research-and-data-tools/coverage-and-reimbursement-roadmap-womens-health-innovation"
+    },
+    "title": {
+      "pl": "Coverage and Reimbursement Roadmap for Women’s Health Innovation",
+      "en": "Coverage and Reimbursement Roadmap for Women’s Health Innovation"
+    },
+    "description": {
+      "pl": "Przewodnik po ścieżkach refundacji i finansowania innowacji w zdrowiu kobiet w USA — od koncepcji produktu do dostępu pacjentek. Opisuje bariery systemowe oraz ścieżki self-pay, ubezpieczycieli komercyjnych i programów publicznych.",
+      "en": "A guide to coverage and reimbursement pathways for women’s health innovations in the US, from product concept to patient access. It covers structural barriers and the self-pay, commercial payer, and public programme routes."
+    }
+  },
+  {
+    "id": "report-2026-post-femtech",
+    "cover": {
+      "src": "/resources/covers/2026-report-post-femtech.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://post.parliament.uk/research-briefings/post-pn-0775/"
+    },
+    "category": "global",
+    "publisher": "UK Parliament POST",
+    "href": {
+      "pl": "https://post.parliament.uk/research-briefings/post-pn-0775/",
+      "en": "https://post.parliament.uk/research-briefings/post-pn-0775/"
+    },
+    "title": {
+      "pl": "FemTech: Consumer Technology to Support Women’s Health",
+      "en": "FemTech: Consumer Technology to Support Women’s Health"
+    },
+    "description": {
+      "pl": "Briefing parlamentarny o aplikacjach, oprogramowaniu i urządzeniach wspierających zdrowie kobiet. Ocenia bazę dowodową, regulacje, bezpieczeństwo i prywatność danych, wdrażanie w NHS oraz ryzyko pogłębiania nierówności.",
+      "en": "A parliamentary briefing on apps, software, and connected devices supporting women’s health. It reviews the evidence base, regulation, safety and data privacy, NHS adoption, and the risk of widening inequalities."
+    }
+  },
+  {
+    "id": "report-2026-censorship",
+    "cover": {
+      "src": "/resources/covers/2026-report-censorship.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://censhership.com/one-year-on"
+    },
+    "category": "global",
+    "publisher": "CensHERship · The Case for Her",
+    "href": {
+      "pl": "https://censhership.com/one-year-on",
+      "en": "https://censhership.com/one-year-on"
+    },
+    "title": {
+      "pl": "Censorship Revealed: One Year On — The State of Women’s Health Censorship in 2026",
+      "en": "Censorship Revealed: One Year On — The State of Women’s Health Censorship in 2026"
+    },
+    "description": {
+      "pl": "Analiza ograniczania i moderowania treści dotyczących zdrowia kobiet na platformach cyfrowych rok po pierwszym badaniu CensHERship. Pokazuje, że problem nadal wpływa na sposób komunikowania się organizacji i dostęp odbiorczyń do informacji.",
+      "en": "An analysis of restrictions and moderation affecting women’s health content on digital platforms one year after CensHERship’s first study. It shows that suppression continues to shape organizational communication and access to information."
+    }
+  },
+  {
+    "id": "report-2026-southeast-asia",
+    "cover": {
+      "src": "/resources/covers/2026-report-southeast-asia.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://www.linkedin.com/posts/femtechasia_2026-overview-of-the-femtech-industry-in-activity-7503256153502404608-zNuS"
+    },
+    "category": "global",
+    "publisher": "FemTech Association Asia",
+    "href": {
+      "pl": "https://www.linkedin.com/posts/femtechasia_2026-overview-of-the-femtech-industry-in-activity-7503256153502404608-zNuS",
+      "en": "https://www.linkedin.com/posts/femtechasia_2026-overview-of-the-femtech-industry-in-activity-7503256153502404608-zNuS"
+    },
+    "title": {
+      "pl": "2026 Overview of the Femtech Industry in Southeast Asia",
+      "en": "2026 Overview of the Femtech Industry in Southeast Asia"
+    },
+    "description": {
+      "pl": "Przegląd rynku FemTech w Indonezji, Malezji, Filipinach, Singapurze, Tajlandii i Wietnamie. Obejmuje mapy rynku, modele biznesowe, obszary zdrowotne, finansowanie i profile rozwijających się ekosystemów regionu.",
+      "en": "An overview of the FemTech sector in Indonesia, Malaysia, the Philippines, Singapore, Thailand, and Vietnam. It covers market maps, business models, health categories, funding, and emerging regional ecosystems."
+    }
+  },
+  {
+    "id": "report-2026-limited-definition",
+    "cover": {
+      "src": "/resources/covers/2026-report-limited-definition.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://www.trillianthealth.com/2026-womens-health-research-report"
+    },
+    "category": "global",
+    "publisher": "Trilliant Health",
+    "href": {
+      "pl": "https://www.trillianthealth.com/2026-womens-health-research-report",
+      "en": "https://www.trillianthealth.com/2026-womens-health-research-report"
+    },
+    "title": {
+      "pl": "How a Limited Women’s Health Definition Inadequately Shapes Research, Investment and Care Delivery",
+      "en": "How a Limited Women’s Health Definition Inadequately Shapes Research, Investment and Care Delivery"
+    },
+    "description": {
+      "pl": "31-stronicowa analiza pokazująca, jak zbyt wąskie sprowadzanie zdrowia kobiet do obszaru seksualnego i reprodukcyjnego wpływa na badania, finansowanie, udział w badaniach klinicznych, projektowanie świadczeń i dostęp do opieki.",
+      "en": "A 31-page analysis of how narrowly defining women’s health around sexual and reproductive care shapes research, investment, clinical trial participation, benefit design, and access to care."
+    }
+  },
+  {
+    "id": "report-2026-global-index-year-5",
+    "cover": {
+      "src": "/resources/covers/2026-report-global-index.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://hologic.womenshealthindex.com/report-and-data"
+    },
+    "category": "global",
+    "publisher": "Hologic · Gallup",
+    "href": {
+      "pl": "https://hologic.womenshealthindex.com/report-and-data",
+      "en": "https://hologic.womenshealthindex.com/report-and-data"
+    },
+    "title": {
+      "pl": "Global Women’s Health Index, Year 5",
+      "en": "Global Women’s Health Index, Year 5"
+    },
+    "description": {
+      "pl": "Globalny obraz zdrowia i dobrostanu kobiet oparty na doświadczeniach osób ze 144 krajów i terytoriów. Piąta edycja analizuje dostęp do opieki, profilaktykę i nierówności; dane zebrano w 2024 roku, a analizę opublikowano w 2026.",
+      "en": "A global picture of women’s health and wellbeing based on experiences across 144 countries and territories. Year 5 examines access, prevention, and inequalities using 2024 data analyzed and published in 2026."
+    }
+  },
+  {
+    "id": "report-2026-hrp-annual",
+    "cover": {
+      "src": "/resources/covers/2026-report-hrp.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://www.who.int/publications/i/item/9789240121843"
+    },
+    "category": "global",
+    "publisher": "WHO · UNDP · UNFPA · UNICEF · World Bank",
+    "href": {
+      "pl": "https://www.who.int/publications/i/item/9789240121843",
+      "en": "https://www.who.int/publications/i/item/9789240121843"
+    },
+    "title": {
+      "pl": "HRP Annual Report 2025",
+      "en": "HRP Annual Report 2025"
+    },
+    "description": {
+      "pl": "Raport roczny programu HRP opisujący działania z 2025 roku na rzecz zdrowia seksualnego i reprodukcyjnego oraz praw reprodukcyjnych. Obejmuje badania, innowacje, partnerstwa i rozwiązania wzmacniające systemy ochrony zdrowia na świecie.",
+      "en": "HRP’s annual report on its 2025 work to advance sexual and reproductive health and rights. It covers research, innovation, partnerships, and solutions that strengthen health systems and outcomes worldwide."
     }
   }
 ];

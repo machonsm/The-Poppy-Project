@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="Women’s Health Investment Report: Q1 2026">
+  <rect width="1200" height="900" fill="#f3e9ee"/>
+  <circle cx="1060" cy="84" r="260" fill="#d96d8a" opacity=".19"/>
+  <circle cx="1050" cy="790" r="310" fill="#5c315f" opacity=".08"/>
+  <path d="M116 154h610" stroke="#d96d8a" stroke-width="10"/>
+  <text x="116" y="112" fill="#5c315f" font-family="Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="5">WOMEN’S HEALTH · REPORT 2026</text>
+  <text x="116" y="300" fill="#5c315f" font-family="Georgia, serif" font-size="64" font-weight="700">Women’s Health Investment</text>
+  <text x="116" y="382" fill="#5c315f" font-family="Georgia, serif" font-size="64" font-weight="700">Report: Q1 2026</text>
+  <path d="M877 304c92-106 215-67 215 40 0 90-88 147-215 252-127-105-215-162-215-252 0-107 123-146 215-40Z" fill="none" stroke="#d96d8a" stroke-width="18" opacity=".75"/>
+  <circle cx="877" cy="432" r="44" fill="#d96d8a" opacity=".8"/>
+  <line x1="116" y1="688" x2="708" y2="688" stroke="#d96d8a" stroke-width="6"/>
+  <text x="116" y="747" fill="#5c315f" font-family="Arial, sans-serif" font-size="27" font-weight="700">FemmeHealth Alliance</text>
+</svg>
