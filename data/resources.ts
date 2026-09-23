@@ -5,6 +5,7 @@ import { sitePath } from "@/lib/site-path";
 export type ResourceCategory = "poland" | "global";
 export type PoppyResource = {
   id: string;
+  hidden?: boolean;
   category: ResourceCategory;
   publisher: string;
   cover: { src: string; width: number; height: number; source: string; position?: string; fit?: "contain"; background?: string };
@@ -17,16 +18,16 @@ const resourceEntries: PoppyResource[] = [
   {
     "id": "report-1",
     "cover": {
-      "src": "/resources/covers/piersi-w-polsce-2026.svg",
-      "width": 1200,
-      "height": 900,
-      "source": "https://zdrowie.pap.pl/profilaktyka/mammografia-bezplatne-badanie-na-wage-zycia-dlaczego-kobiety-wciaz-jej-unikaja"
+      "src": "/resources/covers/piersi-w-polsce-2026.webp",
+      "width": 1920,
+      "height": 1080,
+      "source": "https://sexed.pl/projects/dlaczego-polki-odkladaja-badania-piersi-raport-nie-mam-czasu-na-raka/"
     },
     "category": "poland",
     "publisher": "SEXEDPL · Ipsos",
     "href": {
-      "pl": "https://zdrowie.pap.pl/profilaktyka/mammografia-bezplatne-badanie-na-wage-zycia-dlaczego-kobiety-wciaz-jej-unikaja",
-      "en": "https://zdrowie.pap.pl/profilaktyka/mammografia-bezplatne-badanie-na-wage-zycia-dlaczego-kobiety-wciaz-jej-unikaja"
+      "pl": "https://sexed.pl/projects/dlaczego-polki-odkladaja-badania-piersi-raport-nie-mam-czasu-na-raka/",
+      "en": "https://sexed.pl/projects/dlaczego-polki-odkladaja-badania-piersi-raport-nie-mam-czasu-na-raka/"
     },
     "title": {
       "pl": "Piersi w Polsce: Nie mam czasu na raka",
@@ -38,34 +39,12 @@ const resourceEntries: PoppyResource[] = [
     }
   },
   {
-    "id": "report-2026-miedzy-rolami",
-    "cover": {
-      "src": "/resources/covers/miedzy-rolami-2026.svg",
-      "width": 1200,
-      "height": 900,
-      "source": "https://twarzedepresji.pl/artykul/zdrowie-psychiczne-kobiet-badanie-twarze-depresji/"
-    },
-    "category": "poland",
-    "publisher": "Fundacja Twarze Depresji",
-    "href": {
-      "pl": "https://twarzedepresji.pl/artykul/zdrowie-psychiczne-kobiet-badanie-twarze-depresji/",
-      "en": "https://twarzedepresji.pl/artykul/zdrowie-psychiczne-kobiet-badanie-twarze-depresji/"
-    },
-    "title": {
-      "pl": "Między rolami: o kobiecej tożsamości",
-      "en": "Between Roles: On Women’s Identity"
-    },
-    "description": {
-      "pl": "Raport o zdrowiu psychicznym kobiet i obciążeniu rolami zawodowymi, rodzinnymi i społecznymi. Badanie ponad 1000 kobiet pokazuje, które role i oczekiwania są największym źródłem stresu oraz jak wpływają na dobrostan.",
-      "en": "A report on women’s mental health and the burden of professional, family, and social roles. Based on a study of more than 1,000 women, it identifies the roles and expectations that create the most stress and affect wellbeing."
-    }
-  },
-  {
     "id": "report-2026-objawy-w-sieci",
     "cover": {
-      "src": "/resources/covers/objawy-w-sieci-2026.svg",
-      "width": 1200,
-      "height": 900,
+      "src": "/resources/covers/objawy-w-sieci-2026.png",
+      "position": "50% 0%",
+      "width": 1191,
+      "height": 1684,
       "source": "https://www.santanderconsumer.pl/files/pdf/20260413-Raport-Objawy-w-sieci-Biustowniczki-2026.pdf"
     },
     "category": "poland",
@@ -81,29 +60,6 @@ const resourceEntries: PoppyResource[] = [
     "description": {
       "pl": "Raport o tym, jak Polki szukają informacji o zdrowiu w internecie. Analizuje diagnozowanie online, wiarygodność źródeł, dezinformację zdrowotną oraz wpływ treści z sieci na decyzje dotyczące konsultacji i leczenia.",
       "en": "A report on how women in Poland search for health information online. It examines online self-diagnosis, source credibility, health misinformation, and how digital content shapes decisions about medical consultations and treatment."
-    }
-  },
-  {
-    "id": "report-2026-menonawigator",
-    "cover": {
-      "src": "/resources/covers/top-10-menopauza-2026.svg",
-      "width": 1200,
-      "height": 900,
-      "source": "https://menopedia.pl/menobiblioteka/artykul/top-10-objawow-menopauzy-w-polsce-wg-menonawigatora-raport-maj-2026"
-    },
-    "category": "poland",
-    "publisher": "MenoNawigator · MenoPedia",
-    "href": {
-      "pl": "https://menopedia.pl/menobiblioteka/artykul/top-10-objawow-menopauzy-w-polsce-wg-menonawigatora-raport-maj-2026",
-      "en": "https://menopedia.pl/menobiblioteka/artykul/top-10-objawow-menopauzy-w-polsce-wg-menonawigatora-raport-maj-2026"
-    },
-    "title": {
-      "pl": "TOP 10 objawów menopauzy w Polsce 2026",
-      "en": "Top 10 Menopause Symptoms in Poland 2026"
-    },
-    "description": {
-      "pl": "Pierwszy krajowy ranking oparty na bieżącym raportowaniu objawów przez użytkowniczki MenoNawigatora. Analiza ponad 1000 wpisów pokazuje najczęstsze i najbardziej uciążliwe symptomy oraz znaczenie systematycznej samoobserwacji.",
-      "en": "The first national ranking based on ongoing symptom tracking by MenoNawigator users. An analysis of more than 1,000 entries highlights the most common and burdensome symptoms and the value of systematic self-observation."
     }
   },
   {
@@ -322,6 +278,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-11",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-svb.svg",
       "width": 1200,
@@ -631,6 +588,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-femmehealth-q1",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-femmehealth-q1.svg",
       "width": 1200,
@@ -654,6 +612,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-care-for-women",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-care-for-women.svg",
       "width": 1200,
@@ -677,6 +636,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-innovation-radar",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-innovation-radar.svg",
       "width": 1200,
@@ -700,6 +660,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-accelerating-femtech",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-accelerating-femtech.svg",
       "width": 1200,
@@ -723,6 +684,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-france-barometer",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-france-barometer.svg",
       "width": 1200,
@@ -746,6 +708,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-india-futures",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-india-futures.svg",
       "width": 1200,
@@ -769,6 +732,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-uk-health-gap",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-uk-gap.svg",
       "width": 1200,
@@ -792,6 +756,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-funding-q2",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-funding-q2.svg",
       "width": 1200,
@@ -815,6 +780,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-nogafem",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-nogafem.svg",
       "width": 1200,
@@ -838,6 +804,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-era-of-scale",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-era-of-scale.svg",
       "width": 1200,
@@ -861,6 +828,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-capital-index-q2",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-capital-index-q2.svg",
       "width": 1200,
@@ -884,6 +852,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-reimbursement-roadmap",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-reimbursement.svg",
       "width": 1200,
@@ -907,6 +876,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-post-femtech",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-post-femtech.svg",
       "width": 1200,
@@ -930,6 +900,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-censorship",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-censorship.svg",
       "width": 1200,
@@ -953,6 +924,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-southeast-asia",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-southeast-asia.svg",
       "width": 1200,
@@ -976,6 +948,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-limited-definition",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-limited-definition.svg",
       "width": 1200,
@@ -999,6 +972,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-global-index-year-5",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-global-index.svg",
       "width": 1200,
@@ -1022,6 +996,7 @@ const resourceEntries: PoppyResource[] = [
   },
   {
     "id": "report-2026-hrp-annual",
+    "hidden": true,
     "cover": {
       "src": "/resources/covers/2026-report-hrp.svg",
       "width": 1200,
@@ -1041,6 +1016,30 @@ const resourceEntries: PoppyResource[] = [
     "description": {
       "pl": "Raport roczny programu HRP opisujący działania z 2025 roku na rzecz zdrowia seksualnego i reprodukcyjnego oraz praw reprodukcyjnych. Obejmuje badania, innowacje, partnerstwa i rozwiązania wzmacniające systemy ochrony zdrowia na świecie.",
       "en": "HRP’s annual report on its 2025 work to advance sexual and reproductive health and rights. It covers research, innovation, partnerships, and solutions that strengthen health systems and outcomes worldwide."
+    }
+  },
+  {
+    "id": "report-2026-femtech-spain",
+    "hidden": true,
+    "cover": {
+      "src": "/resources/covers/2026-report-femtech-spain.svg",
+      "width": 1200,
+      "height": 900,
+      "source": "https://www.femtechspain.es/en/ecosystem"
+    },
+    "category": "global",
+    "publisher": "FemTech Spain · Ship2B Ventures",
+    "href": {
+      "pl": "https://www.femtechspain.es/en/report-2026.html",
+      "en": "https://www.femtechspain.es/en/report-2026.html"
+    },
+    "title": {
+      "pl": "Femtech Spain Industry Report 2026",
+      "en": "Femtech Spain Industry Report 2026"
+    },
+    "description": {
+      "pl": "Druga edycja raportu o hiszpańskim ekosystemie FemTech. Obejmuje mapę 64 aktywnych firm według kategorii, lokalizacji i technologii, a także analizę finansowania, inwestycji, regulacji i polityki zdrowotnej w Hiszpanii.",
+      "en": "The second annual report on Spain’s FemTech ecosystem. It maps 64 active companies by category, geography, and technology type, and examines funding, investment, regulation, and women’s health policy in Spain."
     }
   }
 ];

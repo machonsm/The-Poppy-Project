@@ -106,7 +106,8 @@ export function PoppyResourcesPage({ initialLanguage = "pl" }: { initialLanguage
   const [query, setQuery] = useState("");
   const c = copy[language];
   const terms = normalise(query).trim().split(/\s+/).filter(Boolean);
-  const matching = resources.filter(resource => {
+  const publishedResources = resources.filter(resource => !resource.hidden);
+  const matching = publishedResources.filter(resource => {
     const text = normalise(`${resource.title.pl} ${resource.title.en} ${resource.publisher} ${resource.description.pl} ${resource.description.en}`);
     return terms.every(term => text.includes(term));
   });
@@ -132,7 +133,7 @@ export function PoppyResourcesPage({ initialLanguage = "pl" }: { initialLanguage
               </div>
             </div>
             <div className="pp-library__result-line">
-              <p role="status" aria-live="polite" aria-atomic="true">{category === "all" && !query ? <><strong>{resources.length}</strong> {c.results}</> : <>{c.shown} <strong>{visible.length}</strong> {c.of} {resources.length}</>}</p>
+              <p role="status" aria-live="polite" aria-atomic="true">{category === "all" && !query ? <><strong>{publishedResources.length}</strong> {c.results}</> : <>{c.shown} <strong>{visible.length}</strong> {c.of} {publishedResources.length}</>}</p>
               <span>{c.external}<ArrowUpRight size={14} aria-hidden="true" /></span>
             </div>
             {visible.length ? <div className="pp-library__grid">
