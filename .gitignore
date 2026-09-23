@@ -11,3 +11,10 @@ coverage/
 
 *.log
 tsconfig.tsbuildinfo
+
+# Temporary browser profiles and report-cover tooling
+.chrome-report-preview*/
+.edge-report-preview/
+.tmp-pymupdf/
+objawy-*-preview.png
+objawy-w-sieci-2026.pdf
