@@ -253,6 +253,30 @@ const resourceEntries: PoppyResource[] = [
     }
   },
   {
+    "id": "report-2024-niewidzialne-w-pracy",
+    "cover": {
+      "src": "/resources/covers/2024-official-niewidzialne-w-pracy.png",
+      "position": "62% 50%",
+      "width": 730,
+      "height": 371,
+      "source": "https://menopauzabeztabu.org.pl/wp-content/uploads/2024/09/nasz-raport-2-3.png"
+    },
+    "category": "poland",
+    "publisher": "Kulczyk Foundation · Ipsos",
+    "href": {
+      "pl": "https://menopauzabeztabu.org.pl/nasz-raport/",
+      "en": "https://menopauzabeztabu.org.pl/nasz-raport/"
+    },
+    "title": {
+      "pl": "Niewidzialne w pracy. Kobiety w okresie okołomenopauzalnym",
+      "en": "Invisible at Work: Women in the Perimenopausal Period"
+    },
+    "description": {
+      "pl": "Raport z badania przeprowadzonego przez Ipsos na zlecenie Kulczyk Foundation pokazuje wpływ objawów transformacji menopauzalnej na komfort, efektywność i decyzje zawodowe kobiet w Polsce oraz wskazuje rozwiązania, które mogą zapewnić im realne wsparcie w miejscu pracy.",
+      "en": "An Ipsos study commissioned by Kulczyk Foundation examines how menopausal transition symptoms affect women’s comfort, performance, and employment decisions in Poland, and identifies workplace measures that can provide meaningful support."
+    }
+  },
+  {
     "id": "report-10",
     "cover": {
       "src": "/resources/covers/report-10.png",

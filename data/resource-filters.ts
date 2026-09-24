@@ -31,6 +31,7 @@ const metadata: Record<string, ResourceFilterMetadata> = {
   "report-5": { years: [2025], topics: ["zdrowie-w-pracy", "menstruacja", "menopauza"], documentLanguage: "pl", geography: "poland" },
   "report-8": { years: [2025], topics: ["zdrowie-seksualne-reprodukcyjne", "profilaktyka-diagnostyka", "system-opieki"], documentLanguage: "pl", geography: "poland" },
   "report-9": { years: [2025], topics: ["menopauza", "system-opieki", "edukacja-komunikacja", "zdrowie-w-pracy"], documentLanguage: "pl", geography: "poland" },
+  "report-2024-niewidzialne-w-pracy": { years: [2024], topics: ["menopauza", "zdrowie-w-pracy", "system-opieki", "edukacja-komunikacja"], documentLanguage: "pl", geography: "poland" },
   "report-7": { years: [2024], topics: ["system-opieki", "profilaktyka-diagnostyka"], documentLanguage: "pl", geography: "poland" },
   "report-2": { years: [2020], topics: ["menstruacja", "prawa-rownosc", "edukacja-komunikacja"], documentLanguage: "pl", geography: "global" },
   "report-3": { years: [2024], topics: ["edukacja-komunikacja", "zdrowie-seksualne-reprodukcyjne"], documentLanguage: "pl", geography: "poland" },

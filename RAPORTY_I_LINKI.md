@@ -1,7 +1,7 @@
 # Biblioteka Poppy Project — raporty i materiały
 
-Aktualizacja: 23 września 2026  
-Łącznie: **43 materiały** — 41 raportów i 2 interaktywne mapy.
+Aktualizacja: 24 września 2026  
+Łącznie: **44 materiały** — 42 raporty i 2 interaktywne mapy.
 
 Rok „brak daty” oznacza, że w obecnej bazie nie ma wystarczająco pewnej informacji o roku publikacji. Linki prowadzą bezpośrednio do materiału albo do oficjalnej strony wydawcy.
 
@@ -19,6 +19,7 @@ Rok „brak daty” oznacza, że w obecnej bazie nie ma wystarczająco pewnej in
 | 8 | brak daty | Narodowa Kartkówka z WDŻ | SEXEDPL · DOZ.pl | [Otwórz materiał](https://sexed.pl/projects/narodowa-kartkowka-z-wdz/) |
 | 9 | brak daty | Menopauza bez tabu | Kulczyk Foundation | [Otwórz materiał](https://kulczykfoundation.org.pl/menopauza/badania/Menopauza_Bez_Tabu_Pierwsze_W_Polsce_Kompleksowe_Badanie_Dotyczace_Menopauzy) |
 | 10 | brak daty | Kobiety w Polsce w XXI wieku | Centrum Praw Kobiet | [Otwórz materiał](https://cpk.org.pl/pobierz-raport/) |
+| 11 | 2024 | Niewidzialne w pracy. Kobiety w okresie okołomenopauzalnym | Kulczyk Foundation · Ipsos | [Otwórz materiał](https://menopauzabeztabu.org.pl/nasz-raport/) |
 
 ## Świat
 
