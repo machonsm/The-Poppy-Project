@@ -1,7 +1,7 @@
 # Biblioteka Poppy Project — raporty i materiały
 
 Aktualizacja: 24 września 2026  
-Łącznie: **44 materiały** — 42 raporty i 2 interaktywne mapy.
+Łącznie: **45 materiałów** — 43 raporty i 2 interaktywne mapy.
 
 Rok „brak daty” oznacza, że w obecnej bazie nie ma wystarczająco pewnej informacji o roku publikacji. Linki prowadzą bezpośrednio do materiału albo do oficjalnej strony wydawcy.
 
@@ -56,6 +56,7 @@ Rok „brak daty” oznacza, że w obecnej bazie nie ma wystarczająco pewnej in
 | 29 | brak daty | State of Women’s Health Report | Springboard Enterprises · Accenture | [Otwórz materiał](https://sb.co/state-of-womens-health/) |
 | 30 | brak daty | The Business Case for Accelerating Women’s Health Investment | WHAM | [Otwórz materiał](https://whamnow.org/the-report/) |
 | 31 | brak daty | Accelerating Private Capital Investment in Women’s Health | Kearney · Flagship Pioneering · Mubadala · Novo Holdings | [Otwórz materiał](https://www.kearney.com/industry/health/w-health/article/accelerating-private-capital-investment-in-womens-health) |
+| 32 | 2026 | Investing in Menopause | Women’s Health Access Matters (WHAM) | [Otwórz materiał](https://whamnow.org/white-papers/) |
 
 ## Interaktywne mapy
 

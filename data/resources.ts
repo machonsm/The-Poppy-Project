@@ -1037,6 +1037,31 @@ const resourceEntries: PoppyResource[] = [
     }
   },
   {
+    "id": "report-2026-wham-investing-in-menopause",
+    "cover": {
+      "src": "/resources/covers/2026-official-wham-investing-in-menopause.png",
+      "fit": "contain",
+      "background": "#ffffff",
+      "width": 900,
+      "height": 1165,
+      "source": "https://whamnow.org/wp-content/uploads/2026/09/WHAM-menopause-investment-white-paper.png"
+    },
+    "category": "global",
+    "publisher": "Women’s Health Access Matters (WHAM)",
+    "href": {
+      "pl": "https://whamnow.org/white-papers/",
+      "en": "https://whamnow.org/white-papers/"
+    },
+    "title": {
+      "pl": "Investing in Menopause",
+      "en": "Investing in Menopause"
+    },
+    "description": {
+      "pl": "White paper przedstawia menopauzę jako wieloukładową transformację zdrowotną i niewykorzystany rynek obejmujący miliard kobiet. Analizuje bariery w danych, kodowaniu i finansowaniu opieki oraz wskazuje modele, priorytetowe możliwości i działania potrzebne, aby opieka menopauzalna stała się mierzalna, skalowalna i atrakcyjna inwestycyjnie.",
+      "en": "This white paper frames menopause as a multisystem health transition and an underserved billion-woman market. It maps barriers in data, coding, and payment systems, alongside proven models, priority opportunities, and actions needed to make menopause care measurable, scalable, and investable."
+    }
+  },
+  {
     "id": "resource-2026-boro-global-map",
     "cover": {
       "src": "/resources/covers/2026-official-boro-innovation-map.png",

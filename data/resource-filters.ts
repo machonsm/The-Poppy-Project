@@ -56,6 +56,7 @@ const metadata: Record<string, ResourceFilterMetadata> = {
   "report-2026-global-index-year-5": { years: [2026], topics: ["system-opieki", "profilaktyka-diagnostyka", "zdrowie-psychiczne"], documentLanguage: "en", geography: "global" },
   "report-2026-hrp-annual": { years: [2026], topics: ["zdrowie-seksualne-reprodukcyjne", "innowacje-badania", "system-opieki"], documentLanguage: "en", geography: "global" },
   "report-2026-femtech-spain": { years: [2026], topics: ["rynek-femtech", "inwestycje", "system-opieki"], documentLanguage: "en", geography: "global" },
+  "report-2026-wham-investing-in-menopause": { years: [2026], topics: ["menopauza", "inwestycje", "rynek-femtech", "system-opieki"], documentLanguage: "en", geography: "global" },
   "report-14": { years: [2026], topics: ["inwestycje", "rynek-femtech", "innowacje-badania"], documentLanguage: "en", geography: "global" },
   "report-21": { years: [2026], topics: ["inwestycje", "rynek-femtech"], documentLanguage: "en", geography: "global" },
   "report-13": { years: [2024], topics: ["rynek-femtech", "inwestycje"], documentLanguage: "en", geography: "global" },
