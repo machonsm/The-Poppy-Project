@@ -136,6 +136,20 @@ const eventEntries: EventItem[] = [
     imageAlt: "Trzy uśmiechnięte kobiety podczas wspólnego spotkania"
   },
   {
+    title: "Śląskie Dni Zdrowia Kobiet 2026",
+    date: "2026-10-09T00:00:00+02:00",
+    endDate: "2026-10-10T23:59:59+02:00",
+    location: "Katowice, Polska",
+    region: "poland",
+    category: "Wiedza kliniczna",
+    description:
+      "Dwudniowa konferencja dla lekarzy, diagnostów, pielęgniarek i położnych poświęcona nowoczesnym technologiom w medycynie kobiet, aktualnym standardom leczenia, profilaktyce oraz praktycznym szkoleniom z zakresu ginekologii i położnictwa.",
+    url: "https://www.pamis.org/dnizdrowia2026",
+    image: "/events/slaskie-dni-zdrowia-kobiet-2026.png",
+    imageAlt: "Fundacja PAMIS — Polska Akademia Minimalnie Inwazyjnej Chirurgii",
+    imageFit: "contain"
+  },
+  {
     title: "World Health Summit 2026",
     date: "2026-10-11T09:00:00+02:00",
     endDate: "2026-10-13T18:00:00+02:00",
