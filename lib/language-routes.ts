@@ -7,7 +7,8 @@ const localizedRoutes = [
   { pl: "/artykuly/", en: "/en/articles/" },
   { pl: "/materialy/", en: "/en/resources/" },
   { pl: "/o-nas/", en: "/en/about/" },
-  { pl: "/podcast/", en: "/en/podcast/" }
+  { pl: "/podcast/", en: "/en/podcast/" },
+  { pl: "/polityka-prywatnosci/", en: "/en/privacy-policy/" }
 ] as const;
 
 function normalizePath(pathname: string) {

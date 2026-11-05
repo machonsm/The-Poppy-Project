@@ -10,6 +10,7 @@ import { PoppyNewsletterSignup } from "@/components/PoppyNewsletterSignup";
 import { usePoppyBlooms } from "@/components/motion/usePoppyBlooms";
 import { isSiteHome, sitePath } from "@/lib/site-path";
 import { languageHome, type PoppyLanguage } from "@/lib/language-routes";
+import { privacyRoutes } from "@/data/privacy";
 
 export type { PoppyLanguage } from "@/lib/language-routes";
 
@@ -132,6 +133,11 @@ export function PoppyFooter({ language = "pl", showNewsletter = false, decorativ
         </div>
         <div className="pp-footer__bottom">
           <span>© {new Date().getFullYear()} Poppy Project</span>
+          <div className="pp-footer__privacy">
+            <a href={sitePath(privacyRoutes[language])}>{language === "pl" ? "Polityka prywatności" : "Privacy policy"}</a>
+            <a href={sitePath(`${privacyRoutes[language]}#cookies`)}>{language === "pl" ? "Polityka cookies" : "Cookie policy"}</a>
+            <button type="button" className="poppy-cookie-settings" onClick={() => window.dispatchEvent(new Event("poppy-open-cookie-settings"))}>{language === "pl" ? "Ustawienia cookies" : "Cookie settings"}</button>
+          </div>
           <span className="pp-footer__note">{language === "pl" ? "Polska platforma innowacji w zdrowiu kobiet" : "Polish platform for innovation in women’s health"}</span>
           <a href="#main-content" aria-label={language === "pl" ? "Wróć na górę" : "Back to top"}><ArrowUp size={18} aria-hidden="true" /></a>
         </div>

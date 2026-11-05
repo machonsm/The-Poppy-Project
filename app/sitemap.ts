@@ -8,7 +8,8 @@ const pages = [
   { pl: "/artykuly/", en: "/en/articles/", priority: 0.9, changeFrequency: "weekly" as const },
   { pl: "/materialy/", en: "/en/resources/", priority: 0.8, changeFrequency: "monthly" as const },
   { pl: "/podcast/", en: "/en/podcast/", priority: 0.8, changeFrequency: "monthly" as const },
-  { pl: "/o-nas/", en: "/en/about/", priority: 0.7, changeFrequency: "monthly" as const }
+  { pl: "/o-nas/", en: "/en/about/", priority: 0.7, changeFrequency: "monthly" as const },
+  { pl: "/polityka-prywatnosci/", en: "/en/privacy-policy/", priority: 0.2, changeFrequency: "yearly" as const }
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

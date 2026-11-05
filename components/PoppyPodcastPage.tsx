@@ -9,6 +9,7 @@ import { FluidLink } from "@/components/ui/FluidButton";
 import { sitePath } from "@/lib/site-path";
 import { usePoppyLanguage } from "@/lib/use-poppy-language";
 import type { PoppyLanguage } from "@/lib/language-routes";
+import { openCookieSettings, useCookieConsent } from "@/lib/cookie-consent";
 import "./podcast-page.css";
 
 const copy = {
@@ -33,6 +34,7 @@ const copy = {
 export function PoppyPodcastPage({ initialLanguage = "pl" }: { initialLanguage?: PoppyLanguage }) {
   const [language, setLanguage] = usePoppyLanguage(initialLanguage);
   const c = copy[language];
+  const { external } = useCookieConsent();
 
   return <div className="pp-site pp-podcast-page">
     <PoppyHeader language={language} onLanguageChange={setLanguage} />
@@ -58,7 +60,7 @@ export function PoppyPodcastPage({ initialLanguage = "pl" }: { initialLanguage?:
 
         <section className="pp-podcast-episodes" id="odcinki" aria-label={c.episodesLabel}>
           <div className="pp-podcast-list">
-            {podcastEpisodes.map((episode, index) => (
+            {podcastEpisodes.map((episode) => (
               <article className="pp-episode" key={episode.id} aria-labelledby={"episode-" + episode.id}>
                 <div className="pp-episode__copy">
                   <div className="pp-episode__meta"><span>{c.episode} {String(episode.number).padStart(2, "0")}</span></div>
@@ -67,16 +69,16 @@ export function PoppyPodcastPage({ initialLanguage = "pl" }: { initialLanguage?:
                   <a className="pp-podcast-text-link" href={spotifyEpisodeUrl(episode.id)} target="_blank" rel="noopener noreferrer" aria-label={c.direct + ": " + episode.title}>{c.direct}<ArrowUpRight size={17} aria-hidden="true" /></a>
                 </div>
                 <div className="pp-episode__player">
-                  <iframe
+                  {external ? <iframe
                     src={spotifyEmbedUrl(episode.id)}
                     title={"Spotify — " + c.episode + " " + episode.number + ": " + episode.title}
                     width="100%"
                     height="352"
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                     allowFullScreen
-                    loading={index === 0 ? "eager" : "lazy"}
+                    loading="lazy"
                     referrerPolicy="strict-origin-when-cross-origin"
-                  />
+                  /> : <div className="pp-episode__placeholder"><Headphones size={28} aria-hidden="true" /><p>{language === "pl" ? "Odtwarzacz Spotify" : "Spotify player"}</p><button type="button" onClick={openCookieSettings}>{language === "pl" ? "Zmień ustawienia cookies" : "Change cookie settings"}</button></div>}
                 </div>
               </article>
             ))}

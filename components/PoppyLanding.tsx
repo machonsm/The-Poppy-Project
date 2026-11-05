@@ -21,6 +21,7 @@ import { usePoppyLanguage } from "@/lib/use-poppy-language";
 import type { PoppyLanguage } from "@/lib/language-routes";
 import { links } from "@/data/links";
 import { mapAssets } from "@/data/map-assets";
+import { PRIVACY_VERSION, privacyRoutes } from "@/data/privacy";
 
 type EventFilter = "all" | EventRegion;
 const eventFilters: EventFilter[] = ["all", "poland", "europe", "world", "online"];
@@ -55,7 +56,7 @@ const content = {
     eventsBody: null, filters: ["Wszystkie", "Polska", "Europa", "Świat", "Online"], noEvents: "Na razie nie ma wydarzeń w tej kategorii.", showAllEvents: "Zobacz wszystkie", eventDate: "Data", eventName: "Wydarzenie", eventLocation: "Miejsce", eventOpen: "Zobacz wydarzenie", eventNote: "Kalendarz branżowy · Informacje i rejestracja na stronach organizatorów.",
     contactTitle: <>Zmiana potrzebuje ludzi.<br /><em>Takich jak Ty.</em></>,
     contactBody: "Tworzysz rozwiązanie dla zdrowia kobiet? Szukasz partnerów? A może masz pomysł, od którego wszystko się zacznie? Poznajmy się.", contactAction: "Napisz do nas", companyAction: "Zgłoś firmę do naszej bazy danych", formNote: "Wyślij zgłoszenie bezpośrednio ze strony. Dane formularza trafią do nas przez usługę FormSubmit.",
-    formFields: ["Nazwa firmy", "Twój adres e-mail", "Strona internetowa", "Obszar działalności", "Opowiedz nam o firmie"], formEmailHint: "Podaj adres, na który możemy odpowiedzieć — nie musi być firmowy.", consent: "Zgadzam się na przekazanie danych zgłoszenia zespołowi Poppy Project przez usługę FormSubmit.", formButton: "Wyślij zgłoszenie", formSending: "Wysyłanie…", formSuccess: "Dziękujemy! Zgłoszenie zostało przyjęte. Odpowiemy na podany adres e-mail.", formError: "Nie udało się wysłać zgłoszenia. Spróbuj ponownie lub napisz do joinpoppypl@gmail.com.",
+    formFields: ["Nazwa firmy", "Twój adres e-mail", "Strona internetowa", "Obszar działalności", "Opowiedz nam o firmie"], formEmailHint: "Podaj adres, na który możemy odpowiedzieć — nie musi być firmowy.", formButton: "Wyślij zgłoszenie", formSending: "Wysyłanie…", formSuccess: "Dziękujemy! Zgłoszenie zostało przyjęte. Odpowiemy na podany adres e-mail.", formError: "Nie udało się wysłać zgłoszenia. Spróbuj ponownie lub napisz do joinpoppypl@gmail.com.",
     instagramTitle: <>Zobacz, co dzieje się<br /><em>na Instagramie.</em></>, instagramBody: "Wybrane wiadomości, perspektywy i rozmowy z ekosystemu zdrowia kobiet.", socialAction: "Obserwuj nas na Instagramie"
   },
   en: {
@@ -85,7 +86,7 @@ const content = {
     eventsBody: null, filters: ["All events", "Poland", "Europe", "World", "Online"], noEvents: "No events in this category yet.", showAllEvents: "View all events", eventDate: "Date", eventName: "Event", eventLocation: "Location", eventOpen: "View event", eventNote: "Industry calendar · Details and registration on organisers’ websites.",
     contactTitle: <>Change needs people.<br /><em>People like you.</em></>,
     contactBody: "Building a solution for women’s health? Looking for partners? Or holding an idea that could start something? Let’s get to know each other.", contactAction: "Email us", companyAction: "Submit your company to our database", formNote: "Send your submission directly from this page. FormSubmit will deliver the form data to us.",
-    formFields: ["Company name", "Your email address", "Website", "Area of activity", "Tell us about your company"], formEmailHint: "Use an address where we can reply — it does not have to be a company email.", consent: "I agree to send my submission data to the Poppy Project team through FormSubmit.", formButton: "Send submission", formSending: "Sending…", formSuccess: "Thank you! Your submission has been received. We’ll reply to the email address you provided.", formError: "We couldn’t send your submission. Please try again or email joinpoppypl@gmail.com.",
+    formFields: ["Company name", "Your email address", "Website", "Area of activity", "Tell us about your company"], formEmailHint: "Use an address where we can reply — it does not have to be a company email.", formButton: "Send submission", formSending: "Sending…", formSuccess: "Thank you! Your submission has been received. We’ll reply to the email address you provided.", formError: "We couldn’t send your submission. Please try again or email joinpoppypl@gmail.com.",
     instagramTitle: <>See what’s happening<br /><em>on Instagram.</em></>, instagramBody: "Selected stories, perspectives and conversations from the women’s health ecosystem.", socialAction: "Follow us on Instagram"
   }
 };
@@ -151,7 +152,7 @@ export function PoppyLanding({ initialLanguage = "pl", initialEventDay = "" }: {
           website: String(data.get("website") ?? "").trim(),
           activity: String(data.get("activity") ?? "").trim(),
           description: String(data.get("description") ?? "").trim(),
-          consent: "yes",
+          privacy_notice_version: PRIVACY_VERSION,
           _url: companyFormPageUrl,
           _subject: `Poppy Project — company database: ${company}`,
           _template: "table",
@@ -289,7 +290,9 @@ export function PoppyLanding({ initialLanguage = "pl", initialEventDay = "" }: {
               <h3 className="pp-company__title">{c.companyAction}</h3>
               <div className="pp-company__body">
                 <p>{c.formNote}</p>
+                <p className="pp-company__privacy">{language === "pl" ? <>Administratorem danych jest Sandra Machoń (Poppy Project). Podane informacje przetwarzamy, aby odpowiedzieć i rozpatrzyć zgłoszenie firmy, na podstawie uzasadnionego interesu (art. 6 ust. 1 lit. f RODO). Zgłoszenie przekazuje nam FormSubmit. Nie zapisuje Cię ono do newslettera. Nie podawaj danych o zdrowiu ani prywatnych danych innych osób. Szczegóły, okresy przechowywania i Twoje prawa: </> : <>The controller is Sandra Machoń (Poppy Project). We process your information to reply and review your company submission, based on legitimate interests (GDPR Article 6(1)(f)). FormSubmit delivers it to us. Submitting does not subscribe you to the newsletter. Do not include health information or other people’s private details. Details, retention and your rights: </>}<a href={sitePath(`${privacyRoutes[language]}#forms`)}>{language === "pl" ? "polityka prywatności" : "privacy policy"}</a>.</p>
                 <form action={`https://formsubmit.co/${links.email}`} method="POST" onSubmit={submitCompany} aria-busy={formStatus === "sending"}>
+                  <input type="hidden" name="privacy_notice_version" value={PRIVACY_VERSION} />
                   <input type="hidden" name="_url" value={companyFormPageUrl} />
                   <input type="hidden" name="_subject" value="Poppy Project — company database submission" />
                   <input type="hidden" name="_template" value="table" />
@@ -300,7 +303,6 @@ export function PoppyLanding({ initialLanguage = "pl", initialEventDay = "" }: {
                   <label><span>{c.formFields[2]}</span><input name="website" type="url" placeholder="https://" /></label>
                   <label><span>{c.formFields[3]}</span><input name="activity" type="text" /></label>
                   <label className="pp-company__wide"><span>{c.formFields[4]} *</span><textarea name="description" rows={3} required maxLength={1500} /></label>
-                  <label className="pp-company__consent"><input type="checkbox" name="consent" value="yes" required /><span>{c.consent}</span></label>
                   <div className="pp-company__wide"><FluidButton type="submit" disabled={formStatus === "sending"}>{formStatus === "sending" ? c.formSending : c.formButton}<Send size={17} aria-hidden="true" /></FluidButton></div>
                   {formStatus === "success" && <p className="pp-company__wide" role="status">{c.formSuccess}</p>}
                   {formStatus === "error" && <p className="pp-company__wide" role="alert">{c.formError}</p>}

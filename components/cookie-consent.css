@@ -1,0 +1,24 @@
+.poppy-cookie { position: fixed; z-index: 10000; inset: auto 20px 20px; margin: auto; max-width: 1050px; padding: 22px 26px; background: #fdfbf7; color: #28241f; border: 1px solid #b7a995; border-radius: 16px; box-shadow: 0 8px 35px #0003; display: flex; align-items: center; gap: 24px; }
+.poppy-cookie__content { flex: 1; }
+.poppy-cookie h2 { margin: 0 0 8px; font-size: 1.2rem; }
+.poppy-cookie p { margin: 5px 0; line-height: 1.45; font-size: .9rem; }
+.poppy-cookie a { text-decoration: underline; }
+.poppy-cookie-settings { background: transparent; border: 0; padding: 4px; color: inherit; font: inherit; text-decoration: underline; cursor: pointer; }
+.pp-footer .pp-footer__bottom { flex-wrap: wrap; }
+.pp-footer .pp-footer__privacy { flex-wrap: wrap; gap: 10px 18px; }
+.poppy-external-embed { padding: 18px; border: 1px solid currentColor; border-radius: 12px; }
+.poppy-external-embed p { margin: 0 0 12px; font-size: .9rem; line-height: 1.45; }
+.poppy-external-embed button { cursor: pointer; padding: 9px 15px; border: 1px solid currentColor; border-radius: 20px; background: transparent; color: inherit; font: inherit; }
+.pp-company .pp-company__privacy { font-size: .9rem; line-height: 1.5; margin-block: 16px; }
+.pp-company__privacy a, .poppy-external-embed a { text-decoration: underline; text-underline-offset: 3px; }
+.poppy-cookie__actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.poppy-cookie__actions button { cursor: pointer; border: 1px solid #752722; border-radius: 24px; background: #752722; color: white; font: inherit; padding: 10px 16px; }
+.poppy-cookie__actions button:focus-visible { outline: 3px solid #b77e24; outline-offset: 3px; }
+.poppy-cookie__categories { margin: 16px 0 0; padding: 0; border: 0; display: grid; gap: 12px; }
+.poppy-cookie__categories legend { font-size: .9rem; font-weight: 600; margin-bottom: 10px; }
+.poppy-cookie__categories label { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+.poppy-cookie__categories input { width: 20px; height: 20px; accent-color: #752722; flex-shrink: 0; }
+.poppy-cookie__categories span { display: grid; font-size: .9rem; }
+.poppy-cookie__categories small { display: block; font-size: .8rem; }
+.poppy-cookie__actions .poppy-cookie__settings { background: transparent; color: #752722; }
+@media (max-width: 700px) { .poppy-cookie { inset: auto 10px 10px; display: block; padding: 16px; max-height: 80vh; overflow-y: auto; } .poppy-cookie__actions { margin-top: 14px; } }
