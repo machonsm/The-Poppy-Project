@@ -1,5 +1,5 @@
 /** Keep the public policy, notices and browser consent record on the same version. */
-export const PRIVACY_VERSION = "2026-11-05";
+export const PRIVACY_VERSION = "2026-11-06.1";
 export const PRIVACY_CONTROLLER = "Sandra Machoń";
 export const PRIVACY_EMAIL = "joinpoppypl@gmail.com";
 export const CONSENT_STORAGE_KEY = "poppy-cookie-consent-v3";

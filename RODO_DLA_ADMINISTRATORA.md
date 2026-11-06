@@ -1,6 +1,6 @@
 # RODO — działania administratora Poppy Project
 
-Stan przeglądu: 5 listopada 2026 r. Administrator wskazany przez prowadzącą projekt: **Sandra Machoń**, osoba fizyczna, kontakt: **joinpoppypl@gmail.com**.
+Stan przeglądu: 6 listopada 2026 r. Administrator wskazany przez prowadzącą projekt: **Sandra Machoń**, osoba fizyczna, kontakt: **joinpoppypl@gmail.com**.
 
 To dokument wewnętrzny, nie jest publikowany jako podstrona. Opisuje również czynności, których nie wykonuje dodanie polityki do repozytorium. Nie stanowi potwierdzenia pełnej zgodności prawnej.
 
@@ -12,7 +12,7 @@ To dokument wewnętrzny, nie jest publikowany jako podstrona. Opisuje również 
 - Informacja o newsletterze i link do polityki przed uruchomieniem formularza Supascribe.
 - Google Analytics i GoatCounter wymagają akceptacji. Zgody reklamowe pozostają wyłączone. Google signals i sygnały personalizacji reklam są wyłączone w konfiguracji tagu.
 - Cookies GA mają w kodzie ważność 180 dni bez odnawiania okresu przy każdej wizycie. To osobne ustawienie od retencji danych na serwerach Google.
-- Niezależne wybory „Analityka” i „Treści zewnętrzne” zawierają wersję klauzuli i datę, są ważne 180 dni. Nowy zapis ma klucz `poppy-cookie-consent-v3`. Starsza zgoda obejmująca tylko analitykę nie jest automatycznie rozszerzana na Spotify i Supascribe.
+- Niezależne wybory „Analityka” i „Treści zewnętrzne” zawierają wersję klauzuli i datę, są ważne 180 dni. Zapis ma klucz `poppy-cookie-consent-v3` i wersję `2026-11-06.1`. Zmiana wersji wymaga ponownego wyboru w banerze. Starsza zgoda obejmująca tylko analitykę nie jest automatycznie rozszerzana na Spotify i Supascribe.
 - Odmowa jest równie dostępna jak akceptacja. Wycofanie zgody jest dostępne w stopce. Nie ma zgody przez przewijanie.
 - Baner udostępnia „Akceptuj wszystko”, „Odrzuć opcjonalne” i ustawienia kategorii. Spotify i Supascribe uruchamiają się po zgodzie na „Treści zewnętrzne”, również na kolejnych podstronach. Zgodę można wycofać niezależnie od analityki. Zgoda na osadzenie formularza nie zapisuje do newslettera.
 

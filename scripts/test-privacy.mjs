@@ -84,7 +84,23 @@ try {
   };
   const banner = () => evaluate("!!document.querySelector('.poppy-cookie')");
   const analyticsRequests = () => external.filter(url => /googletagmanager|google-analytics|goatcounter|gc\.zgo\.at/.test(url));
+  const spotifyRequests = () => external.filter(url => /(?:^https?:\/\/)(?:[^/]+\.)?spotify\.com\//.test(url));
 
+  if (process.env.POPPY_TEST_SCENARIO === "events") {
+    const { checkEventsScrolling } = await import("./events-scroll-checks.mjs");
+    await checkEventsScrolling({ send, evaluate, navigate, until, delay });
+  } else {
+  await navigate("/podcast/");
+  await until(banner, "Consent banner was not shown before a choice");
+  assert.equal(await evaluate("document.querySelectorAll('iframe[src*=\"open.spotify.com\"]').length"), 0, "Spotify loaded before a cookie choice");
+  assert.equal(spotifyRequests().length, 0, "Spotify requested before consent");
+  assert.equal(analyticsRequests().length, 0, "Our analytics requested before consent");
+  await evaluate("localStorage.setItem('poppy-cookie-consent-v3', JSON.stringify({version:'2026-11-06',at:Date.now(),analytics:false,external:true}))");
+  await navigate("/podcast/");
+  await until(banner, "Previous notice version did not require a new choice");
+  assert.equal(await evaluate("document.querySelectorAll('iframe[src*=\"open.spotify.com\"]').length"), 0, "Old newsletter-only consent enabled Spotify");
+  assert.equal(spotifyRequests().length, 0, "Old consent caused a Spotify request");
+  console.log("PASS: Spotify and analytics blocked before consent; previous notice requires a new choice");
   await navigate("/polityka-prywatnosci/");
   await until(banner, "Consent banner was not shown");
   assert(await evaluate("document.querySelector('main').textContent.includes('Sandra Machoń')"));
@@ -93,20 +109,22 @@ try {
   await until(async () => !(await banner()), "Banner did not close after rejection");
   await navigate("/podcast/");
   assert.equal(analyticsRequests().length, 0, "Analytics requested after rejection");
-  assert.equal(await evaluate("document.querySelectorAll('iframe').length"), 0, "Spotify loaded automatically");
-  console.log("PASS: Polish policy, refusal persistence, no automatic analytics or Spotify");
+  assert.equal(await evaluate("document.querySelectorAll('iframe[src*=\"open.spotify.com\"]').length"), 0, "Spotify loaded after Reject optional");
+  assert.equal(spotifyRequests().length, 0, "Spotify requested after rejection");
+  assert(await evaluate("!!document.querySelector('a[href*=\"open.spotify.com/episode/\"]')"), "Direct Spotify link missing after rejection");
+  console.log("PASS: refusal persists and blocks Spotify and analytics; direct Spotify links remain");
 
   await evaluate("document.querySelector('.poppy-cookie-settings').click()");
   await until(banner, "Settings did not reopen");
   await evaluate("Array.from(document.querySelectorAll('.poppy-cookie button')).find(b => b.textContent.includes('Akceptuj')).click()");
   await until(async () => analyticsRequests().length === 2, "Analytics scripts were not activated after acceptance");
-  assert(await evaluate("document.querySelectorAll('iframe[src*=\"open.spotify.com\"]').length > 0"), "Accept all did not activate Spotify");
+  assert(await evaluate("document.querySelectorAll('iframe[src*=\"open.spotify.com\"]').length > 0"), "Spotify is missing after acceptance");
   const commands = await evaluate("window.dataLayer.map(command => Array.from(command))");
   assert(commands.some(command => command[0] === "consent" && command[2]?.ad_storage === "denied"));
   assert(commands.some(command => command[0] === "config" && command[2]?.cookie_expires === 15552000 && command[2]?.allow_google_signals === false));
   const views = commands.filter(command => command[0] === "event" && command[1] === "page_view");
   assert.equal(views.length, 1, "Expected one page view after acceptance");
-  console.log("PASS: accept all activates analytics and Spotify, advertising denied, cookie lifetime limited");
+  console.log("PASS: accept all activates Spotify and analytics, advertising denied, cookie lifetime limited");
 
   await navigate("/");
   await until(() => evaluate("!!document.querySelector('[data-supascribe-embed-id]') && !!document.querySelector('script[src*=\"js.supascribe.com\"]')"), "Saved external-content consent did not activate newsletter");
@@ -121,7 +139,10 @@ try {
   await until(() => evaluate("document.readyState === 'complete' && !document.cookie.includes('_ga=') && !window.gtag"), "Withdrawal did not remove cookie and stop scripts");
   assert.equal(analyticsRequests().length, beforeWithdrawal, "Analytics requested during withdrawal reload");
   assert.equal(await evaluate("document.querySelectorAll('[data-supascribe-embed-id]').length"), 0, "Newsletter remained active after withdrawal");
-  console.log("PASS: withdrawal deletes accessible GA cookies and stops analytics and external embeds");
+  console.log("PASS: withdrawal deletes accessible GA cookies and stops our analytics and newsletter embed");
+  await navigate("/podcast/");
+  assert.equal(await evaluate("document.querySelectorAll('iframe[src*=\"open.spotify.com\"]').length"), 0, "Spotify remained active after withdrawal");
+  await navigate("/");
 
   await evaluate("document.querySelector('.poppy-cookie-settings').click()");
   await until(() => evaluate("!!document.querySelector('input[name=\"cookie-external\"]')"), "Category settings did not open");
@@ -131,13 +152,13 @@ try {
   assert.equal(analyticsRequests().length, beforeWithdrawal, "External-only consent activated analytics");
   await navigate("/podcast/");
   assert(await evaluate("document.querySelectorAll('iframe[src*=\"open.spotify.com\"]').length > 0 && !window.gtag"), "External-only preference was not restored on podcast page");
-  console.log("PASS: external content can be enabled independently, remembered across pages without analytics");
+  console.log("PASS: external-content consent activates Spotify and newsletter without analytics");
 
   await evaluate("document.querySelector('.poppy-cookie-settings').click()");
   await until(() => evaluate("!!document.querySelector('input[name=\"cookie-analytics\"]')"), "Category settings did not reopen");
   await evaluate("document.querySelector('input[name=\"cookie-external\"]').click(); document.querySelector('input[name=\"cookie-analytics\"]').click(); Array.from(document.querySelectorAll('.poppy-cookie button')).find(b => b.textContent.includes('Zapisz')).click()");
-  await until(() => evaluate("!!window.gtag && document.querySelectorAll('iframe').length === 0"), "Analytics-only selection did not remove Spotify and activate analytics");
-  console.log("PASS: analytics-only choice works and revoking external content removes Spotify");
+  await until(() => evaluate("document.readyState === 'complete' && !!window.gtag && document.querySelectorAll('iframe[src*=\"open.spotify.com\"]').length === 0"), "Analytics-only choice did not remove Spotify");
+  console.log("PASS: analytics-only choice keeps Spotify blocked and revoking external content removes players");
 
   await evaluate("document.querySelector('.poppy-cookie-settings').click()");
   await until(banner, "Settings did not open for final rejection");
@@ -152,12 +173,25 @@ try {
   await send("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   assert(await evaluate("Array.from(document.querySelectorAll('.poppy-cookie button')).every(b => { const r=b.getBoundingClientRect(); return r.width > 0 && r.right <= innerWidth && r.bottom <= innerHeight; })"), "Consent buttons not visible on mobile");
   console.log("PASS: English policy/footer/settings and mobile consent actions");
+  await evaluate("Array.from(document.querySelectorAll('.poppy-cookie button')).find(b => b.textContent.includes('Reject')).click()");
+  await navigate("/en/podcast/");
+  assert.equal(await evaluate("document.querySelectorAll('iframe[src*=\"open.spotify.com\"]').length"), 0, "English podcast loaded Spotify after rejection");
+  await evaluate("document.querySelector('.poppy-cookie-settings').click()");
+  await until(banner, "English settings did not open");
+  await evaluate("Array.from(document.querySelectorAll('.poppy-cookie button')).find(b => b.textContent.includes('Accept')).click()");
+  await until(() => evaluate("document.querySelectorAll('iframe[src*=\"open.spotify.com\"]').length > 0"), "English acceptance did not activate Spotify");
+  await evaluate("document.querySelector('.poppy-cookie-settings').click()");
+  await until(banner, "English settings did not reopen");
+  await evaluate("Array.from(document.querySelectorAll('.poppy-cookie button')).find(b => b.textContent.includes('Reject')).click()");
+  await until(() => evaluate("document.readyState === 'complete' && !window.gtag && document.querySelectorAll('iframe[src*=\"open.spotify.com\"]').length === 0"), "English withdrawal did not remove Spotify");
+  console.log("PASS: English rejection, acceptance and withdrawal control Spotify");
 
   await navigate("/");
   assert(await evaluate("!!document.querySelector('#zglos-firme a[href*=\"polityka-prywatnosci\"]') && !document.querySelector('#zglos-firme input[name=\"consent\"]')"));
-  assert(await evaluate("!!document.querySelector('input[name=\"privacy_notice_version\"][value=\"2026-11-05\"]')"));
+  assert(await evaluate("!!document.querySelector('input[name=\"privacy_notice_version\"][value=\"2026-11-06.1\"]')"));
   assert.equal(await evaluate("document.querySelectorAll('[data-supascribe-embed-id], script[src*=\"js.supascribe.com\"]').length"), 0, "Newsletter embed loaded despite remembered refusal");
   console.log("PASS: company notice/version and newsletter privacy gate");
+  }
 } finally {
   socket?.close();
   browser.kill();

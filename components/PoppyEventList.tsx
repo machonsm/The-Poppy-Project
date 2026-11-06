@@ -7,9 +7,15 @@ const englishLocations: Record<string, string> = {
   "Nadarzyn, Polska": "Nadarzyn, Poland",
   "Poznań, Polska": "Poznań, Poland",
   "Kraków, Polska": "Kraków, Poland",
+  "Katowice, Polska": "Katowice, Poland",
+  "Szczecin, Polska": "Szczecin, Poland",
+  "Gdańsk, Polska": "Gdańsk, Poland",
+  "Poznań + online": "Poznań + online",
   "Bruksela, Belgia": "Brussels, Belgium",
   "Genewa + online": "Geneva + online",
   "Berlin + online": "Berlin + online",
+  "Berlin, Niemcy": "Berlin, Germany",
+  "Helsinki, Finlandia": "Helsinki, Finland",
   "Paryż, Francja": "Paris, France",
   "Warszawa, Polska": "Warsaw, Poland",
   "Warszawa + livestream": "Warsaw + livestream",
@@ -54,7 +60,7 @@ export function PoppyEventList({ events, language, openLabel }: PoppyEventListPr
             rel="noopener noreferrer"
             aria-label={openLabel + ": " + event.title + ". " + dateRange + ". " + location + ". " + newTab + "."}
           >
-            <time className="pp-event__date" dateTime={event.date} aria-label={dateRange}>
+            <time className={`pp-event__date${event.ongoing ? " pp-event__date--ongoing" : ""}`} dateTime={event.date} aria-label={dateRange}>
               {event.ongoing ? <>
                 <strong aria-hidden="true">{language === "pl" ? "Trwa" : "Open"}</strong>
                 <span aria-hidden="true">{language === "pl" ? "do" : "until"}<br />{(end ?? start).toLocaleDateString(locale, { ...dateOptions, year: "numeric" })}</span>
@@ -69,7 +75,7 @@ export function PoppyEventList({ events, language, openLabel }: PoppyEventListPr
             </div>
             <span className="pp-event__location">{location}</span>
             <span className="pp-event__arrow" aria-hidden="true"><ArrowUpRight size={21} /></span>
-            <span className="pp-event__preview" aria-hidden="true">
+            <span className={`pp-event__preview${event.image ? "" : " pp-event__preview--text"}`} aria-hidden="true">
               {event.image ? <Image className={event.imageFit === "contain" ? "pp-event__preview-image--contain" : undefined} src={event.image} alt="" width={490} height={354} sizes="245px" /> : <span className="pp-event__preview-fallback"><small>{event.category}</small><strong>{event.title}</strong></span>}
             </span>
           </a>

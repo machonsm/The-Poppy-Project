@@ -10,13 +10,13 @@ const copy = {
   pl: {
     title: "Polityka prywatności i cookies",
     intro: "Tutaj wyjaśniamy, jakie dane są przetwarzane podczas korzystania z joinpoppy.pl, zgłaszania firmy i zapisu do newslettera Poppy Project oraz jak możesz zarządzać swoją prywatnością.",
-    date: "Wersja z 5 listopada 2026 r.",
+    date: "Wersja z 6 listopada 2026 r.",
     toc: "Spis treści", controller: "1. Administrator i kontakt", purposes: "2. Jakie dane przetwarzamy i dlaczego", retention: "3. Jak długo przechowujemy dane", providers: "4. Dostawcy i odbiorcy danych", transfers: "5. Przekazywanie danych poza EOG", cookies: "6. Cookies i pamięć przeglądarki", choices: "7. Twój wybór i wycofanie zgody", newsletter: "8. Newsletter na Substacku", forms: "9. Zgłoszenia firm i dane w katalogu", rights: "10. Twoje prawa", security: "11. Bezpieczeństwo i dane szczególne", changes: "12. Zmiany polityki",
   },
   en: {
     title: "Privacy and cookie policy",
     intro: "This policy explains how data is processed when you use joinpoppy.pl, submit a company or subscribe to the Poppy Project newsletter, and how you can manage your privacy.",
-    date: "Version dated 5 November 2026",
+    date: "Version dated 6 November 2026",
     toc: "Contents", controller: "1. Controller and contact", purposes: "2. Data, purposes and lawful bases", retention: "3. How long data is kept", providers: "4. Providers and recipients", transfers: "5. Transfers outside the EEA", cookies: "6. Cookies and browser storage", choices: "7. Your choice and withdrawal", newsletter: "8. Newsletter on Substack", forms: "9. Company submissions and directory data", rights: "10. Your rights", security: "11. Security and sensitive data", changes: "12. Policy updates",
   }
 };

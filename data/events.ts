@@ -213,6 +213,73 @@ const eventEntries: EventItem[] = [
     imageFit: "contain"
   },
   {
+    title: "Infoshare Katowice 2026",
+    date: "2026-11-17T08:30:00+01:00",
+    endDate: "2026-11-18T15:30:00+01:00",
+    location: "Katowice, Polska",
+    region: "poland",
+    category: "Technologie i biznes",
+    description:
+      "Konferencja technologiczno-biznesowa w Międzynarodowym Centrum Kongresowym w Katowicach. Prelekcje, spotkania z ekspertami i matchmaking dla startupów, inwestorów oraz firm.",
+    url: "https://katowice.infoshare.pl/",
+    image: "/events/infoshare-katowice-2026.webp",
+    imageAlt: "Infoshare Katowice — oficjalna grafika wydarzenia, 17–18 listopada 2026",
+    imageFit: "contain"
+  },
+  {
+    title: "Slush 2026",
+    date: "2026-11-18T08:00:00+02:00",
+    endDate: "2026-11-19T18:00:00+02:00",
+    location: "Helsinki, Finlandia",
+    region: "europe",
+    category: "Startupy i inwestycje",
+    description:
+      "Międzynarodowe spotkanie founderów, startupów i inwestorów venture capital w Messukeskus w Helsinkach. Dwa dni rozmów, prezentacji i spotkań biznesowych.",
+    url: "https://slush.org/",
+    image: "/events/slush-2026.webp",
+    imageAlt: "Slush 2026 — zrzut oficjalnej strony wydarzenia",
+    imageFit: "contain"
+  },
+  {
+    title: "AI in Women’s Health — Global Virtual Conference",
+    date: "2026-11-18T14:00:00Z",
+    endDate: "2026-11-18T18:00:00Z",
+    location: "Online",
+    region: "online",
+    category: "FemTech i AI",
+    description:
+      "Bezpłatna konferencja online Women of Wearables poświęcona zastosowaniom sztucznej inteligencji w zdrowiu kobiet. W programie rozmowy o innowacjach i przyszłości opieki.",
+    url: "https://www.eventbrite.co.uk/e/ai-in-womens-health-global-virtual-conference-tickets-2002793463162",
+    image: "/events/ai-womens-health-2026.webp",
+    imageAlt: "AI in Women’s Health — oficjalny plakat konferencji Women of Wearables, 18 listopada 2026",
+    imageFit: "contain"
+  },
+  {
+    title: "Menopauza 2.0. Nowe ciało, nowe zasady",
+    date: "2026-11-21T08:30:00+01:00",
+    endDate: "2026-11-21T16:55:00+01:00",
+    location: "Szczecin, Polska",
+    region: "poland",
+    category: "Menopauza i zdrowie kobiet",
+    description:
+      "Konferencja Pomorskiego Uniwersytetu Medycznego dla kobiet w okresie okołomenopauzalnym i po menopauzie. Tematy obejmują metabolizm, hormony, żywienie i aktywność fizyczną. Wyłącznie stacjonarnie w Hotelu Courtyard by Marriott w Szczecinie.",
+    url: "https://evenea.pl/wydarzenie/menopauza-20-nowe-cialo-nowe-zasady-2yt42ise"
+  },
+  {
+    title: "FemTech Germany Summit 2026",
+    date: "2026-11-21T12:30:00+01:00",
+    endDate: "2026-11-21T19:45:00+01:00",
+    location: "Berlin, Niemcy",
+    region: "europe",
+    category: "FemTech i innowacje",
+    description:
+      "Konferencja w Delta Campus w Berlinie łącząca founderki, naukowców i inwestorów wokół zdrowia kobiet na różnych etapach życia. Panele, warsztaty i prezentacje startupów.",
+    url: "https://femtechgermany.org/femtech-germany-sumit-2026/",
+    image: "/events/femtech-germany-summit-2026.webp",
+    imageAlt: "FemTech Germany Summit 2026 — oficjalny baner wydarzenia",
+    imageFit: "contain"
+  },
+  {
     title: "Horizon Europe Cluster 1 Health Brokerage Event",
     date: "2026-11-24T09:00:00+01:00",
     endDate: "2026-11-25T17:00:00+01:00",
@@ -224,6 +291,20 @@ const eventEntries: EventItem[] = [
     url: "https://hadea.ec.europa.eu/events/brokerage-event-horizon-europe-cluster-1-health-2026-11-24_en",
     image: "/events/european-commission.webp",
     imageAlt: "Logo Komisji Europejskiej",
+    imageFit: "contain"
+  },
+  {
+    title: "Warsaw Longevity Forum 2026",
+    date: "2026-11-24T10:00:00+01:00",
+    endDate: "2026-11-25T17:00:00+01:00",
+    location: "Warszawa, Polska",
+    region: "poland",
+    category: "Długowieczność i innowacje",
+    description:
+      "Forum poświęcone długowieczności, medycynie, profilaktyce i technologiom zdrowotnym. Spotkanie nauki i biznesu w DoubleTree by Hilton Hotel & Conference Centre w Warszawie.",
+    url: "https://4longevity.pl/",
+    image: "/events/warsaw-longevity-forum-2026.webp",
+    imageAlt: "Warsaw Longevity Forum — oficjalna grafika wydarzenia, 24–25 listopada 2026",
     imageFit: "contain"
   },
   {
@@ -264,6 +345,34 @@ const eventEntries: EventItem[] = [
     url: "https://www.womenshealtheuropeforum.eu/",
     image: "/events/womens-health-europe-forum.webp",
     imageAlt: "Women's Health Europe Forum 2026 w Paryżu — oficjalna grafika wydarzenia"
+  },
+  {
+    title: "ELEVATE Health & Longevity Summit 2026",
+    date: "2026-11-28T00:00:00+01:00",
+    endDate: "2026-11-29T23:59:59+01:00",
+    location: "Warszawa, Polska",
+    region: "poland",
+    category: "Zdrowie i długowieczność",
+    description:
+      "Dwudniowe spotkanie poświęcone zdrowiu, profilaktyce i długowieczności na PGE Narodowym w Warszawie. W programie wystąpienia ekspertów, warsztaty i strefa wystawców.",
+    url: "https://elevatesummit.pl/en/",
+    image: "/events/elevate-summit-2026.webp",
+    imageAlt: "ELEVATE — oficjalna grafika Health & Longevity Summit",
+    imageFit: "contain"
+  },
+  {
+    title: "What’s Your Plan in 2027? Take Action on Building Your Career in Women’s Health",
+    date: "2026-12-02T12:00:00-05:00",
+    endDate: "2026-12-02T13:00:00-05:00",
+    location: "Online",
+    region: "online",
+    category: "Kariera w zdrowiu kobiet",
+    description:
+      "Warsztat online In Women’s Health z Jodi Neuhauser: podsumowanie 2026 roku i planowanie kolejnych kroków kariery w sektorze zdrowia kobiet na 2027 rok.",
+    url: "https://luma.com/gaotmreo",
+    image: "/events/in-womens-health-career-2027.webp",
+    imageAlt: "In Women’s Health — oficjalna okładka warsztatu planowania kariery na 2027 rok",
+    imageFit: "contain"
   },
   {
     title: "MEDmeetsTECH",
@@ -317,6 +426,34 @@ const eventEntries: EventItem[] = [
     imageAlt: "Kobieta podczas spaceru na świeżym powietrzu"
   },
   {
+    title: "Wolves Summit Warsaw 2027",
+    date: "2027-04-07T00:00:00+02:00",
+    endDate: "2027-04-08T23:59:59+02:00",
+    location: "Warszawa, Polska",
+    region: "poland",
+    category: "Startupy i inwestycje",
+    description:
+      "Spotkanie startupów i inwestorów z Europy. Strona Open Calls przyjmuje zgłoszenia do konkursu startupowego oraz propozycje partnerstw, warsztatów i delegacji na warszawską edycję 7–8 kwietnia 2027.",
+    url: "https://www.wolvessummit.com/open-calls/",
+    image: "/events/wolves-summit.webp",
+    imageAlt: "Wolves Summit — oficjalna strona zgłoszeń na edycję Warsaw 2027",
+    imageFit: "contain"
+  },
+  {
+    title: "Dietetyka w praktyce. Women’s Health 2027",
+    date: "2027-04-10T08:50:00+02:00",
+    endDate: "2027-04-10T19:30:00+02:00",
+    location: "Poznań + online",
+    region: "poland",
+    category: "Żywienie i zdrowie kobiet",
+    description:
+      "Konferencja dla dietetyków o zdrowiu metabolicznym, sile i długowieczności kobiet. Program obejmuje m.in. perimenopauzę, ochronę mięśni i kości oraz wykorzystanie danych z urządzeń ubieralnych. Udział stacjonarny lub online, dostępny dodatkowy warsztat.",
+    url: "https://www.dietetykawpraktyce.pl/",
+    image: "/events/dietetyka-w-praktyce.webp",
+    imageAlt: "Dietetyka w praktyce — oficjalna strona konferencji Women’s Health 2027",
+    imageFit: "contain"
+  },
+  {
     title: "EIC Pre-Accelerator 2027 — otwarcie naboru",
     date: "2027-05-05T09:00:00+02:00",
     endDate: "2027-11-18T17:00:00+01:00",
@@ -328,6 +465,34 @@ const eventEntries: EventItem[] = [
     url: "https://eic.ec.europa.eu/eic-funding-opportunities/eic-pre-accelerator_en",
     image: "/events/european-commission.webp",
     imageAlt: "EIC Pre-Accelerator — program finansowania Komisji Europejskiej",
+    imageFit: "contain"
+  },
+  {
+    title: "Impact’27",
+    date: "2027-05-12T00:00:00+02:00",
+    endDate: "2027-05-13T23:59:59+02:00",
+    location: "Poznań, Polska",
+    region: "poland",
+    category: "Biznes i innowacje",
+    description:
+      "Międzynarodowy kongres w Poznaniu łączący przedstawicieli biznesu, technologii, nauki i sektora publicznego. Rozmowy o gospodarce, innowacjach i kierunkach rozwoju różnych branż.",
+    url: "https://impactcee.com/impact27/pl/",
+    image: "/events/impact-2027.webp",
+    imageAlt: "Impact’27 — oficjalne logo wydarzenia",
+    imageFit: "contain"
+  },
+  {
+    title: "Infoshare 2027",
+    date: "2027-05-19T00:00:00+02:00",
+    endDate: "2027-05-20T23:59:59+02:00",
+    location: "Gdańsk, Polska",
+    region: "poland",
+    category: "Technologie i biznes",
+    description:
+      "Konferencja technologiczna w AmberExpo w Gdańsku dla founderów, inwestorów, specjalistów i liderów biznesu. Zapowiedziana edycja odbędzie się 19–20 maja 2027.",
+    url: "https://infoshare.pl/",
+    image: "/events/infoshare.webp",
+    imageAlt: "Infoshare — oficjalna strona z zapowiedzią edycji 2027 w Gdańsku",
     imageFit: "contain"
   }
 ];

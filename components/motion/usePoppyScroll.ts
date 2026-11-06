@@ -128,6 +128,9 @@ export function usePoppyScroll(rootRef: RefObject<HTMLDivElement | null>) {
       root.classList.toggle("pp-cinematic", allowed() && desktop.matches);
       if (allowed() && desktop.matches) {
         lenis = new Lenis({ lerp: .1, smoothWheel: true, syncTouch: false,
+          // Let nested lists consume wheel input while they can scroll, then
+          // hand it back to the page at their edges instead of trapping it.
+          allowNestedScroll: true,
           anchors: { offset: -(root.querySelector(".pp-header")?.getBoundingClientRect().height ?? 100) - 16 },
           prevent: node => node.hasAttribute("data-lenis-prevent"),
           virtualScroll: ({ event }) => !event.defaultPrevented,

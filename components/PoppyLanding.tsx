@@ -5,6 +5,7 @@ import { ArrowUpRight, Download, Send } from "lucide-react";
 import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent, type MouseEvent as ReactMouseEvent } from "react";
 import { PoppyHeader, PoppyFooter } from "@/components/PoppyChrome";
 import { PoppyEventList } from "@/components/PoppyEventList";
+import { PoppyEventsScroller } from "@/components/PoppyEventsScroller";
 import { InstagramStoryCarousel } from "@/components/InstagramStoryCarousel";
 import { FluidButton, FluidLink } from "@/components/ui/FluidButton";
 import { FemtechExplorer } from "@/components/FemtechExplorer";
@@ -251,7 +252,7 @@ export function PoppyLanding({ initialLanguage = "pl", initialEventDay = "" }: {
           <div className="pp-container">
             <div className="pp-section-heading pp-section-heading--split" data-reveal><div><h2 id="events-heading">{c.eventsTitle}</h2></div>{c.eventsBody && <p>{c.eventsBody}</p>}</div>
             <div className="pp-events__toolbar"><div className="pp-event-filters" role="group" aria-label={language === "pl" ? "Filtruj wydarzenia" : "Filter events"}>{eventFilters.map((id, index) => <button type="button" key={id} aria-pressed={filter === id} aria-controls="pp-events-results" onClick={() => setFilter(id)}>{c.filters[index]}<span>{!today ? "—" : id === "all" ? upcomingEvents.length : upcomingEvents.filter(event => event.region === id).length}</span></button>)}</div></div>
-            <div className="pp-events__results" id="pp-events-results" role="region" aria-busy={!today} aria-label={language === "pl" ? "Lista wydarzeń" : "Events list"} tabIndex={visibleEvents.length > 5 ? 0 : undefined}>{!today ? <div className="pp-events__empty" role="status"><p>{language === "pl" ? "Ładowanie wydarzeń…" : "Loading events…"}</p><noscript>{language === "pl" ? "Włącz JavaScript, aby zobaczyć aktualne wydarzenia." : "Enable JavaScript to see current events."}</noscript></div> : visibleEvents.length ? <PoppyEventList key={filter} events={visibleEvents} language={language} openLabel={c.eventOpen} /> : <div className="pp-events__empty" role="status"><p>{c.noEvents}</p>{filter !== "all" && <button type="button" onClick={() => setFilter("all")}>{c.showAllEvents}<ArrowUpRight size={17} aria-hidden="true" /></button>}</div>}</div>
+            <PoppyEventsScroller key={filter} language={language} loading={!today}>{!today ? <div className="pp-events__empty" role="status"><p>{language === "pl" ? "Ładowanie wydarzeń…" : "Loading events…"}</p><noscript>{language === "pl" ? "Włącz JavaScript, aby zobaczyć aktualne wydarzenia." : "Enable JavaScript to see current events."}</noscript></div> : visibleEvents.length ? <PoppyEventList events={visibleEvents} language={language} openLabel={c.eventOpen} /> : <div className="pp-events__empty" role="status"><p>{c.noEvents}</p>{filter !== "all" && <button type="button" onClick={() => setFilter("all")}>{c.showAllEvents}<ArrowUpRight size={17} aria-hidden="true" /></button>}</div>}</PoppyEventsScroller>
             <p className="pp-events__note">{c.eventNote}</p>
           </div>
         </section>
